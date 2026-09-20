@@ -2,6 +2,7 @@ import {
   AUDIENCE_OPTIONS,
   CATEGORY_OPTIONS,
   ISSUE_OPTIONS,
+  REGION_OPTIONS,
   type Filters,
 } from "../lib/directory"
 import { btnSecondary, focusRing } from "../lib/ui"
@@ -16,11 +17,15 @@ type Props = {
 
 export function FilterBar({ filters, onChange, onClear }: Props) {
   const hasFilters =
-    filters.q.trim() !== "" || filters.audience !== "" || filters.issue !== "" || filters.category !== ""
+    filters.q.trim() !== "" ||
+    filters.audience !== "" ||
+    filters.issue !== "" ||
+    filters.category !== "" ||
+    filters.region !== ""
 
   return (
     <div className="rounded-xl border border-sage-200 bg-white p-4 shadow-sm">
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <div className="sm:col-span-2 lg:col-span-1">
           <label htmlFor="filter-q" className="mb-1 block text-sm font-semibold text-stone-700">
             Search
@@ -84,6 +89,24 @@ export function FilterBar({ filters, onChange, onClear }: Props) {
             {CATEGORY_OPTIONS.map((c) => (
               <option key={c} value={c}>
                 {c}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="filter-region" className="mb-1 block text-sm font-semibold text-stone-700">
+            Region
+          </label>
+          <select
+            id="filter-region"
+            className={controlClass}
+            value={filters.region}
+            onChange={(e) => onChange({ region: e.target.value })}
+          >
+            <option value="">All regions</option>
+            {REGION_OPTIONS.map((r) => (
+              <option key={r} value={r}>
+                {r}
               </option>
             ))}
           </select>

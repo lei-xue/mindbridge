@@ -2,8 +2,13 @@ import { test } from "node:test"
 import assert from "node:assert/strict"
 import resources from "../src/data/resources.json" with { type: "json" }
 
-test("directory has at least 15 resources", () => {
-  assert.ok(resources.length >= 15, `expected >= 15 entries, got ${resources.length}`)
+test("directory has at least 23 resources", () => {
+  assert.ok(resources.length >= 23, `expected >= 23 entries, got ${resources.length}`)
+})
+
+test("directory includes California resources", () => {
+  const california = resources.filter((r) => r.region === "California")
+  assert.ok(california.length >= 1, "expected at least one resource with region 'California'")
 })
 
 test("every resource has required fields", () => {

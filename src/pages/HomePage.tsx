@@ -19,6 +19,7 @@ export function HomePage() {
     audience: searchParams.get("audience") ?? "",
     issue: searchParams.get("issue") ?? "",
     category: searchParams.get("category") ?? "",
+    region: searchParams.get("region") ?? "",
   }
 
   const onChange = (patch: Partial<Filters>) => {

@@ -10,6 +10,7 @@ export type Filters = {
   audience: string
   issue: string
   category: string
+  region: string
 }
 
 function uniqSorted(values: string[]): string[] {
@@ -19,6 +20,7 @@ function uniqSorted(values: string[]): string[] {
 export const AUDIENCE_OPTIONS = uniqSorted(RESOURCES.flatMap((r) => r.audience))
 export const ISSUE_OPTIONS = uniqSorted(RESOURCES.flatMap((r) => [...r.issues, ...r.tags]))
 export const CATEGORY_OPTIONS = uniqSorted(RESOURCES.map((r) => r.category))
+export const REGION_OPTIONS = uniqSorted(RESOURCES.map((r) => r.region))
 
 export function getResourceById(id: string): Resource | undefined {
   return RESOURCES.find((r) => r.id === id)
@@ -38,6 +40,7 @@ export function filterResources(filters: Filters): Resource[] {
       return false
     }
     if (filters.category && r.category !== filters.category) return false
+    if (filters.region && r.region !== filters.region) return false
     if (q && !`${r.name} ${r.description}`.toLowerCase().includes(q)) return false
     return true
   })
