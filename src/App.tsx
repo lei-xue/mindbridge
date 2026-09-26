@@ -5,7 +5,7 @@ import { Header } from "./components/Header"
 import { AboutPage } from "./pages/AboutPage"
 import { HomePage } from "./pages/HomePage"
 import { ResourceDetailPage } from "./pages/ResourceDetailPage"
-import { btnSecondary } from "./lib/ui"
+import { btnSecondary, focusRing } from "./lib/ui"
 
 function NotFoundPage() {
   return (
@@ -22,9 +22,24 @@ function NotFoundPage() {
 export default function App() {
   return (
     <div className="flex min-h-svh flex-col">
+      <a
+        href="#main-content"
+        onClick={(event) => {
+          event.preventDefault()
+          const main = document.getElementById("main-content")
+          main?.focus()
+          main?.scrollIntoView({
+            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+            block: "start",
+          })
+        }}
+        className={`sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-2 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:font-semibold focus:text-teal-800 focus:shadow-lg ${focusRing}`}
+      >
+        Skip to main content
+      </a>
       <CrisisBanner />
       <Header />
-      <main className="flex-1">
+      <main id="main-content" tabIndex={-1} className="flex-1">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/resource/:id" element={<ResourceDetailPage />} />

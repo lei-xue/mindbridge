@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "test": "node --test \"tests/**/*.test.mjs\"",
+    "test:ui": "playwright test --config=playwright.config.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -16,6 +17,7 @@
     "react-router-dom": "^7.18.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import { Link, useSearchParams } from "react-router-dom"
 import { CrisisResourceCard } from "../components/CrisisResourceCard"
 import { FilterBar } from "../components/FilterBar"
@@ -13,9 +14,18 @@ import { btnCall, btnSecondary, focusRing } from "../lib/ui"
 
 export function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const [query, setQuery] = useState("")
+
+  useEffect(() => {
+    if (searchParams.has("q")) {
+      const next = new URLSearchParams(searchParams)
+      next.delete("q")
+      setSearchParams(next, { replace: true })
+    }
+  }, [searchParams, setSearchParams])
 
   const filters: Filters = {
-    q: searchParams.get("q") ?? "",
+    q: query,
     audience: searchParams.get("audience") ?? "",
     issue: searchParams.get("issue") ?? "",
     category: searchParams.get("category") ?? "",
@@ -23,8 +33,13 @@ export function HomePage() {
   }
 
   const onChange = (patch: Partial<Filters>) => {
+    if (Object.hasOwn(patch, "q")) setQuery(patch.q ?? "")
+
+    const urlEntries = Object.entries(patch).filter(([key]) => key !== "q")
+    if (urlEntries.length === 0) return
+
     const next = new URLSearchParams(searchParams)
-    for (const [key, value] of Object.entries(patch)) {
+    for (const [key, value] of urlEntries) {
       if (value) {
         next.set(key, value)
       } else {
@@ -34,7 +49,10 @@ export function HomePage() {
     setSearchParams(next, { replace: true })
   }
 
-  const onClear = () => setSearchParams({}, { replace: true })
+  const onClear = () => {
+    setQuery("")
+    setSearchParams({}, { replace: true })
+  }
 
   const results = filterResources(filters)
   const crisisEntries = getResourcesByIds(CRISIS_ENTRY_IDS)
@@ -53,7 +71,19 @@ export function HomePage() {
             <a href="tel:988" className={btnCall}>
               Call or text 988 now
             </a>
-            <a href="#directory" className={btnSecondary}>
+            <a
+              href="#directory"
+              className={btnSecondary}
+              onClick={(event) => {
+                event.preventDefault()
+                const heading = document.getElementById("directory-heading")
+                heading?.focus()
+                heading?.scrollIntoView({
+                  behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+                  block: "start",
+                })
+              }}
+            >
               Browse all resources
             </a>
           </div>
@@ -76,9 +106,52 @@ export function HomePage() {
         </div>
       </section>
 
+      <section aria-labelledby="local-support-heading" className="border-b border-sage-200 bg-white">
+        <div className="mx-auto max-w-5xl px-4 py-8 sm:py-10">
+          <h2 id="local-support-heading" className="text-xl font-bold text-stone-900 sm:text-2xl">
+            Looking for in-person support?
+          </h2>
+          <p className="mt-2 max-w-3xl text-stone-700">
+            MindBridge does not list verified nearby clinic locations. If you&apos;re in Los Angeles
+            County, start with the county&apos;s official Department of Mental Health Provider Directory.
+            Elsewhere, search your local 211 directory or call 211.
+            Availability varies by area; confirm details with the provider.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <a href="tel:211" className={btnCall}>
+              Call 211
+            </a>
+            <a
+              href="https://www.211.org/about-us/your-local-211"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={btnSecondary}
+            >
+              Find your local 211 directory
+            </a>
+            <a
+              href="https://dmh.lacounty.gov/pd/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={btnSecondary}
+            >
+              Los Angeles County DMH Provider Directory
+            </a>
+          </div>
+          <p className="mt-3 max-w-3xl text-sm text-stone-600">
+            MindBridge does not request your GPS location. Any location details you choose to enter on
+            external directories are governed by their privacy practices.
+          </p>
+        </div>
+      </section>
+
       <section id="directory" aria-labelledby="directory-heading" className="scroll-mt-16">
         <div className="mx-auto max-w-5xl px-4 py-10">
-          <h2 id="directory-heading" className="text-xl font-bold text-stone-900 sm:text-2xl">
+          <h2
+            id="directory-heading"
+            tabIndex={-1}
+            className={`rounded text-xl font-bold text-stone-900 ${focusRing} sm:text-2xl`}
+          >
             Browse resources
           </h2>
           <p className="mt-1 text-stone-700">
