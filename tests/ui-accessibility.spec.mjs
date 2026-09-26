@@ -9,7 +9,7 @@ test("Browse all resources stays on the home page and reveals the directory", as
   await expect(page.getByText("Showing 23 of 23 resources")).toBeVisible()
 })
 
-test("local support callout offers official regional directories without requesting location", async ({ page }) => {
+test("local support search offers the County directory and explains location privacy", async ({ page }) => {
   await page.goto("/")
 
   await expect(page.getByRole("heading", { name: "Looking for in-person support?" })).toBeVisible()
@@ -23,8 +23,47 @@ test("local support callout offers official regional directories without request
   await expect(laDirectory).toHaveAttribute("href", "https://dmh.lacounty.gov/pd/")
   await expect(laDirectory).toHaveAttribute("target", "_blank")
   await expect(laDirectory).toHaveAttribute("rel", "noopener noreferrer")
-  await expect(localSupport.getByText(/MindBridge does not request your GPS location/)).toBeVisible()
+  await expect(localSupport.getByRole("heading", { name: "Search LA County DMH directory" })).toBeVisible()
+  await expect(localSupport.getByText(/No GPS is used/)).toBeVisible()
+  await expect(localSupport.getByText(/Cloudflare processes the request/)).toBeVisible()
   await expect(localSupport.getByRole("button", { name: /location/i })).toHaveCount(0)
+})
+
+test("LA County city/ZIP search uses POST, keeps the query out of the URL, and discloses partial results", async ({ page }) => {
+  const requests = []
+  await page.route("**/api/la-county/locations", async (route) => {
+    const body = JSON.parse(route.request().postData() || "{}")
+    requests.push(body)
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        results: [{
+          id: "sample-1",
+          name: "First directory listing",
+          address: { lines: ["100 Test St"], city: "LOS ANGELES", state: "CA", postalCode: "90012" },
+          phones: ["(555) 010-0000"], websites: [], hours: [], languages: ["English"], populations: [], accessibility: [], lastUpdated: null,
+        }],
+        hasMore: true,
+      }),
+    })
+  })
+
+  await page.goto("/")
+  await page.getByLabel("Search by").selectOption("zip")
+  await page.getByLabel("5-digit ZIP code").fill("9001")
+  await page.getByRole("button", { name: "Search", exact: true }).click()
+  await expect(page.getByRole("alert")).toHaveText("Enter a 5-digit ZIP code.")
+  expect(requests).toHaveLength(0)
+
+  await page.getByLabel("5-digit ZIP code").fill("90012")
+  await page.getByRole("button", { name: "Search", exact: true }).click()
+  await expect(page.getByRole("heading", { name: "1 directory listing for ZIP 90012" })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "First directory listing" })).toBeVisible()
+  await expect(page.getByText(/additional matches beyond this result page/)).toBeVisible()
+  await expect(page.getByRole("button", { name: "Load more listings" })).toHaveCount(0)
+  expect(requests).toEqual([{ searchType: "zip", value: "90012" }])
+  await expect(page).not.toHaveURL(/90012/)
 })
 
 test("keyboard users can skip navigation and filter/clear results", async ({ page }) => {

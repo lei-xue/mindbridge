@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Link, useSearchParams } from "react-router-dom"
 import { CrisisResourceCard } from "../components/CrisisResourceCard"
 import { FilterBar } from "../components/FilterBar"
+import { LaCountyDirectorySearch } from "../components/LaCountyDirectorySearch"
 import { ResourceCard } from "../components/ResourceCard"
 import {
   CRISIS_ENTRY_IDS,
@@ -112,11 +113,11 @@ export function HomePage() {
             Looking for in-person support?
           </h2>
           <p className="mt-2 max-w-3xl text-stone-700">
-            MindBridge does not list verified nearby clinic locations. If you&apos;re in Los Angeles
-            County, start with the county&apos;s official Department of Mental Health Provider Directory.
-            Elsewhere, search your local 211 directory or call 211.
-            Availability varies by area; confirm details with the provider.
+            Search LA County DMH&apos;s provider directory below by city or ZIP. Outside Los Angeles
+            County, use your local 211 directory or call 211. These directory listings are not
+            independently verified by MindBridge; confirm service, eligibility, and availability directly.
           </p>
+          <LaCountyDirectorySearch />
           <div className="mt-4 flex flex-wrap gap-3">
             <a href="tel:211" className={btnCall}>
               Call 211

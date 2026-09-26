@@ -16,6 +16,10 @@ dist-ssr
 /test-results/
 /playwright-report/
 
+# Cloudflare Workers local state and local-only variables
+.wrangler/
+.dev.vars
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
