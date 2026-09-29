@@ -49,14 +49,14 @@ function OrangeSiteCard({ site }: { site: (typeof orangeSnapshot.sites)[number] 
   )
 }
 
-function CountyPlanCard({ county }: { county: string }) {
+function CountyPlanCard({ county, compact = false }: { county: string; compact?: boolean }) {
   const plan = countyAccess.countyPlans.find((entry) => entry.name === county)
   if (!plan) return null
   const dial = plan.phone.match(/\(?\d{3}\)?[ .-]*\d{3}[ .-]*\d{4}/)?.[0].replace(/\D/g, "")
-  return <section aria-label="County mental health plan" className="mt-4 rounded-lg border border-teal-300 bg-white p-4">
-    <h5 className="font-semibold text-stone-900">{county} County Mental Health Plan</h5>
-    <p className="mt-1 text-sm text-stone-700">Official county contact for Medi-Cal specialty mental-health services. Ask for current providers, eligibility, and an appointment; this is not a nearby clinic listing or a guarantee of free care.</p>
-    <p className="mt-2 text-sm text-stone-700">Listed access phone: {plan.phone} {dial && <a href={`tel:${dial}`} className={`ml-2 rounded font-semibold text-teal-800 underline ${focusRing}`}>Call county plan</a>}</p>
+  return <section aria-label="County mental health plan" className={`mt-4 rounded-lg border border-teal-300 bg-white ${compact ? "p-3" : "p-4"}`}>
+    <h5 className="font-semibold text-stone-900">{compact ? `${county} County access line` : `${county} County Mental Health Plan`}</h5>
+    {!compact && <p className="mt-1 text-sm text-stone-700">Official county contact for Medi-Cal specialty mental-health services. Ask for current providers, eligibility, and an appointment; this is not a nearby clinic listing or a guarantee of free care.</p>}
+    <p className="mt-2 text-sm text-stone-700">{compact ? "Medi-Cal specialty mental-health plan (not another local clinic): " : "Listed access phone: "}{plan.phone} {dial && <a href={`tel:${dial}`} className={`ml-2 rounded font-semibold text-teal-800 underline ${focusRing}`}>Call county plan</a>}</p>
     <a href={countyAccess.source} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>DHCS county mental health plans</a>
   </section>
 }
@@ -127,6 +127,8 @@ export function CaliforniaFacilitySearch() {
     const query = searched.field === "county" ? "Orange" : searched.value
     return location.toLocaleLowerCase("en-US") === query.toLocaleLowerCase("en-US")
   }) : []
+  const orangeCities = new Set(orangeMatches.map((site) => site.city))
+  const orangeCity = searched?.field === "zip" && orangeCities.size === 1 ? orangeMatches[0].city : null
   const hasExactResults = matches.length > 0 || orangeMatches.length > 0 || Boolean(laSearch?.results.length)
   const noExactResults = !hasExactResults && !laSearch?.isLoading && !laSearch?.error
 
@@ -153,7 +155,7 @@ export function CaliforniaFacilitySearch() {
       {error && <p role="alert" className="mt-3 text-sm font-semibold text-red-800">{error}</p>}
       {searched && <div className="mt-5" aria-live="polite">
         <h4 className="font-semibold text-stone-900">Results for {searched.field === "zip" ? "ZIP" : searched.field} {searched.value}</h4>
-        {searched.field === "zip" && countyCandidates.length === 1 && <p className="mt-2 text-sm text-stone-700">Suggested county: <strong>{selectedCounty}</strong>. This is an approximate ZIP-to-county match, not address-level verification.</p>}
+        {searched.field === "zip" && countyCandidates.length === 1 && <p className="mt-2 text-sm text-stone-700">{orangeCity ? <>Listed sites: <strong>{orangeCity} · {selectedCounty} County</strong>.</> : <>Suggested county: <strong>{selectedCounty}</strong>.</>} The ZIP-to-county match is approximate; confirm your location.</p>}
         {searched.field === "zip" && countyCandidates.length > 1 && <p className="mt-2 text-sm text-stone-700">This ZIP may cross county boundaries. Choose your county below; the ZIP alone cannot identify your side of the boundary.</p>}
         {searched.field === "zip" && countyCandidates.length === 0 && <p className="mt-2 text-sm text-stone-700">This ZIP is not in the available county crosswalk. Choose your county below to see its official contact.</p>}
         {countyCandidates.length !== 1 && <div className="mt-3">
@@ -163,11 +165,11 @@ export function CaliforniaFacilitySearch() {
             {(countyCandidates.length ? countyCandidates : countyAccess.countyPlans.map((plan) => plan.name)).map((county) => <option key={county} value={county}>{county} County</option>)}
           </select>
         </div>}
-        {selectedCounty && <CountyPlanCard county={selectedCounty} />}
+        {selectedCounty && !hasExactResults && <CountyPlanCard county={selectedCounty} />}
         {laSearch && <LaCountyDirectoryResults state={laSearch} />}
         {orangeMatches.length > 0 && (
           <section aria-label="Orange County Behavioral Health Plan sites" className="mt-4 rounded-lg border border-teal-300 bg-white p-4">
-            <h5 className="font-semibold text-stone-900">{orangeMatches.length} Orange County BHP provider sites for {searched.field === "zip" ? "ZIP" : searched.field} {searched.value}</h5>
+            <h5 className="font-semibold text-stone-900">{orangeCity ? `${orangeMatches.length} provider sites listed in ${orangeCity} · Orange County` : `${orangeMatches.length} Orange County BHP provider sites for ${searched.field === "zip" ? "ZIP" : searched.field} ${searched.value}`}</h5>
             <p className="mt-1 text-xs text-stone-600">Official Orange County Medi-Cal Behavioral Health Plan site data, retrieved {orangeSnapshot.retrievedAt}; this snapshot is not live availability, an appointment guarantee, or a list of free services. Confirm eligibility and hours directly.</p>
             <div className="mt-3 grid gap-3 lg:grid-cols-2">{orangeMatches.slice(0, 20).map((site) => <OrangeSiteCard key={site.id} site={site} />)}</div>
             {orangeMatches.length > 20 && <p className="mt-2 text-sm text-stone-700">Showing the first 20 sites. Use the full official directory for the rest.</p>}
@@ -178,6 +180,7 @@ export function CaliforniaFacilitySearch() {
           <p className="mt-1 text-xs text-stone-600">Limited licensing snapshot; a listed license does not establish availability or walk-in access.</p>
           <div className="mt-3 grid gap-3 lg:grid-cols-2">{matches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div>
         </section>}
+        {selectedCounty && hasExactResults && <CountyPlanCard county={selectedCounty} compact />}
         {noExactResults && <p role="status" className="mt-4 text-sm text-stone-700">No exact {searched.field === "zip" ? "ZIP" : searched.field} listings were found in the connected sources. This does not mean there is no care nearby; try the official county directory or local 211.</p>}
         {matchedCounty && !hasExactResults && !laSearch?.isLoading && (
           <details className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
