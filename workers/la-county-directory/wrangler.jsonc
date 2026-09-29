@@ -3,9 +3,12 @@
   "name": "mindbridge-la-county-directory",
   "main": "index.js",
   "compatibility_date": "2026-09-25",
-  "workers_dev": true,
+  "workers_dev": false,
+  "routes": [
+    { "pattern": "mindbridge.leixue.dev/api/la-county/locations", "zone_name": "leixue.dev" }
+  ],
   "vars": {
-    "ALLOWED_ORIGINS": "http://localhost:5173,http://127.0.0.1:5173"
+    "ALLOWED_ORIGINS": "https://mindbridge.leixue.dev"
   },
   "dev": {
     "port": 8787,

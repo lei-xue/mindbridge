@@ -9,7 +9,7 @@
     "lint": "oxlint",
     "test": "node --test \"tests/**/*.test.mjs\"",
     "test:ui": "playwright test --config=playwright.config.mjs",
-    "worker:dev": "wrangler dev --config workers/la-county-directory/wrangler.jsonc",
+    "worker:dev": "wrangler dev --config workers/la-county-directory/wrangler.jsonc --var ALLOWED_ORIGINS:http://localhost:5173,http://127.0.0.1:5173",
     "worker:deploy": "wrangler deploy --config workers/la-county-directory/wrangler.jsonc",
     "preview": "vite preview"
   },

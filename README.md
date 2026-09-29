@@ -53,12 +53,11 @@ The local Vite proxy sends `/api/la-county/locations` to the Worker at `127.0.0.
 
 Deployment is separate from pushing the static app. It requires authorization to the Cloudflare account that will host the Worker; do not put credentials in the repository or chat.
 
-1. An account owner or authorized operator runs `npx wrangler login`, then `npm run worker:deploy`.
-2. In the Worker settings, set `ALLOWED_ORIGINS` to the exact origin of the public MindBridge website (for example, `https://mindbridge.example`, with no path). The checked-in local value is only for development. This browser-origin check is not authentication; configure appropriate Cloudflare rate limiting before exposing a public Worker endpoint.
-3. Configure the static site's build variable `VITE_LA_COUNTY_API_URL` to `https://<deployed-worker-host>/api/la-county/locations`, then rebuild and deploy the static app. Alternatively, bind the Worker to the app's same-origin `/api/la-county/locations` route and leave that build variable unset.
-4. Verify the live endpoint and search from the deployed site. No API key is used by the County endpoint.
+1. Verify the Cloudflare account is on the Workers Free tier, authorize Wrangler for script/route changes, then run `npm run worker:deploy`. Do not enable a paid plan.
+2. The checked-in route attaches the Worker to `https://mindbridge.leixue.dev/api/la-county/locations`, on the existing `leixue.dev` zone. The production origin is the only allowed browser origin; `npm run worker:dev` overrides it for local Vite testing. The browser-origin check is not authentication, and the Free tier's request cap is not a per-user rate limiter.
+3. The static site defaults to this same-origin `/api/la-county/locations` path, so no frontend rebuild or `VITE_LA_COUNTY_API_URL` is required. Verify the live endpoint and browser search after deployment. No API key is used by the County endpoint.
 
-This repository change prepares the code and local workflow only; it does not authorize or perform a Cloudflare deployment.
+Cloudflare deployment is a separate step from pushing this repository; verify the live route after every deployment.
 
 ## Checks
 
