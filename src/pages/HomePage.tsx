@@ -113,7 +113,7 @@ export function HomePage() {
             Looking for in-person support?
           </h2>
           <p className="mt-2 max-w-3xl text-stone-700">
-            Search for local listings where we have them, or find your county's official Medi-Cal mental-health plan contact to ask about current providers. Orange County has a dated provider-site snapshot, San Diego County has a limited adult-clinic list, and LA County has a live directory search. Elsewhere we have only a limited licensed-facility snapshot. This is not complete statewide provider coverage, and listed services are not guaranteed free or available.
+            Choose your county below to find its official Medi-Cal mental-health plan contact. Provider listings are incomplete and may not be free or available.
           </p>
           <CaliforniaFacilitySearch />
           <div className="mt-4 flex flex-wrap gap-3">

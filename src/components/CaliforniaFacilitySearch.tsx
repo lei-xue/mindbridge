@@ -71,12 +71,13 @@ function CountyPlanCard({ county, compact = false }: { county: string; compact?:
     {!compact && <p className="mt-1 text-sm text-stone-700">Official county contact for Medi-Cal specialty mental-health services. Ask for current providers, eligibility, and an appointment; this is not a nearby clinic listing or a guarantee of free care.</p>}
     <p className="mt-2 text-sm text-stone-700">{compact ? "Medi-Cal specialty mental-health plan (not another local clinic): " : "Listed access phone: "}{plan.phone} {dial && <a href={`tel:${dial}`} className={`ml-2 rounded font-semibold text-teal-800 underline ${focusRing}`}>Call county plan</a>}</p>
     {website && <p className="mt-2 text-sm text-stone-700"><a href={website} target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>Visit {county} County plan website</a> <span className="text-xs">(linked by DHCS; not necessarily a provider directory)</span></p>}
+    {county === "Los Angeles" && <p className="mt-2 text-sm text-stone-700">Browse the <a href="https://dmh.lacounty.gov/pd/" target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>official LA County provider directory</a> without entering a ZIP here.</p>}
     <a href={countyAccess.source} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>DHCS county mental health plans</a>
   </section>
 }
 
 export function CaliforniaFacilitySearch() {
-  const [field, setField] = useState<SearchField>("zip")
+  const [field, setField] = useState<SearchField>("county")
   const [value, setValue] = useState("")
   const [searched, setSearched] = useState<{ field: SearchField; value: string } | null>(null)
   const [error, setError] = useState("")
@@ -105,8 +106,8 @@ export function CaliforniaFacilitySearch() {
     setManualCounty("")
     setBrowseCity("")
     const term = value.trim().replace(/\s+/g, " ")
-    if (field === "zip" ? !/^\d{5}$/.test(term) : !/^[\p{L}\p{M}][\p{L}\p{M} .'-]{1,59}$/u.test(term)) {
-      setError(field === "zip" ? "Enter a 5-digit California ZIP code." : "Enter a California city or county name.")
+    if (field === "county" ? !countyAccess.countyPlans.some((plan) => plan.name === term) : field === "zip" ? !/^\d{5}$/.test(term) : !/^[\p{L}\p{M}][\p{L}\p{M} .'-]{1,59}$/u.test(term)) {
+      setError(field === "county" ? "Choose a California county." : field === "zip" ? "Enter a 5-digit California ZIP code." : "Enter a California city name.")
       setSearched(null)
       return
     }
@@ -145,7 +146,7 @@ export function CaliforniaFacilitySearch() {
   ) ? orangeSnapshot.sites.filter((site) => {
     const location = searched.field === "county" ? "Orange" : site[searched.field]
     const query = searched.field === "county" ? "Orange" : searched.value
-    return location.toLocaleLowerCase("en-US") === query.toLocaleLowerCase("en-US") && (searched.field !== "city" || countyAccess.zipCounties[site.zip as keyof typeof countyAccess.zipCounties]?.includes("Orange"))
+    return location.toLocaleLowerCase("en-US") === query.toLocaleLowerCase("en-US") && (searched.field === "zip" || countyAccess.zipCounties[site.zip as keyof typeof countyAccess.zipCounties]?.includes("Orange"))
   }) : []
   const orangeCities = new Set(orangeMatches.map((site) => site.city))
   const orangeCity = searched?.field === "zip" && orangeCities.size === 1 ? orangeMatches[0].city : null
@@ -176,30 +177,38 @@ export function CaliforniaFacilitySearch() {
     <div className="mt-5 rounded-xl border border-sage-200 bg-sage-50 p-4 sm:p-5">
       <h3 className="text-lg font-bold text-stone-900">Find in-person mental-health support in California</h3>
       <p className="mt-1 text-sm text-stone-700">
-        Search for listings matching the ZIP, city, or county you enter. Orange County has a dated provider-site snapshot, San Diego County has a limited adult-clinic list, and LA County has a live directory search. Elsewhere, we may only have a few licensed facilities—not a complete provider directory. Every county has an official Medi-Cal mental-health plan contact that can help you ask about current providers.
+        Select a county—no ZIP needed. Orange County has provider-site listings and San Diego County has a limited adult-clinic list; elsewhere, listings may be sparse. The county plan contact can help you ask about current providers.
       </p>
       <form onSubmit={onSubmit} className="mt-4 grid gap-3 sm:grid-cols-[minmax(0,12rem)_minmax(0,1fr)_auto] sm:items-end">
         <div>
           <label htmlFor="california-search-field" className="mb-1 block text-sm font-semibold text-stone-700">Search by</label>
           <select id="california-search-field" className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} value={field} onChange={(event) => { laAbort.current?.abort(); setLaSearch(null); setManualCounty(""); setBrowseCity(""); setField(event.target.value as SearchField); setValue(""); setSearched(null); setError("") }}>
-            <option value="zip">ZIP code</option><option value="city">City</option><option value="county">County</option>
+            <option value="county">County</option><option value="city">City</option><option value="zip">ZIP code (optional)</option>
           </select>
         </div>
         <div>
-          <label htmlFor="california-search-value" className="mb-1 block text-sm font-semibold text-stone-700">California city, county, or ZIP</label>
-          <input id="california-search-value" type="text" inputMode={field === "zip" ? "numeric" : "text"} autoComplete="off" maxLength={field === "zip" ? 5 : 60} placeholder={field === "zip" ? "e.g. 92868" : field === "county" ? "e.g. Orange" : "e.g. Santa Ana"} className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} value={value} onChange={(event) => setValue(event.target.value)} />
+          {field === "county" ? <>
+            <label htmlFor="california-search-value" className="mb-1 block text-sm font-semibold text-stone-700">California county</label>
+            <select id="california-search-value" className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} value={value} onChange={(event) => setValue(event.target.value)}>
+              <option value="">Choose a county</option>
+              {countyAccess.countyPlans.map((plan) => <option key={plan.name} value={plan.name}>{plan.name} County</option>)}
+            </select>
+          </> : <>
+            <label htmlFor="california-search-value" className="mb-1 block text-sm font-semibold text-stone-700">California city, county, or ZIP</label>
+            <input id="california-search-value" type="text" inputMode={field === "zip" ? "numeric" : "text"} autoComplete="off" maxLength={field === "zip" ? 5 : 60} placeholder={field === "zip" ? "e.g. 92868" : "e.g. Santa Ana"} className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} value={value} onChange={(event) => setValue(event.target.value)} />
+          </>}
         </div>
         <button type="submit" className={btnSecondary}>Find support options</button>
       </form>
       <details className="mt-3 text-xs text-stone-600"><summary className="cursor-pointer font-semibold">Search coverage and privacy</summary><p className="mt-2">California, Orange County, and San Diego County snapshots and approximate ZIP-to-county hints are filtered in your browser. Submitting an unambiguous LA County ZIP also sends it in a request body through Cloudflare to the LA County DMH directory. For cities or uncertain ZIPs, a separate LA search button asks first. Cloudflare processes that request and LA County may log IP/browser details. No GPS is used, and MindBridge does not put your location in the URL or intentionally store it. The 2020 Census ZIP approximation may cross county boundaries or miss newer/PO Box ZIPs; confirm your county before relying on a referral.</p></details>
-      <p className="mt-2 text-xs text-stone-700">For a ZIP mapped only to LA County, submitting also sends it through Cloudflare to the LA County DMH directory; LA County may log IP/browser details. Other live searches require a separate click. No GPS is used.</p>
+      {field === "zip" && <p className="mt-2 text-xs text-stone-700">A ZIP mapped only to LA County also starts a live directory search through Cloudflare; LA County may log IP/browser details. Other live searches require a separate click.</p>}
       {error && <p role="alert" className="mt-3 text-sm font-semibold text-red-800">{error}</p>}
       {searched && <div className="mt-5" aria-live="polite">
         <h4 className="font-semibold text-stone-900">Results for {searched.field === "zip" ? "ZIP" : searched.field} {searched.value}</h4>
         {searched.field === "zip" && countyCandidates.length === 1 && <p className="mt-2 text-sm text-stone-700">{orangeCity ? <>Listed sites: <strong>{orangeCity} · Orange County</strong>.</> : <>Suggested county: <strong>{countyCandidates[0]}</strong>.</>} The ZIP-to-county match is approximate; confirm your location.</p>}
         {searched.field === "zip" && countyCandidates.length > 1 && <p className="mt-2 text-sm text-stone-700">This ZIP may cross county boundaries. Choose your county below; the ZIP alone cannot identify your side of the boundary.</p>}
         {searched.field === "zip" && countyCandidates.length === 0 && <p className="mt-2 text-sm text-stone-700">We cannot confirm this ZIP belongs to California from the available ZIP-to-county crosswalk (newer and PO Box ZIPs may be missing). If you know your California county, choose it below for its official contact; otherwise verify the ZIP and county first.</p>}
-        {countyCandidates.length === 1 && <details className="mt-2 text-sm text-stone-700"><summary className="cursor-pointer font-semibold text-teal-800">Change county</summary><p className="mt-1">The suggestion may not match your address. Choosing another county changes the county contact and hides location listings from the suggested county; it does not search a new provider directory.</p>
+        {countyCandidates.length === 1 && searched.field !== "county" && <details className="mt-2 text-sm text-stone-700"><summary className="cursor-pointer font-semibold text-teal-800">Change county</summary><p className="mt-1">The suggestion may not match your address. Choosing another county changes the county contact and hides location listings from the suggested county; it does not search a new provider directory.</p>
           <div className="mt-2"><label htmlFor="choose-county" className="mb-1 block font-semibold">Choose your county</label>
           <select id="choose-county" value={selectedCounty} onChange={(event) => onCountyChange(event.target.value)} className={`min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
             {countyAccess.countyPlans.map((plan) => <option key={plan.name} value={plan.name}>{plan.name} County</option>)}
@@ -212,29 +221,39 @@ export function CaliforniaFacilitySearch() {
           </select>
         </div>}
         {selectedCounty && <p className="mt-2 text-xs text-stone-600">County selection provides a referral phone, not a complete list of providers in that county. Only matching records from the connected sources are shown below.</p>}
-        {selectedCounty && !hasExactResults && <CountyPlanCard county={selectedCounty} />}
+        {selectedCounty && (searched.field === "county" || !hasExactResults) && <CountyPlanCard county={selectedCounty} />}
         {selectedCounty === "Los Angeles" && searched.field !== "county" && !laSearch && <div className="mt-4 rounded-lg border border-teal-300 bg-white p-4"><p className="text-sm text-stone-700">Want to search LA County's live provider directory for this {searched.field}? Clicking below sends the entered location through Cloudflare to LA County; they may log your IP/browser details.</p><button type="button" className={`${btnSecondary} mt-2`} onClick={() => runLaSearch(searched.field as SearchType, searched.value)}>Search live LA County directory</button></div>}
         {laSearch && <LaCountyDirectoryResults state={laSearch} />}
         {orangeMatches.length > 0 && (
           <section aria-label="Orange County Behavioral Health Plan sites" className="mt-4 rounded-lg border border-teal-300 bg-white p-4">
             <h5 className="font-semibold text-stone-900">{orangeCity ? `${orangeMatches.length} provider sites listed in ${orangeCity} · Orange County` : `${orangeMatches.length} Orange County BHP provider sites for ${searched.field === "zip" ? "ZIP" : searched.field} ${searched.value}`}</h5>
             <p className="mt-1 text-xs text-stone-600">Local provider-site matches · Official Orange County Medi-Cal Behavioral Health Plan data, retrieved {orangeSnapshot.retrievedAt}. These are not verified openings, free services, or walk-in options; confirm eligibility and hours directly.</p>
-            <div className="mt-3 grid gap-3 lg:grid-cols-2">{orangeMatches.slice(0, 20).map((site) => <OrangeSiteCard key={site.id} site={site} />)}</div>
-            {orangeMatches.length > 20 && <p className="mt-2 text-sm text-stone-700">Showing the first 20 sites. Use the full official directory for the rest.</p>}
+            {searched.field === "county" && <><label htmlFor="orange-county-city" className="mt-3 block text-sm font-semibold text-stone-700">Filter Orange County sites by city</label>
+              <select id="orange-county-city" value={browseCity} onChange={(event) => setBrowseCity(event.target.value)} className={`mt-1 min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
+                <option value="">All cities (first 20)</option>
+                {[...new Set(orangeMatches.map((site) => site.city))].sort().map((city) => <option key={city} value={city}>{city}</option>)}
+              </select>{browseCity && <p className="mt-2 text-sm text-stone-700">{orangeMatches.filter((site) => site.city === browseCity).length} sites listed in {browseCity}.</p>}</>}
+            <div className="mt-3 grid gap-3 lg:grid-cols-2">{orangeMatches.filter((site) => searched.field !== "county" || !browseCity || site.city === browseCity).slice(0, 20).map((site) => <OrangeSiteCard key={site.id} site={site} />)}</div>
+            {orangeMatches.filter((site) => searched.field !== "county" || !browseCity || site.city === browseCity).length > 20 && <p className="mt-2 text-sm text-stone-700">Showing the first 20 sites. Choose a city or use the full official directory for the rest.</p>}
           </section>
         )}
         {sanDiegoMatches.length > 0 && <section aria-label="San Diego adult behavioral health clinics" className="mt-4 rounded-lg border border-teal-300 bg-white p-4">
           <h5 className="font-semibold text-stone-900">{sanDiegoMatches.length} adult clinic listings for {searched.field === "zip" ? "ZIP" : searched.field} {searched.value} · San Diego County</h5>
           <p className="mt-1 text-xs text-stone-600">San Diego County's published outpatient behavioral health clinic list for adults 18 and older, retrieved {sanDiegoSnapshot.retrievedAt}. This is a limited snapshot, not its complete provider directory. Call to confirm eligibility, cost, appointment or walk-in rules, and hours before visiting.</p>
-          <div className="mt-3 grid gap-3 lg:grid-cols-2">{sanDiegoMatches.map((clinic) => <SanDiegoClinicCard key={clinic.id} clinic={clinic} />)}</div>
+          {searched.field === "county" && <><label htmlFor="san-diego-county-city" className="mt-3 block text-sm font-semibold text-stone-700">Filter San Diego adult clinics by city</label>
+            <select id="san-diego-county-city" value={browseCity} onChange={(event) => setBrowseCity(event.target.value)} className={`mt-1 min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
+              <option value="">All cities</option>
+              {[...new Set(sanDiegoMatches.map((clinic) => clinic.city))].sort().map((city) => <option key={city} value={city}>{city}</option>)}
+            </select>{browseCity && <p className="mt-2 text-sm text-stone-700">{sanDiegoMatches.filter((clinic) => clinic.city === browseCity).length} clinics listed in {browseCity}.</p>}</>}
+          <div className="mt-3 grid gap-3 lg:grid-cols-2">{sanDiegoMatches.filter((clinic) => searched.field !== "county" || !browseCity || clinic.city === browseCity).map((clinic) => <SanDiegoClinicCard key={clinic.id} clinic={clinic} />)}</div>
         </section>}
         {matches.length > 0 && <section aria-label="Statewide licensed-facility snapshot" className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
           <h5 className="font-semibold text-stone-900">{matches.length} statewide licensed-facility listings for {searched.field} {searched.value}</h5>
           <p className="mt-1 text-xs text-stone-600">Licensed-facility matches · Limited, dated licensing snapshot (including hospitals and rehabilitation centers), not a general outpatient directory. A license does not establish availability or walk-in access.</p>
           <div className="mt-3 grid gap-3 lg:grid-cols-2">{matches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div>
         </section>}
-        {selectedCounty && hasExactResults && <CountyPlanCard county={selectedCounty} compact />}
-        {noExactResults && <p role="status" className="mt-4 text-sm text-stone-700">No exact {searched.field === "zip" ? "ZIP" : searched.field} listings were found in the connected sources{selectedCounty === "Los Angeles" && !laSearch ? " (LA live directory not yet searched)" : ""}. This does not mean there is no care nearby; ask your county plan for current providers or use local 211.</p>}
+        {selectedCounty && hasExactResults && searched.field !== "county" && <CountyPlanCard county={selectedCounty} compact />}
+        {noExactResults && <p role="status" className="mt-4 text-sm text-stone-700">{searched.field === "county" ? "No facility or provider-site listings from the connected snapshots for this county. This does not mean no care is available; ask the county plan for current providers or use local 211." : <>No exact {searched.field === "zip" ? "ZIP" : "city"} listings were found in the connected sources{selectedCounty === "Los Angeles" && !laSearch ? " (LA live directory not yet searched)" : ""}. This does not mean there is no care nearby; ask your county plan for current providers or use local 211.</>}</p>}
         {orangeElsewhere.length > 0 && <details aria-label="Other Orange County provider sites" className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
           <summary className="cursor-pointer font-semibold text-stone-900">{orangeElsewhere.length} provider sites elsewhere in Orange County (not exact-ZIP matches)</summary>
           <p className="mt-2 text-sm text-stone-700">These official Orange County BHP snapshot sites are not necessarily near this ZIP, available, or appropriate for your needs. Choose a city you recognize to browse its sites; this is not a distance search. Ask the county plan or use its full directory for current options.</p>

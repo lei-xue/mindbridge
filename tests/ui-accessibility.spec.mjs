@@ -52,6 +52,7 @@ test("LA County city/ZIP search uses POST, keeps the query out of the URL, and d
   })
 
   await page.goto("/")
+  await page.getByLabel("Search by").selectOption("zip")
   await page.getByLabel("California city, county, or ZIP").fill("9001")
   await page.getByRole("button", { name: "Find support options" }).click()
   await expect(page.getByRole("alert")).toHaveText("Enter a 5-digit California ZIP code.")
