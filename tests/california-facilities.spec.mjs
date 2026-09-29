@@ -4,11 +4,11 @@ test('California county snapshot searches locally without putting location in UR
   const requests = []
   page.on('request', (request) => { if (request.method() !== 'GET') requests.push(request.url()) })
   await page.goto('/')
-  await expect(page.getByLabel('Search by')).toHaveValue('county')
+  await expect(page.getByLabel('Search by')).toBeHidden()
   await page.getByLabel('California county').selectOption('Orange')
   await page.getByRole('button', { name: 'Find support options' }).click()
   await expect(page.getByText(/statewide licensed-facility listings for county Orange/)).toBeVisible()
-  await expect(page.getByText(/ALISO RIDGE BEHAVIORAL HEALTH, LLC/i)).toBeVisible()
+  await expect(page.getByText(/ALISO RIDGE BEHAVIORAL HEALTH, LLC/i)).toBeHidden()
   expect(page.url()).not.toContain('Orange')
   expect(requests).toEqual([])
 })
@@ -18,12 +18,16 @@ test('county-first search can browse official local sites by chosen city without
   await page.getByLabel('California county').selectOption('Orange')
   await page.getByRole('button', { name: 'Find support options' }).click()
   const sites = page.locator('section[aria-label="Orange County Behavioral Health Plan sites"]')
+  await expect(sites.locator('article')).toHaveCount(0)
   await sites.getByLabel('Filter Orange County sites by city').selectOption('Irvine')
   await expect(sites.locator('article')).toHaveCount(1)
   await expect(sites.locator('article').first()).toContainText('Irvine')
   await page.getByLabel('California county').selectOption('San Diego')
   await page.getByRole('button', { name: 'Find support options' }).click()
   const clinics = page.locator('section[aria-label="San Diego adult behavioral health clinics"]')
+  await expect(clinics.locator('article')).toHaveCount(0)
+  await clinics.getByLabel('Filter San Diego adult clinics by city').selectOption('*')
+  await expect(clinics.locator('article')).toHaveCount(20)
   await clinics.getByLabel('Filter San Diego adult clinics by city').selectOption('Escondido')
   await expect(clinics.locator('article')).toHaveCount(2)
 })
@@ -42,6 +46,7 @@ test('non-LA ZIP searches local records without calling the live LA API', async 
   const countyRequests = []
   page.on('request', (request) => { if (request.url().includes('/api/la-county/locations')) countyRequests.push(request.url()) })
   await page.goto('/')
+  await page.getByText('Search by city or ZIP instead').click()
   await page.getByLabel('Search by').selectOption('zip')
   await page.getByLabel('California city, county, or ZIP').fill('92708')
   await page.getByRole('button', { name: 'Find support options' }).click()
@@ -54,6 +59,7 @@ test('San Diego adult clinic matches are separate from the statewide license sna
   const countyRequests = []
   page.on('request', (request) => { if (request.url().includes('/api/la-county/locations')) countyRequests.push(request.url()) })
   await page.goto('/')
+  await page.getByText('Search by city or ZIP instead').click()
   await page.getByLabel('Search by').selectOption('zip')
   await page.getByLabel('California city, county, or ZIP').fill('92025')
   await page.getByRole('button', { name: 'Find support options' }).click()
@@ -68,6 +74,7 @@ test('San Diego adult clinic matches are separate from the statewide license sna
 
 test('San Diego city finds its adult clinics but changing county removes them', async ({ page }) => {
   await page.goto('/')
+  await page.getByText('Search by city or ZIP instead').click()
   await page.getByLabel('Search by').selectOption('city')
   await page.getByLabel('California city, county, or ZIP').fill('Escondido')
   await page.getByRole('button', { name: 'Find support options' }).click()
@@ -100,6 +107,7 @@ test('a ZIP spanning counties asks the visitor to choose rather than assuming a 
   const requests = []
   page.on('request', (request) => { if (request.url().includes('/api/la-county/locations')) requests.push(request.url()) })
   await page.goto('/')
+  await page.getByText('Search by city or ZIP instead').click()
   await page.getByLabel('Search by').selectOption('zip')
   await page.getByLabel('California city, county, or ZIP').fill('90630')
   await page.getByRole('button', { name: 'Find support options' }).click()
@@ -116,6 +124,7 @@ test('ambiguous ZIP can explicitly request the live LA directory after choosing 
     await route.fulfill({ json: { results: [], hasMore: false } })
   })
   await page.goto('/')
+  await page.getByText('Search by city or ZIP instead').click()
   await page.getByLabel('Search by').selectOption('zip')
   await page.getByLabel('California city, county, or ZIP').fill('90630')
   await page.getByRole('button', { name: 'Find support options' }).click()
@@ -130,6 +139,7 @@ test('ambiguous ZIP can explicitly request the live LA directory after choosing 
 
 test('visitor can correct a single suggested county without treating its snapshot as comprehensive', async ({ page }) => {
   await page.goto('/')
+  await page.getByText('Search by city or ZIP instead').click()
   await page.getByLabel('Search by').selectOption('zip')
   await page.getByLabel('California city, county, or ZIP').fill('92708')
   await page.getByRole('button', { name: 'Find support options' }).click()
@@ -142,6 +152,7 @@ test('visitor can correct a single suggested county without treating its snapsho
 
 test('correcting a city hint removes sites from the previous county', async ({ page }) => {
   await page.goto('/')
+  await page.getByText('Search by city or ZIP instead').click()
   await page.getByLabel('Search by').selectOption('city')
   await page.getByLabel('California city, county, or ZIP').fill('Santa Ana')
   await page.getByRole('button', { name: 'Find support options' }).click()
@@ -159,6 +170,7 @@ test('footer shows the exact frontend build version after deployment', async ({ 
 
 test('zero state-licensed ZIP matches do not hide separate Orange County sites', async ({ page }) => {
   await page.goto('/')
+  await page.getByText('Search by city or ZIP instead').click()
   await page.getByLabel('Search by').selectOption('zip')
   await page.getByLabel('California city, county, or ZIP').fill('92708')
   await page.getByRole('button', { name: 'Find support options' }).click()
@@ -179,6 +191,7 @@ test('zero state-licensed ZIP matches do not hide separate Orange County sites',
 
 test('a ZIP with no exact listings does not present distant county facilities as local results', async ({ page }) => {
   await page.goto('/')
+  await page.getByText('Search by city or ZIP instead').click()
   await page.getByLabel('Search by').selectOption('zip')
   await page.getByLabel('California city, county, or ZIP').fill('90620')
   await page.getByRole('button', { name: 'Find support options' }).click()
@@ -193,6 +206,7 @@ test('a ZIP with no exact listings does not present distant county facilities as
 
 test('unmatched Orange ZIP offers a county-wide provider-site pathway without claiming nearby matches', async ({ page }) => {
   await page.goto('/')
+  await page.getByText('Search by city or ZIP instead').click()
   await page.getByLabel('Search by').selectOption('zip')
   await page.getByLabel('California city, county, or ZIP').fill('92620')
   await page.getByRole('button', { name: 'Find support options' }).click()
@@ -212,6 +226,7 @@ test('unmatched Orange ZIP offers a county-wide provider-site pathway without cl
 
 test('unmatched San Diego ZIP offers adult clinics elsewhere in county without implying ZIP proximity', async ({ page }) => {
   await page.goto('/')
+  await page.getByText('Search by city or ZIP instead').click()
   await page.getByLabel('Search by').selectOption('zip')
   await page.getByLabel('California city, county, or ZIP').fill('92037')
   await page.getByRole('button', { name: 'Find support options' }).click()
@@ -227,6 +242,7 @@ test('unmatched San Diego ZIP offers adult clinics elsewhere in county without i
 
 test('ambiguous ZIP does not select a county-wide site list until visitor chooses county', async ({ page }) => {
   await page.goto('/')
+  await page.getByText('Search by city or ZIP instead').click()
   await page.getByLabel('Search by').selectOption('zip')
   await page.getByLabel('California city, county, or ZIP').fill('90630')
   await page.getByRole('button', { name: 'Find support options' }).click()
@@ -237,6 +253,7 @@ test('ambiguous ZIP does not select a county-wide site list until visitor choose
 
 test('unmapped ZIP does not fabricate a California county and still offers a manual contact pathway', async ({ page }) => {
   await page.goto('/')
+  await page.getByText('Search by city or ZIP instead').click()
   await page.getByLabel('Search by').selectOption('zip')
   await page.getByLabel('California city, county, or ZIP').fill('99999')
   await page.getByRole('button', { name: 'Find support options' }).click()
@@ -248,6 +265,7 @@ test('unmapped ZIP does not fabricate a California county and still offers a man
 
 test('Orange network site physically outside Orange does not create a false Orange city hint', async ({ page }) => {
   await page.goto('/')
+  await page.getByText('Search by city or ZIP instead').click()
   await page.getByLabel('Search by').selectOption('city')
   await page.getByLabel('California city, county, or ZIP').fill('Woodland Hills')
   await page.getByRole('button', { name: 'Find support options' }).click()

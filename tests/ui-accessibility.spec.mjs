@@ -52,6 +52,7 @@ test("LA County city/ZIP search uses POST, keeps the query out of the URL, and d
   })
 
   await page.goto("/")
+  await page.getByText("Search by city or ZIP instead").click()
   await page.getByLabel("Search by").selectOption("zip")
   await page.getByLabel("California city, county, or ZIP").fill("9001")
   await page.getByRole("button", { name: "Find support options" }).click()
@@ -80,6 +81,7 @@ test("city search only sends location to LA after a separate click", async ({ pa
     await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ results: [], hasMore: false }) })
   })
   await page.goto("/")
+  await page.getByText("Search by city or ZIP instead").click()
   await page.getByLabel("Search by").selectOption("city")
   await page.getByLabel("California city, county, or ZIP").fill("Pasadena")
   await page.getByRole("button", { name: "Find support options" }).click()
