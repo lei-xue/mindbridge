@@ -1,5 +1,13 @@
 import { expect, test } from "@playwright/test"
 
+test("county support link skips to the non-crisis search without displacing 988", async ({ page }) => {
+  await page.goto("/")
+  await expect(page.getByRole("link", { name: "Call or text 988 now" })).toBeVisible()
+  await page.getByRole("link", { name: "Find in-person support by county" }).click()
+  await expect(page.locator("#local-support-heading")).toBeFocused()
+  await expect(page.getByLabel("California county")).toBeVisible()
+})
+
 test("Browse all resources stays on the home page and reveals the directory", async ({ page }) => {
   await page.goto("/")
 

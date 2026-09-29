@@ -88,6 +88,22 @@ export function HomePage() {
               Browse all resources
             </a>
           </div>
+          <p className="mt-4 text-sm text-stone-700">
+            Not in immediate crisis?{" "}
+            <a
+              href="#local-support-heading"
+              className={`rounded font-semibold text-teal-800 underline ${focusRing}`}
+              onClick={(event) => {
+                event.preventDefault()
+                const heading = document.getElementById("local-support-heading")
+                heading?.focus()
+                heading?.scrollIntoView({
+                  behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+                  block: "start",
+                })
+              }}
+            >Find in-person support by county</a>.
+          </p>
         </div>
       </section>
 
@@ -109,7 +125,7 @@ export function HomePage() {
 
       <section aria-labelledby="local-support-heading" className="border-b border-sage-200 bg-white">
         <div className="mx-auto max-w-5xl px-4 py-8 sm:py-10">
-          <h2 id="local-support-heading" className="text-xl font-bold text-stone-900 sm:text-2xl">
+          <h2 id="local-support-heading" tabIndex={-1} className={`scroll-mt-16 rounded text-xl font-bold text-stone-900 ${focusRing} sm:text-2xl`}>
             Looking for in-person support?
           </h2>
           <p className="mt-2 max-w-3xl text-stone-700">

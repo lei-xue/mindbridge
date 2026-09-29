@@ -25,6 +25,7 @@ test('county-first search can browse official local sites by chosen city without
   await page.getByLabel('California county').selectOption('San Diego')
   await page.getByRole('button', { name: 'Find support options' }).click()
   const clinics = page.locator('section[aria-label="San Diego adult behavioral health clinics"]')
+  await expect(clinics.getByText('20 adult clinic locations in San Diego County')).toBeVisible()
   await expect(clinics.locator('article')).toHaveCount(0)
   await clinics.getByLabel('Filter San Diego adult clinics by city').selectOption('*')
   await expect(clinics.locator('article')).toHaveCount(20)
