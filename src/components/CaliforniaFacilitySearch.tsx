@@ -134,12 +134,12 @@ export function CaliforniaFacilitySearch() {
       laAbort.current?.abort()
       setLaSearch(null)
       setManualCounty("")
-      setBrowseCity("")
-      setSearched(null)
+      setBrowseCity("*")
+      setSearched({ field: "county", value: county })
       setError("")
       setValue(county)
-      // The chosen county remains editable; no search or external request starts.
-      setLocationMessage(`Suggested county: ${county}. Confirm it, then find support options.`)
+      // Show local county records immediately, without calling an external API.
+      setLocationMessage(`Showing ${county} County options. You can choose a different county above.`)
     }, (failure) => {
       if (request !== locationRequest.current) return
       setLocating(false)

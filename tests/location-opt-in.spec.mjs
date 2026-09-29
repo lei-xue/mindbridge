@@ -15,13 +15,11 @@ test('location is opt-in, locally suggests county and never starts live search o
   const before = calls.length
   await page.getByRole('button', {name:'Use current location'}).click()
   await expect(page.getByLabel('California county')).toHaveValue('Butte')
-  await expect(page.getByRole('status')).toContainText('Confirm it')
+  await expect(page.getByRole('status')).toContainText('Showing Butte County options')
   expect(await page.evaluate(() => window.locationCalls)).toBe(1)
   expect(calls.slice(before).every(r => !r.body && !/39\.7285|121\.8375|api\/la-county/.test(r.url))).toBe(true)
   expect(await page.evaluate(() => JSON.stringify({local:{...localStorage},session:{...sessionStorage}}))).not.toMatch(/39\.7285|121\.8375/)
   await expect(page).not.toHaveURL(/39\.7285|121\.8375|Butte/)
-  await expect(page.locator('section[aria-label="Butte adult outpatient centers"]')).toHaveCount(0)
-  await page.getByRole('button', {name:'Find support options'}).click()
   await expect(page.locator('section[aria-label="Butte adult outpatient centers"] article')).toHaveCount(4)
 })
 
