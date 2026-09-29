@@ -1,0 +1,43 @@
+{
+  "retrievedAt": "2026-09-29",
+  "source": "https://www.buttecounty.net/369/Find-Adult-Services-by-Location",
+  "directoryUrl": "https://www.buttecounty.net/2300/Find-a-Provider",
+  "clinics": [
+    {
+      "id": "butte-adult-chico",
+      "name": "Chico Adult Services",
+      "city": "Chico",
+      "address": "560 Cohasset Avenue, Suite 175",
+      "zip": "95926",
+      "phone": "530-891-2784",
+      "source": "https://www.buttecounty.net/1593/Adult-Mental-Health-Services-in-Chico"
+    },
+    {
+      "id": "butte-adult-gridley",
+      "name": "Gridley Family Services",
+      "city": "Gridley",
+      "address": "995 Spruce Street",
+      "zip": "95948",
+      "phone": "530-846-7305",
+      "source": "https://www.buttecounty.net/165/Gridley"
+    },
+    {
+      "id": "butte-adult-oroville",
+      "name": "Oroville Adult Services",
+      "city": "Oroville",
+      "address": "82 Table Mountain Blvd",
+      "zip": "95965",
+      "phone": "530-538-7705",
+      "source": "https://www.buttecounty.net/166/Oroville"
+    },
+    {
+      "id": "butte-adult-paradise",
+      "name": "Paradise Adult Services",
+      "city": "Paradise",
+      "address": "7200 Skyway",
+      "zip": "95969",
+      "phone": "530-877-5845",
+      "source": "https://www.buttecounty.net/167/Paradise"
+    }
+  ]
+}

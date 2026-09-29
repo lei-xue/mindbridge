@@ -35,6 +35,27 @@ test('county-first search can browse official local sites by chosen city without
   await expect(clinics.locator('article').first().getByRole('link', { name: '(760) 480-2255' })).toHaveAttribute('href', 'tel:+17604802255')
 })
 
+test('Butte county adult outpatient centers are local, city-filtered, and removed on county change', async ({ page }) => {
+  const requests = []
+  page.on('request', (request) => { if (request.method() !== 'GET') requests.push(request.url()) })
+  await page.goto('/')
+  await page.getByLabel('California county').selectOption('Butte')
+  await page.getByRole('button', { name: 'Find support options' }).click()
+  const centers = page.locator('section[aria-label="Butte adult outpatient centers"]')
+  await expect(centers).toContainText('4 adult outpatient centers')
+  await expect(centers.locator('article')).toHaveCount(0)
+  await centers.getByLabel('Filter Butte adult centers by city').selectOption('Paradise')
+  await expect(centers.locator('article')).toHaveCount(1)
+  await expect(centers).toContainText('7200 Skyway')
+  await expect(centers.getByRole('link', { name: '530-877-5845' })).toHaveAttribute('href', 'tel:+15308775845')
+  await centers.getByLabel('Filter Butte adult centers by city').selectOption('*')
+  await expect(centers.locator('article')).toHaveCount(4)
+  await page.getByLabel('California county').selectOption('Colusa')
+  await page.getByRole('button', { name: 'Find support options' }).click()
+  await expect(centers).toHaveCount(0)
+  expect(requests).toEqual([])
+})
+
 test('mixed-format licensed-facility phone remains text rather than a misleading dial link', async ({ page }) => {
   await page.goto('/')
   await page.getByLabel('California county').selectOption('Sacramento')

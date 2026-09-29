@@ -32,6 +32,10 @@ The [Orange County Behavioral Health Plan provider directory](https://bhpprovide
 
 The footer's version is generated at frontend build time from the UTC build minute and the source commit's short SHA. It identifies the frontend artifact, not the separately deployed LA County Worker.
 
+## Butte County adult outpatient subset
+
+County selection now also offers **four** county-published adult outpatient centers in Chico, Gridley, Oroville, and Paradise. This is an ages-18-and-over subset, not Butte's complete provider directory. Choose a city before cards appear; each card links to its official source and the section links to the full directory. `python3 scripts/build_butte_adult_clinics.py` refreshes from the county's adult-service pages and fails if their outpatient scope, address, or phone cannot be recognized. SEARCH teams, administrative offices, youth-only contacts, CalWORKs offices, and peer/drop-in programs are excluded. Paradise's adult number is distinct from its youth number. Published walk-in information is not imported as a guarantee. The coverage counts above describe the three earlier snapshots and do not include this new subset.
+
 ## Tech stack
 
 - React and TypeScript

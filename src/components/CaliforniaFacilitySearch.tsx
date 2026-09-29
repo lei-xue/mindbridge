@@ -6,6 +6,7 @@ import countyAccess from "../data/california-county-access.json"
 import countySites from "../data/california-county-sites.json"
 import orangeSnapshot from "../data/orange-provider-sites.json"
 import sanDiegoSnapshot from "../data/san-diego-adult-clinics.json"
+import butteSnapshot from "../data/butte-adult-clinics.json"
 import { btnSecondary, focusRing } from "../lib/ui"
 
 const sanDiegoDirectoryUrl = "https://www.optumsandiego.com/content/SanDiego/sandiego/en/community-resources/providerdirectory1.html"
@@ -165,7 +166,8 @@ export function CaliforniaFacilitySearch() {
     if (searched.field === "county") return true
     return clinic[searched.field].toLocaleLowerCase("en-US") === searched.value.toLocaleLowerCase("en-US")
   }) : []
-  const hasExactResults = matches.length > 0 || orangeMatches.length > 0 || sanDiegoMatches.length > 0 || Boolean(laSearch?.results.length)
+  const hasButteClinics = searched?.field === "county" && selectedCounty === "Butte"
+  const hasExactResults = matches.length > 0 || orangeMatches.length > 0 || sanDiegoMatches.length > 0 || hasButteClinics || Boolean(laSearch?.results.length)
   const noExactResults = !hasExactResults && !laSearch?.isLoading && !laSearch?.error
   // These are county-wide browsing aids, never exact-ZIP or proximity matches.
   const orangeElsewhere = searched?.field === "zip" && selectedCounty === "Orange" && orangeMatches.length === 0
@@ -253,6 +255,22 @@ export function CaliforniaFacilitySearch() {
               {[...new Set(sanDiegoMatches.map((clinic) => clinic.city))].sort().map((city) => <option key={city} value={city}>{city}</option>)}
             </select>{browseCity && browseCity !== "*" && <p className="mt-2 text-sm text-stone-700">{sanDiegoMatches.filter((clinic) => clinic.city === browseCity).length} clinics listed in {browseCity}.</p>}</>}
           <div className="mt-3 grid gap-3 lg:grid-cols-2">{sanDiegoMatches.filter((clinic) => searched.field !== "county" || (browseCity !== "" && (browseCity === "*" || clinic.city === browseCity))).map((clinic) => <SanDiegoClinicCard key={clinic.id} clinic={clinic} />)}</div>
+        </section>}
+        {hasButteClinics && <section aria-label="Butte adult outpatient centers" className="mt-4 rounded-lg border border-teal-300 bg-white p-4">
+          <h5 className="font-semibold text-stone-900">{butteSnapshot.clinics.length} adult outpatient centers in Butte County</h5>
+          <p className="mt-1 text-xs text-stone-600">County-published centers for adults 18 and older · {butteSnapshot.retrievedAt} snapshot, not the full provider directory. Call to confirm eligibility, cost, hours, and appointments.</p>
+          <label htmlFor="butte-clinic-city" className="mt-3 block text-sm font-semibold text-stone-700">Filter Butte adult centers by city</label>
+          <select id="butte-clinic-city" value={browseCity} onChange={(event) => setBrowseCity(event.target.value)} className={`mt-1 min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
+            <option value="">Choose a city to see centers</option><option value="*">Show all centers</option>
+            {butteSnapshot.clinics.map((clinic) => <option key={clinic.city} value={clinic.city}>{clinic.city}</option>)}
+          </select>
+          <div className="mt-3 grid gap-3 lg:grid-cols-2">{butteSnapshot.clinics.filter((clinic) => browseCity === "*" || clinic.city === browseCity).map((clinic) => <article key={clinic.id} className="rounded-xl border border-sage-200 bg-white p-5 shadow-sm">
+            <h5 className="font-bold text-stone-900">{clinic.name}</h5>
+            <p className="mt-2 text-sm text-stone-700">{clinic.address} · {clinic.city}, CA {clinic.zip}</p>
+            <p className="mt-2 text-sm text-stone-700">Listed phone: <ListedPhone phone={clinic.phone} /></p>
+            <a href={clinic.source} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded text-sm text-teal-800 underline ${focusRing}`}>Official center information</a>
+          </article>)}</div>
+          <a href={butteSnapshot.directoryUrl} target="_blank" rel="noopener noreferrer" className={`mt-3 inline-block rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>Full Butte County provider directory</a>
         </section>}
         {matches.length > 0 && (searched.field === "county" ? <details aria-label="Statewide licensed-facility snapshot" className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
           <summary className="cursor-pointer font-semibold text-stone-900">{matches.length} statewide licensed-facility listings for county {searched.value} (not an outpatient directory)</summary>
