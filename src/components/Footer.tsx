@@ -25,6 +25,7 @@ export function Footer() {
           MindBridge is an information directory, not a substitute for professional care. In an
           emergency, call 911.
         </p>
+        <p className="text-xs text-sage-200">Version: {__APP_BUILD_VERSION__}</p>
         <p>
           <Link
             to="/about"

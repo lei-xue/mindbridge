@@ -3,6 +3,13 @@ import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 
 const facilities = JSON.parse(readFileSync(new URL('../src/data/california-facilities.json', import.meta.url)))
+const zipCounties = JSON.parse(readFileSync(new URL('../src/data/california-zip-counties.json', import.meta.url)))
+
+test('ZIP fallback is based on unambiguous official California facility counties', () => {
+  assert.equal(zipCounties['92706'], 'Orange')
+  assert.equal(zipCounties['90012'], 'Los Angeles')
+  assert.equal(zipCounties['99999'], undefined)
+})
 
 test('statewide snapshot lists licensed or approved mental-health facilities across California', () => {
   assert.ok(facilities.length >= 100)

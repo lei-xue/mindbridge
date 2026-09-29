@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react"
 import facilitiesJson from "../data/california-facilities.json"
+import zipCounties from "../data/california-zip-counties.json"
 import { btnSecondary, focusRing } from "../lib/ui"
 
 type Facility = (typeof facilitiesJson)[number]
@@ -58,6 +59,11 @@ export function CaliforniaFacilitySearch() {
     return selected.toLocaleLowerCase("en-US") === query.toLocaleLowerCase("en-US")
   }) : []
 
+  const matchedCounty = searched?.field === "zip" ? zipCounties[searched.value as keyof typeof zipCounties] : undefined
+  const countyMatches = matchedCounty && matches.length === 0
+    ? facilitiesJson.filter((facility) => facility.county === matchedCounty)
+    : []
+
   return (
     <div className="mt-5 rounded-xl border border-sage-200 bg-sage-50 p-4 sm:p-5">
       <h3 className="text-lg font-bold text-stone-900">Search California licensed mental-health facilities</h3>
@@ -82,6 +88,14 @@ export function CaliforniaFacilitySearch() {
       {searched && <div className="mt-5" aria-live="polite">
         <h4 className="font-semibold text-stone-900">{matches.length} California facility listings for {searched.field} {searched.value}</h4>
         {matches.length ? <div className="mt-3 grid gap-3 lg:grid-cols-2">{matches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div> : <p className="mt-2 text-sm text-stone-700">No listed facilities in that exact {searched.field === "zip" ? "ZIP" : searched.field}. This does not mean there is no care nearby. Try searching by city or county, or use your local 211 directory.</p>}
+        {matchedCounty && matches.length === 0 && (
+          <div className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
+            <p className="font-semibold text-stone-900">ZIP maps to {matchedCounty} County in the state healthcare-facility snapshot.</p>
+            <p className="mt-1 text-sm text-stone-700">{countyMatches.length} other licensed facility listings elsewhere in {matchedCounty} County. These are not necessarily close to your ZIP, available, or walk-in services.</p>
+            {matchedCounty === "Orange" && <p className="mt-2 text-sm text-stone-700">For a broader provider search, use the official <a href="https://bhpproviderdirectory.ochca.com/" target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>Orange County Behavioral Health Plan provider directory</a>.</p>}
+            {countyMatches.length > 0 && <div className="mt-3 grid gap-3 lg:grid-cols-2">{countyMatches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div>}
+          </div>
+        )}
         <p className="mt-4 text-xs text-stone-600">Confirm service type, who is eligible, cost, and whether appointments or referrals are required directly with the facility. A listed license is not a recommendation by MindBridge.</p>
       </div>}
     </div>

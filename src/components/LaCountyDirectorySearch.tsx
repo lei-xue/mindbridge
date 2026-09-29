@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react"
+import zipCounties from "../data/california-zip-counties.json"
 import { btnSecondary, focusRing } from "../lib/ui"
 
 type SearchType = "zip" | "city"
@@ -136,6 +137,15 @@ export function LaCountyDirectorySearch() {
     if (searchType === "zip" && !/^\d{5}$/.test(query)) {
       setError("Enter a 5-digit ZIP code.")
       setStatus("")
+      setResults([])
+      setHasMore(false)
+      return
+    }
+    const knownCounty = zipCounties[query as keyof typeof zipCounties]
+    if (searchType === "zip" && knownCounty && knownCounty !== "Los Angeles") {
+      setError(`ZIP ${query} maps to ${knownCounty} County, outside the LA County directory. Use the California search above or your county provider directory.`)
+      setStatus("")
+      setSubmittedValue("")
       setResults([])
       setHasMore(false)
       return

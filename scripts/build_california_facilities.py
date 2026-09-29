@@ -6,7 +6,7 @@ The output intentionally covers only named licensed facility categories, not all
 mental-health services or walk-in clinics. Inputs come from the URLs in README.
 """
 import csv
-from collections import Counter
+from collections import Counter, defaultdict
 from datetime import date, datetime
 import json
 from pathlib import Path
@@ -15,6 +15,7 @@ import sys
 
 AS_OF = date(2026, 9, 29)
 OUTPUT = Path(__file__).resolve().parent.parent / "src/data/california-facilities.json"
+ZIP_OUTPUT = OUTPUT.with_name("california-zip-counties.json")
 
 
 def rows(path):
@@ -37,8 +38,13 @@ def main(paths):
     healthcare, licensed, counties = paths
     county_names = {int(item["COUNTY CODE"]): item["COUNTY"].strip().title() for item in rows(counties)}
     facilities = []
+    zip_county_candidates = defaultdict(set)
 
     for row in rows(healthcare):
+        zipcode = zip5(row["DBA_ZIP_CODE"])
+        county = cleaned(row["COUNTY_NAME"]).title()
+        if row["FACILITY_STATUS_DESC"].strip() == "Open" and zipcode and county:
+            zip_county_candidates[zipcode].add(county)
         category = row["LICENSE_CATEGORY_DESC"].strip()
         if row["FACILITY_STATUS_DESC"].strip() != "Open" or category not in (
             "Acute Psychiatric Hospital", "Psychology Clinic"
@@ -95,7 +101,9 @@ def main(paths):
     if len(facilities) < 100 or len({item["id"] for item in facilities}) != len(facilities):
         raise ValueError(f"Unexpected source size or duplicate IDs: {len(facilities)} rows, {len({item['id'] for item in facilities})} IDs; review CSVs")
     OUTPUT.write_text(json.dumps(facilities, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"Wrote {len(facilities)} official facility records to {OUTPUT}")
+    zip_counties = {zipcode: next(iter(counties)) for zipcode, counties in sorted(zip_county_candidates.items()) if len(counties) == 1}
+    ZIP_OUTPUT.write_text(json.dumps(zip_counties, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"Wrote {len(facilities)} official facility records and {len(zip_counties)} unambiguous ZIP/county matches")
 
 
 if __name__ == "__main__":
