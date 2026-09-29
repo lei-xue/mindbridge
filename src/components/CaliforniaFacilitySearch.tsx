@@ -93,6 +93,7 @@ export function CaliforniaFacilitySearch() {
   const [browseCity, setBrowseCity] = useState("")
   const [locating, setLocating] = useState(false)
   const [locationMessage, setLocationMessage] = useState("")
+  const [preciseRetry, setPreciseRetry] = useState(false)
   const locationRequest = useRef(0)
   const [laSearch, setLaSearch] = useState<LaSearchState | null>(null)
   const laAbort = useRef<AbortController | null>(null)
@@ -101,6 +102,7 @@ export function CaliforniaFacilitySearch() {
     locationRequest.current++
     setLocating(false)
     setLocationMessage("")
+    setPreciseRetry(false)
   }
   const useCurrentLocation = () => {
     if (!navigator.geolocation) {
@@ -120,10 +122,11 @@ export function CaliforniaFacilitySearch() {
       } catch {
         if (request !== locationRequest.current) return
         setLocating(false)
-        setLocationMessage("Location is unavailable. Choose your county manually.")
+        setLocationMessage("County boundary data could not load. Try again, or choose your county manually.")
         return
       }
       setLocating(false)
+      setPreciseRetry(false)
       if (!county) {
         setLocationMessage("We could not safely suggest a California county. Choose it manually.")
         return
@@ -140,8 +143,13 @@ export function CaliforniaFacilitySearch() {
     }, (failure) => {
       if (request !== locationRequest.current) return
       setLocating(false)
-      setLocationMessage(failure.code === 1 ? "Location permission was not granted. You can choose your county manually." : "Location is unavailable. Choose your county manually.")
-    }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 0 })
+      setPreciseRetry(failure.code === 2 || failure.code === 3)
+      setLocationMessage(failure.code === 1
+        ? "Location permission was not granted. You can choose your county manually."
+        : failure.code === 3
+          ? "Location timed out. Try precise location, or choose your county manually."
+          : "Your device could not determine a location. Check device Location Services, try precise location, or choose your county manually.")
+    }, { enableHighAccuracy: preciseRetry, timeout: 20000, maximumAge: 60000 })
   }
   const runLaSearch = (searchType: SearchType, term: string) => {
     laAbort.current?.abort()
@@ -251,7 +259,7 @@ export function CaliforniaFacilitySearch() {
         <button type="submit" className={btnSecondary}>Find support options</button>
       </form>
       {field === "county" && <div className="mt-3">
-        <button type="button" disabled={locating} className={btnSecondary} onClick={useCurrentLocation}>{locating ? "Finding your county…" : "Use current location"}</button>
+        <button type="button" disabled={locating} className={btnSecondary} onClick={useCurrentLocation}>{locating ? "Finding your county…" : preciseRetry ? "Try precise location" : "Use current location"}</button>
         <p className="mt-1 text-xs text-stone-600">Optional · asks permission first. Coordinates stay in your browser and are not saved. Suggests a county, not nearby clinics.</p>
       </div>}
       {locationMessage && <p role="status" className="mt-2 text-sm text-stone-700">{locationMessage}</p>}
