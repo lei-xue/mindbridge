@@ -6,6 +6,17 @@ const facilities = JSON.parse(readFileSync(new URL('../src/data/california-facil
 const zipCounties = JSON.parse(readFileSync(new URL('../src/data/california-zip-counties.json', import.meta.url)))
 const orangeSnapshot = JSON.parse(readFileSync(new URL('../src/data/orange-provider-sites.json', import.meta.url)))
 const orangeSites = orangeSnapshot.sites
+const countyAccess = JSON.parse(readFileSync(new URL('../src/data/california-county-access.json', import.meta.url)))
+
+test('official county mental health plan access spans every California county and ZIP matches can be ambiguous', () => {
+  assert.equal(countyAccess.countyPlans.length, 58)
+  assert.equal(new Set(countyAccess.countyPlans.map((plan) => plan.name)).size, 58)
+  assert.ok(countyAccess.countyPlans.every((plan) => plan.phone && plan.name))
+  assert.equal(countyAccess.countyPlans.find((plan) => plan.name === 'Colusa')?.phone, '(888) 793-6580')
+  assert.deepEqual(countyAccess.zipCounties['92868'], ['Orange'])
+  assert.deepEqual(countyAccess.zipCounties['90630'], ['Los Angeles', 'Orange'])
+  assert.equal(countyAccess.zipCounties['99999'], undefined)
+})
 
 test('official Orange County MHP sites include real entries without personal provider data', () => {
   assert.ok(orangeSites.length >= 50)
