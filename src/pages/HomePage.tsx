@@ -4,6 +4,7 @@ import { CaliforniaFacilitySearch } from "../components/CaliforniaFacilitySearch
 import { CrisisResourceCard } from "../components/CrisisResourceCard"
 import { FilterBar } from "../components/FilterBar"
 import { ResourceCard } from "../components/ResourceCard"
+import { GentleSprout } from "../components/GentleSprout"
 import {
   CRISIS_ENTRY_IDS,
   filterResources,
@@ -65,12 +66,16 @@ export function HomePage() {
     <>
       <section className="border-b border-sage-200 bg-sage-50">
         <div className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
-          <h1 className="max-w-2xl text-3xl font-extrabold tracking-tight text-stone-900 sm:text-4xl">
+          <div className="flex max-w-2xl items-center justify-between gap-4">
+          <h1 className="text-3xl font-extrabold tracking-tight text-stone-900 sm:text-4xl">
             You are not alone.
           </h1>
+          <GentleSprout />
+          </div>
           <p className="mt-3 max-w-2xl text-lg text-stone-700 sm:text-xl">
             Find free crisis and support resources, or explore in-person options whose cost and eligibility you must confirm.
           </p>
+          <p className="mt-2 text-sm text-sage-700">Take your time. One small step is enough to begin.</p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a href="tel:988" className={btnCall}>
               Call or text 988 now
@@ -181,8 +186,9 @@ export function HomePage() {
             </div>
           ) : (
             <div className="mt-4 rounded-xl border border-dashed border-sage-300 bg-white p-8 text-center">
+              <div className="mb-2 flex justify-center"><GentleSprout small /></div>
               <p className="text-stone-700">
-                No resources match your filters. Try broadening your search.
+                No matches this time. Try fewer filters, or browse all resources.
               </p>
               <button type="button" onClick={onClear} className={`${btnSecondary} mt-4`}>
                 Clear filters

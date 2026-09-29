@@ -1,0 +1,30 @@
+import { test, expect } from '@playwright/test'
+
+for (const width of [320, 390, 1440]) {
+  test(`gentle sprout stays decorative and preserves crisis access at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 })
+    await page.goto('/')
+    await expect(page.getByText('Take your time. One small step is enough to begin.')).toBeVisible()
+    const sprout = page.locator('main section').first().locator('svg')
+    await expect(sprout).toHaveAttribute('aria-hidden', 'true')
+    await expect(sprout).toHaveAttribute('focusable', 'false')
+    expect(await sprout.evaluate(el => getComputedStyle(el).animationName)).toBe('none')
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false)
+    const crisis = page.getByRole('link', { name: 'Call or text 988 now' })
+    await expect(crisis).toHaveAttribute('href', 'tel:988')
+    expect(await crisis.evaluate(el => el.getBoundingClientRect().bottom < innerHeight)).toBe(true)
+    await page.getByRole('searchbox', { name: 'Search' }).fill('no matching resource')
+    await expect(page.getByText('No matches this time. Try fewer filters, or browse all resources.')).toBeVisible()
+    await page.getByRole('button', { name: 'Clear filters' }).last().click()
+    await expect(page.getByText('Showing 20 of 23 resources')).toBeVisible()
+  })
+}
+
+test('sparse county offers a gentle but accurate next step', async ({ page }) => {
+  await page.goto('/')
+  await page.getByLabel('California county').selectOption('Colusa')
+  await page.getByRole('button', { name: 'Find support options' }).click()
+  await expect(page.getByRole('status')).toContainText('That does not mean no care is available')
+  await expect(page.getByRole('link', { name: 'Call county plan' })).toBeVisible()
+  await expect(page.locator('section[aria-labelledby="local-support-heading"]').getByRole('link', { name: 'Call 211', exact: true })).toBeVisible()
+})
