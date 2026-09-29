@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom"
 import { DATA_LAST_REVIEWED } from "../data/meta"
 import { focusRing } from "../lib/ui"
+import { GentleSprout } from "./GentleSprout"
 
 export function Footer() {
   return (
     <footer className="bg-sage-800 text-sage-100">
       <div className="mx-auto max-w-5xl space-y-2 px-4 py-8 text-sm">
-        <p className="font-extrabold text-white">MindBridge — Find mental health help, fast.</p>
+        <div className="flex items-center gap-3"><GentleSprout small pose="bloom" /><p className="font-extrabold text-white">MindBridge — Find mental health help, fast.</p></div>
         <p>
           In crisis?{" "}
           <a

@@ -5,6 +5,7 @@ import { CrisisResourceCard } from "../components/CrisisResourceCard"
 import { FilterBar } from "../components/FilterBar"
 import { ResourceCard } from "../components/ResourceCard"
 import { GentleSprout } from "../components/GentleSprout"
+import { SproutSpeech } from "../components/SproutSpeech"
 import {
   CRISIS_ENTRY_IDS,
   filterResources,
@@ -66,12 +67,11 @@ export function HomePage() {
     <>
       <section className="border-b border-sage-200 bg-sage-50">
         <div className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
-          <div className="flex max-w-2xl items-center justify-between gap-4">
+          <SproutSpeech pose="wave">
           <h1 className="text-3xl font-extrabold tracking-tight text-stone-900 sm:text-4xl">
             You are not alone.
           </h1>
-          <GentleSprout />
-          </div>
+          </SproutSpeech>
           <p className="mt-3 max-w-2xl text-lg text-stone-700 sm:text-xl">
             Find free crisis and support resources, or explore in-person options whose cost and eligibility you must confirm.
           </p>
@@ -134,9 +134,11 @@ export function HomePage() {
 
       <section aria-labelledby="local-support-heading" className="border-b border-sage-200 bg-white">
         <div className="mx-auto max-w-5xl px-4 py-8 sm:py-10">
+          <SproutSpeech pose="hug" small>
           <h2 id="local-support-heading" tabIndex={-1} className={`scroll-mt-16 rounded text-xl font-bold text-stone-900 ${focusRing} sm:text-2xl`}>
             Looking for in-person support?
           </h2>
+          </SproutSpeech>
           <p className="mt-2 max-w-3xl text-stone-700">
             Choose a county for its Medi-Cal mental-health contact and available listings. Coverage is incomplete.
           </p>
@@ -161,6 +163,7 @@ export function HomePage() {
 
       <section id="directory" aria-labelledby="directory-heading" className="scroll-mt-16">
         <div className="mx-auto max-w-5xl px-4 py-10">
+          <SproutSpeech pose="read" small>
           <h2
             id="directory-heading"
             tabIndex={-1}
@@ -168,6 +171,7 @@ export function HomePage() {
           >
             Browse resources
           </h2>
+          </SproutSpeech>
           <p className="mt-1 text-stone-700">
             Filter by who you are, what you're going through, or the kind of support you need.
           </p>
@@ -186,7 +190,7 @@ export function HomePage() {
             </div>
           ) : (
             <div className="mt-4 rounded-xl border border-dashed border-sage-300 bg-white p-8 text-center">
-              <div className="mb-2 flex justify-center"><GentleSprout small /></div>
+              <div className="mb-2 flex justify-center"><GentleSprout small pose="hug" /></div>
               <p className="text-stone-700">
                 No matches this time. Try fewer filters, or browse all resources.
               </p>
