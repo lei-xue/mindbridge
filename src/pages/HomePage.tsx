@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link, useSearchParams } from "react-router-dom"
+import { CaliforniaFacilitySearch } from "../components/CaliforniaFacilitySearch"
 import { CrisisResourceCard } from "../components/CrisisResourceCard"
 import { FilterBar } from "../components/FilterBar"
 import { LaCountyDirectorySearch } from "../components/LaCountyDirectorySearch"
@@ -113,10 +114,11 @@ export function HomePage() {
             Looking for in-person support?
           </h2>
           <p className="mt-2 max-w-3xl text-stone-700">
-            Search LA County DMH&apos;s provider directory below by city or ZIP. Outside Los Angeles
-            County, use your local 211 directory or call 211. These directory listings are not
-            independently verified by MindBridge; confirm service, eligibility, and availability directly.
+            For Los Angeles County, search the live County DMH directory. Elsewhere in California,
+            browse the limited statewide licensed-facility snapshot below, or use your local 211 directory.
+            Listings are not independently verified by MindBridge; confirm services, eligibility, and availability directly.
           </p>
+          <CaliforniaFacilitySearch />
           <LaCountyDirectorySearch />
           <div className="mt-4 flex flex-wrap gap-3">
             <a href="tel:211" className={btnCall}>
