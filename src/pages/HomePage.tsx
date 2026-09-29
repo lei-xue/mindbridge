@@ -114,8 +114,9 @@ export function HomePage() {
             Looking for in-person support?
           </h2>
           <p className="mt-2 max-w-3xl text-stone-700">
-            For Los Angeles County, search the live County DMH directory. Elsewhere in California,
-            browse the limited statewide licensed-facility snapshot below, or use your local 211 directory.
+            For Los Angeles County, search the live County DMH directory. For Orange County, browse
+            official Behavioral Health Plan provider sites in the California search below. Other California
+            areas have only a limited licensed-facility snapshot; you can also use your local 211 directory.
             Listings are not independently verified by MindBridge; confirm services, eligibility, and availability directly.
           </p>
           <CaliforniaFacilitySearch />

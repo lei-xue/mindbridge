@@ -9,7 +9,7 @@ test('California snapshot searches by county without putting location in URL or 
   await page.getByLabel('Search California facilities by').selectOption('county')
   await page.getByLabel('California city, county, or ZIP').fill('Orange')
   await page.getByRole('button', { name: 'Find California facilities' }).click()
-  await expect(page.getByText(/California facility listings for county Orange/)).toBeVisible()
+  await expect(page.getByText(/statewide licensed-facility listings for county Orange/)).toBeVisible()
   await expect(page.getByText(/ALISO RIDGE BEHAVIORAL HEALTH, LLC/i)).toBeVisible()
   expect(page.url()).not.toContain('Orange')
   expect(requests).toEqual([])

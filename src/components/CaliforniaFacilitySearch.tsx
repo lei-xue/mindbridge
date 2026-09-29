@@ -107,7 +107,7 @@ export function CaliforniaFacilitySearch() {
       <p className="mt-3 text-xs text-stone-600">The location you type is filtered in your browser; MindBridge does not send it to a search API or put it in the page URL. Facility information is a snapshot, not real-time availability.</p>
       {error && <p role="alert" className="mt-3 text-sm font-semibold text-red-800">{error}</p>}
       {searched && <div className="mt-5" aria-live="polite">
-        <h4 className="font-semibold text-stone-900">{matches.length} California facility listings for {searched.field} {searched.value}</h4>
+        <h4 className="font-semibold text-stone-900">{matches.length} statewide licensed-facility listings for {searched.field} {searched.value}</h4>
         {matches.length ? <div className="mt-3 grid gap-3 lg:grid-cols-2">{matches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div> : <p className="mt-2 text-sm text-stone-700">No listed facilities in that exact {searched.field === "zip" ? "ZIP" : searched.field} in this state-licensing snapshot. This does not mean there is no care nearby. Try searching by city or county, or use your local 211 directory.</p>}
         {orangeMatches.length > 0 && (
           <section aria-label="Orange County Behavioral Health Plan sites" className="mt-4 rounded-lg border border-teal-300 bg-white p-4">
