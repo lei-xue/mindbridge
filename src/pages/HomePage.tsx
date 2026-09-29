@@ -66,17 +66,17 @@ export function HomePage() {
   return (
     <>
       <section className="border-b border-sage-200 bg-sage-50">
-        <div className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
-          <SproutSpeech pose="wave">
+        <div className="mx-auto max-w-5xl px-4 py-12 text-center sm:py-16">
+          <SproutSpeech pose="wave" hero>
           <h1 className="text-3xl font-extrabold tracking-tight text-stone-900 sm:text-4xl">
             You are not alone.
           </h1>
-          </SproutSpeech>
-          <p className="mt-3 max-w-2xl text-lg text-stone-700 sm:text-xl">
+          <p className="mt-3 text-lg text-stone-700 sm:text-xl">
             Find free crisis and support resources, or explore in-person options whose cost and eligibility you must confirm.
           </p>
+          </SproutSpeech>
           <p className="mt-2 text-sm text-sage-700">Take your time. One small step is enough to begin.</p>
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
             <a href="tel:988" className={btnCall}>
               Call or text 988 now
             </a>

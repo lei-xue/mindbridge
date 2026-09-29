@@ -1,9 +1,9 @@
 // A quiet decorative family, never an assistant or a clinical promise.
 export type SproutPose = "hello" | "wave" | "hug" | "read" | "bloom"
-export function GentleSprout({ small = false, pose = "hello" }: { small?: boolean; pose?: SproutPose }) {
+export function GentleSprout({ small = false, pose = "hello", className = "" }: { small?: boolean; pose?: SproutPose; className?: string }) {
   const pot = pose === "read" ? "#e4eaf1" : pose === "bloom" ? "#f1e2e8" : "#f4e5d7"
   return (
-    <svg aria-hidden="true" focusable="false" data-sprout={pose} viewBox="0 0 96 112" className={`${small ? "h-14 w-12" : "h-24 w-20"} shrink-0`}>
+    <svg aria-hidden="true" focusable="false" data-sprout={pose} viewBox="0 0 96 112" className={`${small ? "h-14 w-12" : "h-24 w-20"} shrink-0 ${className}`}>
       <ellipse cx="48" cy="103" rx="28" ry="5" fill="#e6ede6" />
       <path d="M48 65V37" fill="none" stroke="#506a56" strokeWidth="4" strokeLinecap="round" />
       <path d="M47 49C27 50 18 39 21 24C38 23 49 31 47 49Z" fill="#a9bfab" stroke="#506a56" strokeWidth="2" />
