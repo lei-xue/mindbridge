@@ -4,6 +4,17 @@ import { readFileSync } from 'node:fs'
 
 const facilities = JSON.parse(readFileSync(new URL('../src/data/california-facilities.json', import.meta.url)))
 const zipCounties = JSON.parse(readFileSync(new URL('../src/data/california-zip-counties.json', import.meta.url)))
+const orangeSnapshot = JSON.parse(readFileSync(new URL('../src/data/orange-provider-sites.json', import.meta.url)))
+const orangeSites = orangeSnapshot.sites
+
+test('official Orange County MHP sites include real entries for ZIP 92706 without personal provider data', () => {
+  assert.ok(orangeSites.length >= 50)
+  assert.equal(new Set(orangeSites.map((site) => site.id)).size, orangeSites.length)
+  const sites = orangeSites.filter((site) => site.zip === '92706')
+  assert.equal(sites.length, 2)
+  assert.ok(sites.every((site) => site.city === 'Santa Ana'))
+  assert.ok(orangeSites.every((site) => !('providers' in site) && site.name && site.zip && site.city))
+})
 
 test('ZIP fallback is based on unambiguous official California facility counties', () => {
   assert.equal(zipCounties['92706'], 'Orange')

@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react"
 import facilitiesJson from "../data/california-facilities.json"
+import orangeSnapshot from "../data/orange-provider-sites.json"
 import zipCounties from "../data/california-zip-counties.json"
 import { btnSecondary, focusRing } from "../lib/ui"
 
@@ -35,6 +36,17 @@ function FacilityCard({ facility }: { facility: Facility }) {
   )
 }
 
+function OrangeSiteCard({ site }: { site: (typeof orangeSnapshot.sites)[number] }) {
+  return (
+    <article className="rounded-xl border border-sage-200 bg-white p-5 shadow-sm">
+      <h5 className="font-bold text-stone-900">{site.name}</h5>
+      <p className="mt-1 text-sm text-stone-700">{site.category}</p>
+      <p className="mt-2 text-sm text-stone-700">{site.address} · {site.city}, CA {site.zip}</p>
+      {site.phone && <p className="mt-2 text-sm text-stone-700">Listed phone: {site.phone}</p>}
+    </article>
+  )
+}
+
 export function CaliforniaFacilitySearch() {
   const [field, setField] = useState<SearchField>("zip")
   const [value, setValue] = useState("")
@@ -63,12 +75,21 @@ export function CaliforniaFacilitySearch() {
   const countyMatches = matchedCounty && matches.length === 0
     ? facilitiesJson.filter((facility) => facility.county === matchedCounty)
     : []
+  const orangeMatches = searched && (
+    (searched.field === "zip" && matchedCounty === "Orange") ||
+    searched.field === "city" ||
+    (searched.field === "county" && /^orange(?: county)?$/i.test(searched.value))
+  ) ? orangeSnapshot.sites.filter((site) => {
+    const location = searched.field === "county" ? "Orange" : site[searched.field]
+    const query = searched.field === "county" ? "Orange" : searched.value
+    return location.toLocaleLowerCase("en-US") === query.toLocaleLowerCase("en-US")
+  }) : []
 
   return (
     <div className="mt-5 rounded-xl border border-sage-200 bg-sage-50 p-4 sm:p-5">
       <h3 className="text-lg font-bold text-stone-900">Search California licensed mental-health facilities</h3>
       <p className="mt-1 text-sm text-stone-700">
-        A limited statewide snapshot of psychiatric hospitals, psychiatric health facilities, mental health rehabilitation centers, and psychology clinics. These are <strong>not</strong> a complete directory of mental-health care, free services, or walk-in options.
+        A limited statewide snapshot of psychiatric hospitals, psychiatric health facilities, mental health rehabilitation centers, and psychology clinics, plus Orange County Behavioral Health Plan provider sites. These are <strong>not</strong> a complete directory of mental-health care, free services, or walk-in options.
       </p>
       <form onSubmit={onSubmit} className="mt-4 grid gap-3 sm:grid-cols-[minmax(0,12rem)_minmax(0,1fr)_auto] sm:items-end">
         <div>
@@ -87,15 +108,23 @@ export function CaliforniaFacilitySearch() {
       {error && <p role="alert" className="mt-3 text-sm font-semibold text-red-800">{error}</p>}
       {searched && <div className="mt-5" aria-live="polite">
         <h4 className="font-semibold text-stone-900">{matches.length} California facility listings for {searched.field} {searched.value}</h4>
-        {matches.length ? <div className="mt-3 grid gap-3 lg:grid-cols-2">{matches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div> : <p className="mt-2 text-sm text-stone-700">No listed facilities in that exact {searched.field === "zip" ? "ZIP" : searched.field}. This does not mean there is no care nearby. Try searching by city or county, or use your local 211 directory.</p>}
+        {matches.length ? <div className="mt-3 grid gap-3 lg:grid-cols-2">{matches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div> : <p className="mt-2 text-sm text-stone-700">No listed facilities in that exact {searched.field === "zip" ? "ZIP" : searched.field} in this state-licensing snapshot. This does not mean there is no care nearby. Try searching by city or county, or use your local 211 directory.</p>}
+        {orangeMatches.length > 0 && (
+          <section aria-label="Orange County Behavioral Health Plan sites" className="mt-4 rounded-lg border border-teal-300 bg-white p-4">
+            <h5 className="font-semibold text-stone-900">{orangeMatches.length} Orange County BHP provider sites for {searched.field === "zip" ? "ZIP" : searched.field} {searched.value}</h5>
+            <p className="mt-1 text-xs text-stone-600">Official Orange County Medi-Cal Behavioral Health Plan site data, retrieved {orangeSnapshot.retrievedAt}; this snapshot is not live availability, an appointment guarantee, or a list of free services. Confirm eligibility and hours directly.</p>
+            <div className="mt-3 grid gap-3 lg:grid-cols-2">{orangeMatches.slice(0, 20).map((site) => <OrangeSiteCard key={site.id} site={site} />)}</div>
+            {orangeMatches.length > 20 && <p className="mt-2 text-sm text-stone-700">Showing the first 20 sites. Use the full official directory for the rest.</p>}
+          </section>
+        )}
         {matchedCounty && matches.length === 0 && (
           <div className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
             <p className="font-semibold text-stone-900">ZIP maps to {matchedCounty} County in the state healthcare-facility snapshot.</p>
             <p className="mt-1 text-sm text-stone-700">{countyMatches.length} other licensed facility listings elsewhere in {matchedCounty} County. These are not necessarily close to your ZIP, available, or walk-in services.</p>
-            {matchedCounty === "Orange" && <p className="mt-2 text-sm text-stone-700">For a broader provider search, use the official <a href="https://bhpproviderdirectory.ochca.com/" target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>Orange County Behavioral Health Plan provider directory</a>.</p>}
             {countyMatches.length > 0 && <div className="mt-3 grid gap-3 lg:grid-cols-2">{countyMatches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div>}
           </div>
         )}
+        {(matchedCounty === "Orange" || orangeMatches.length > 0) && <p className="mt-4 text-sm text-stone-700">For the full, more frequently updated list, use the official <a href="https://bhpproviderdirectory.ochca.com/" target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>Orange County Behavioral Health Plan provider directory</a>.</p>}
         <p className="mt-4 text-xs text-stone-600">Confirm service type, who is eligible, cost, and whether appointments or referrals are required directly with the facility. A listed license is not a recommendation by MindBridge.</p>
       </div>}
     </div>

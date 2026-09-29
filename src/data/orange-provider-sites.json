@@ -1,0 +1,896 @@
+{
+  "retrievedAt": "2026-09-29",
+  "sites": [
+    {
+      "id": "oc-3cd3034b98288a16",
+      "name": "CYS Child Guidance Center Buena Park",
+      "category": "Community/Behavioral Health",
+      "address": "6301 BEACH BLVD",
+      "city": "Buena Park",
+      "zip": "90621",
+      "phone": "(714) 736-0231"
+    },
+    {
+      "id": "oc-a2adb00722f309d7",
+      "name": "AMHS Telecare Home First North",
+      "category": "Clinic/Center Mental Health (Including Community Mental Health Center)",
+      "address": "20 CENTERPOINTE DR",
+      "city": "La Palma",
+      "zip": "90623",
+      "phone": "657-325-8313"
+    },
+    {
+      "id": "oc-069592972374902b",
+      "name": "ASANA INTEGRATED MEDICAL GROUP PC",
+      "category": "Psychiatry & Neurology Psychiatry",
+      "address": "6200 CANOGA AVE",
+      "city": "Woodland Hills",
+      "zip": "91367",
+      "phone": "818-532-1297"
+    },
+    {
+      "id": "oc-44f7b77b69039ec2",
+      "name": "Progeny Psychiatric Group - Irvine",
+      "category": "Psychiatry & Neurology Psychiatry",
+      "address": "17782 COWAN",
+      "city": "Irvine",
+      "zip": "92614",
+      "phone": "949-722-7118"
+    },
+    {
+      "id": "oc-5d322127c8fcf417",
+      "name": "AMHS Centralized Intake South",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "2801 BRISTOL ST",
+      "city": "Costa Mesa",
+      "zip": "92626",
+      "phone": "(714) 972-3700"
+    },
+    {
+      "id": "oc-0320b739f38934a3",
+      "name": "AMHS Mental Health Association Costa Mesa Recovery Center",
+      "category": "Counselor Mental Health",
+      "address": "3540 HOWARD WAY",
+      "city": "Costa Mesa",
+      "zip": "92626",
+      "phone": "(949)646-9227"
+    },
+    {
+      "id": "oc-d982b43aa25cc034",
+      "name": "AMHS Telecare TAO South FSP",
+      "category": "Clinic/Center Mental Health (Including Community Mental Health Center)",
+      "address": "275 BAKER ST",
+      "city": "Costa Mesa",
+      "zip": "92626",
+      "phone": "(714) 361-6760"
+    },
+    {
+      "id": "oc-f3c4551fe02979dd",
+      "name": "CYS Clarvida Costa Mesa",
+      "category": "Community/Behavioral Health",
+      "address": "940 S COAST DR",
+      "city": "Costa Mesa",
+      "zip": "92626",
+      "phone": "714-767-3229"
+    },
+    {
+      "id": "oc-8bde3828132ca1b1",
+      "name": "CYS Costa Mesa Region",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "2801 BRISTOL ST",
+      "city": "Costa Mesa",
+      "zip": "92626",
+      "phone": "(714) 850-8408"
+    },
+    {
+      "id": "oc-48cdbb4a6b4acc29",
+      "name": "PACIFIC NEUROPSYCHIATRIC SPECIALISTS INC.",
+      "category": "Psychiatry & Neurology Psychiatry",
+      "address": "3151 AIRWAY AVE",
+      "city": "Costa Mesa",
+      "zip": "92626",
+      "phone": "(714) 545-5550"
+    },
+    {
+      "id": "oc-31216517629a29b1",
+      "name": "AMHS College Hospital Crisis Stabilization Unit",
+      "category": "Clinic/Center",
+      "address": "301 VICTORIA ST",
+      "city": "Costa Mesa",
+      "zip": "92627",
+      "phone": "949-642-2734"
+    },
+    {
+      "id": "oc-92c8375e9488652a",
+      "name": "MAHTAB YOUSEFI",
+      "category": "Psychiatry & Neurology Psychiatry",
+      "address": "301 VICTORIA ST",
+      "city": "Costa Mesa",
+      "zip": "92627",
+      "phone": "(949) 642-2734"
+    },
+    {
+      "id": "oc-75e410fc684a78ab",
+      "name": "CYS Seneca OC South",
+      "category": "Community/Behavioral Health",
+      "address": "22942 EL TORO RD",
+      "city": "Lake Forest",
+      "zip": "92630",
+      "phone": "(949) 317-1010"
+    },
+    {
+      "id": "oc-c5d35bdb2bf06dab",
+      "name": "AMHS MHA Laguna Hills Outpatient Services",
+      "category": "Counselor Mental Health",
+      "address": "23291 MILL CREEK RD",
+      "city": "Laguna Hills",
+      "zip": "92653",
+      "phone": "(949) 458-2715"
+    },
+    {
+      "id": "oc-b0a64018832025b6",
+      "name": "CYS South Region",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "23046 AVENIDA DE LA CARLOTA",
+      "city": "Laguna Hills",
+      "zip": "92653",
+      "phone": "(949) 643-6900"
+    },
+    {
+      "id": "oc-e073ab60eaf6f84f",
+      "name": "AMHS South Clinic",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "27141 ALISO CREEK RD",
+      "city": "Aliso Viejo",
+      "zip": "92656",
+      "phone": "(949) 643-6930"
+    },
+    {
+      "id": "oc-2ed000b0805c60e4",
+      "name": "CYS Child Guidance Center South",
+      "category": "Community/Behavioral Health",
+      "address": "3551 CAMINO MIRA COSTA",
+      "city": "San Clemente",
+      "zip": "92672",
+      "phone": "(949) 272-4444"
+    },
+    {
+      "id": "oc-d4480b2c549e677a",
+      "name": "AMHS ICM PAU Westminster",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "14140 BEACH BLVD",
+      "city": "Westminster",
+      "zip": "92683",
+      "phone": "(714) 896-7566"
+    },
+    {
+      "id": "oc-4c629c2d53d1536b",
+      "name": "AMHS Intensive Care Management Westminster",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "14140 BEACH BLVD",
+      "city": "Westminster",
+      "zip": "92683",
+      "phone": "(714) 896-7566"
+    },
+    {
+      "id": "oc-b1b333302b08d6f2",
+      "name": "AMHS PACT TAY Westminster",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "14140 BEACH BLVD",
+      "city": "Westminster",
+      "zip": "92683",
+      "phone": "(714) 896-7566"
+    },
+    {
+      "id": "oc-8868052491eb593f",
+      "name": "AMHS PAU Westminster",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "14140 BEACH BLVD",
+      "city": "Westminster",
+      "zip": "92683",
+      "phone": "(714) 896-7566"
+    },
+    {
+      "id": "oc-2eb9948316480763",
+      "name": "AMHS Westminster Clinic",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "14140 BEACH BLVD",
+      "city": "Westminster",
+      "zip": "92683",
+      "phone": "(714) 896-7566"
+    },
+    {
+      "id": "oc-a6bd1525380760fa",
+      "name": "CYS West Region",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "14140 BEACH BLVD",
+      "city": "Westminster",
+      "zip": "92683",
+      "phone": "(714) 896-7556"
+    },
+    {
+      "id": "oc-c806711d44791d43",
+      "name": "AMHS Intensive Care Management Mission Viejo",
+      "category": "Clinic/Center Rehabilitation, Substance Use Disorder,Clinic/Center Mental Health (Including Community Mental Health Center)",
+      "address": "23228 MADERO",
+      "city": "Mission Viejo",
+      "zip": "92691",
+      "phone": "(949) 454-3940"
+    },
+    {
+      "id": "oc-d253f157abcc74ae",
+      "name": "AMHS PACT TAY South",
+      "category": "Clinic/Center Rehabilitation, Substance Use Disorder,Clinic/Center Mental Health (Including Community Mental Health Center)",
+      "address": "23228 MADERO",
+      "city": "Mission Viejo",
+      "zip": "92691",
+      "phone": "(949) 454-3940"
+    },
+    {
+      "id": "oc-b72e70866e64ffac",
+      "name": "AMHS Telecare Treehouse Crisis Residential South",
+      "category": "Psychiatric Residential Treatment Facility",
+      "address": "25402 PACIFICA AVE",
+      "city": "Mission Viejo",
+      "zip": "92691",
+      "phone": "(949) 238-2400"
+    },
+    {
+      "id": "oc-4cd8214b5f273f0e",
+      "name": "CYS Western Youth Services Mission Viejo",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "26137 LA PAZ RD",
+      "city": "Mission Viejo",
+      "zip": "92691",
+      "phone": "(949) 595-8610"
+    },
+    {
+      "id": "oc-d0e9d10728ca43cd",
+      "name": "CYS Western Youth Services Mission Viejo MHSA",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "26137 LA PAZ RD",
+      "city": "Mission Viejo",
+      "zip": "92691",
+      "phone": "(949) 595-8610"
+    },
+    {
+      "id": "oc-0f395121a82092ff",
+      "name": "AMHS FORENSICS CENTRAL",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "200 W SANTA ANA BLVD",
+      "city": "Santa Ana",
+      "zip": "92701",
+      "phone": "(714) 480-6767"
+    },
+    {
+      "id": "oc-ca8850f53b4138b8",
+      "name": "AMHS Intensive Care Management Santa Ana",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "200 W SANTA ANA BLVD",
+      "city": "Santa Ana",
+      "zip": "92701",
+      "phone": "714-480-6767"
+    },
+    {
+      "id": "oc-a8376811dda21c74",
+      "name": "AMHS PACT TAY Santa Ana",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "200 W SANTA ANA BLVD",
+      "city": "Santa Ana",
+      "zip": "92701",
+      "phone": "(714) 480-6767"
+    },
+    {
+      "id": "oc-6ffd9daff227d357",
+      "name": "AMHS Santa Ana Clinic",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "200 W SANTA ANA BLVD",
+      "city": "Santa Ana",
+      "zip": "92701",
+      "phone": "(714) 480-6767"
+    },
+    {
+      "id": "oc-c358d8ea6cf0412f",
+      "name": "AMHS Telecare AOT FSP",
+      "category": "Clinic/Center Mental Health (Including Community Mental Health Center)",
+      "address": "615 W CIVIC CENTER DR",
+      "city": "Santa Ana",
+      "zip": "92701",
+      "phone": "(714) 795-3444"
+    },
+    {
+      "id": "oc-1b2e5fd05481a434",
+      "name": "CYS Child Guidance Center East",
+      "category": "Community/Behavioral Health",
+      "address": "600 W SANTA ANA BLVD",
+      "city": "Santa Ana",
+      "zip": "92701",
+      "phone": "(714) 953-4455"
+    },
+    {
+      "id": "oc-d5fb299689a4fdf2",
+      "name": "CYS Seneca OC OP",
+      "category": "Community/Behavioral Health",
+      "address": "1801 PARK COURT PL",
+      "city": "Santa Ana",
+      "zip": "92701",
+      "phone": "(714) 957-1004"
+    },
+    {
+      "id": "oc-ffa7fa002e123243",
+      "name": "CYS Western Youth Services EAST MHSA",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "200 W SANTA ANA BLVD",
+      "city": "Santa Ana",
+      "zip": "92701",
+      "phone": "(714) 704-5900"
+    },
+    {
+      "id": "oc-7f029dbfb700f613",
+      "name": "CYS Western Youth Services East Region",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "200 W SANTA ANA BLVD",
+      "city": "Santa Ana",
+      "zip": "92701",
+      "phone": "(714) 704-5900"
+    },
+    {
+      "id": "oc-d23807f53a20d436",
+      "name": "NEW FOUNDATION MEDICAL INC",
+      "category": "Clinic/Center Multi-Specialty",
+      "address": "520 N MAIN ST",
+      "city": "Santa Ana",
+      "zip": "92701",
+      "phone": "(714) 543-5609"
+    },
+    {
+      "id": "oc-eed5cfa7a7d9c123",
+      "name": "CYS New Alternatives",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "1202 W CIVIC CENTER DR",
+      "city": "Santa Ana",
+      "zip": "92703",
+      "phone": "(714) 245-0045"
+    },
+    {
+      "id": "oc-12490faa5064322d",
+      "name": "CYS Western Youth Services Metro East",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "3631 S HARBOR BLVD",
+      "city": "Santa Ana",
+      "zip": "92704",
+      "phone": "(949) 855-1556"
+    },
+    {
+      "id": "oc-c66412cb68c01d7b",
+      "name": "AMHS Clarvida Camino Nuevo",
+      "category": "Community/Behavioral Health",
+      "address": "2001 E 4TH ST",
+      "city": "Santa Ana",
+      "zip": "92705",
+      "phone": "(714)824-8144"
+    },
+    {
+      "id": "oc-f098915cddcbdfae",
+      "name": "AMHS LPS",
+      "category": "Case Management",
+      "address": "1300 S GRAND AVE",
+      "city": "Santa Ana",
+      "zip": "92705",
+      "phone": "(714) 567-7688"
+    },
+    {
+      "id": "oc-c51047fec2abf122",
+      "name": "CYS Children’s In Home Crisis Stabilization",
+      "category": "Community/Behavioral Health",
+      "address": "1932 E DEERE AVE",
+      "city": "Santa Ana",
+      "zip": "92705",
+      "phone": "(714) 543-4333"
+    },
+    {
+      "id": "oc-9e3d398f14f015c1",
+      "name": "CYS Clarvida STAY Process FSP",
+      "category": "Community/Behavioral Health",
+      "address": "1401 N TUSTIN AVE",
+      "city": "Santa Ana",
+      "zip": "92705",
+      "phone": "(714) 221-6400"
+    },
+    {
+      "id": "oc-0c935b5d4a14a951",
+      "name": "CYS Olive Crest Wraparound",
+      "category": "Voluntary or Charitable,Community/Behavioral Health",
+      "address": "2130 E 4TH ST",
+      "city": "Santa Ana",
+      "zip": "92705",
+      "phone": "(714) 543-5437"
+    },
+    {
+      "id": "oc-d919f24e56c8ad0d",
+      "name": "CYS YRC Central (Youth Reporting Center)",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "1700 E SAINT ANDREW PL",
+      "city": "Santa Ana",
+      "zip": "92705",
+      "phone": "(714) 667-7610"
+    },
+    {
+      "id": "oc-d2c6e93e38106c38",
+      "name": "AMHS STEPs Telecare FSP",
+      "category": "Clinic/Center Mental Health (Including Community Mental Health Center)",
+      "address": "2100 N BROADWAY",
+      "city": "Santa Ana",
+      "zip": "92706",
+      "phone": "(714) 245-6881"
+    },
+    {
+      "id": "oc-74d916c39ea2efb1",
+      "name": "AMHS Telecare Comprehensive FACT FSP",
+      "category": "Clinic/Center Mental Health (Including Community Mental Health Center)",
+      "address": "1910 N BUSH ST",
+      "city": "Santa Ana",
+      "zip": "92706",
+      "phone": "(714) 361-7950"
+    },
+    {
+      "id": "oc-226c56741197f951",
+      "name": "AMHS Crisis Stabilization Unit",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "1030 W WARNER AVE",
+      "city": "Santa Ana",
+      "zip": "92707",
+      "phone": "714-834-6900"
+    },
+    {
+      "id": "oc-383de1ba851cfd15",
+      "name": "CYS Western Youth Services West",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "18350 MOUNT LANGLEY ST",
+      "city": "Fountain Valley",
+      "zip": "92708",
+      "phone": "(714) 378-2620"
+    },
+    {
+      "id": "oc-1a242975d8f61037",
+      "name": "CYS Western Youth Services West MHSA",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "18350 MOUNT LANGLEY ST",
+      "city": "Fountain Valley",
+      "zip": "92708",
+      "phone": "(714) 378-2620"
+    },
+    {
+      "id": "oc-0d6a9a08aebe8c87",
+      "name": "CYS Clarvida Tustin",
+      "category": "Community/Behavioral Health",
+      "address": "18302 IRVINE BLVD.",
+      "city": "Tustin",
+      "zip": "92780",
+      "phone": "714-661-5390"
+    },
+    {
+      "id": "oc-dfbd0f7a0567d1af",
+      "name": "CYS WAYMAKERS CHILDREN'S SPECIALIZED SERVICES",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "14632 YORBA ST",
+      "city": "Tustin",
+      "zip": "92780",
+      "phone": "(714) 714-0780"
+    },
+    {
+      "id": "oc-b4c2edd96010d176",
+      "name": "AMHS Clarvida Anaheim Recovery Center",
+      "category": "Community/Behavioral Health",
+      "address": "511 N BROOKHURST ST",
+      "city": "Anaheim",
+      "zip": "92801",
+      "phone": "(714)780-0750"
+    },
+    {
+      "id": "oc-12bddff77b68cd3f",
+      "name": "AMHS Telecare TAO FSP",
+      "category": "Clinic/Center Mental Health (Including Community Mental Health Center)",
+      "address": "2531 W WOODLAND DR",
+      "city": "Anaheim",
+      "zip": "92801",
+      "phone": "(714) 226-9888"
+    },
+    {
+      "id": "oc-061e36317c9b1743",
+      "name": "CYS YRC North (Youth Reporting Center)",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "1920 W CORPORATE WAY",
+      "city": "Anaheim",
+      "zip": "92801",
+      "phone": "(714) 687-6705"
+    },
+    {
+      "id": "oc-7562e03f2977d625",
+      "name": "AMHS Clarvida OK AB109 FSP",
+      "category": "Community/Behavioral Health",
+      "address": "631 S BROOKHURST ST",
+      "city": "Anaheim",
+      "zip": "92804",
+      "phone": "(714) 620-8131"
+    },
+    {
+      "id": "oc-f2f285200279dfc3",
+      "name": "AMHS Clarvida OK FSP",
+      "category": "Community/Behavioral Health",
+      "address": "631 S BROOKHURST ST",
+      "city": "Anaheim",
+      "zip": "92804",
+      "phone": "714-620-8131"
+    },
+    {
+      "id": "oc-fdf7bfb9b1db6644",
+      "name": "AMHS MHA West Region Outpatient & Recovery Services",
+      "category": "Counselor Mental Health",
+      "address": "3055 WEST ORANGE AVE.",
+      "city": "Anaheim",
+      "zip": "92804",
+      "phone": "(714) 638-8277"
+    },
+    {
+      "id": "oc-03626ebd8561c83b",
+      "name": "AMHS Telecare Treehouse Crisis Residential North",
+      "category": "Psychiatric Residential Treatment Facility",
+      "address": "2026 W BEACON AVE",
+      "city": "Anaheim",
+      "zip": "92804",
+      "phone": "(657) 276-7030"
+    },
+    {
+      "id": "oc-560a93533cb241c0",
+      "name": "ANAHEIM COMMUNITY HOSPITAL, LLC",
+      "category": "General Acute Care Hospital",
+      "address": "3350 W BALL RD",
+      "city": "Anaheim",
+      "zip": "92804",
+      "phone": "714-243-9000"
+    },
+    {
+      "id": "oc-b122f7b3f50912ce",
+      "name": "AMHS Anaheim Clinic",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "222 S HARBOR BLVD",
+      "city": "Anaheim",
+      "zip": "92805",
+      "phone": "(714) 517-6300"
+    },
+    {
+      "id": "oc-0c19926d45b2402d",
+      "name": "AMHS Centralized Intake North",
+      "category": "Clinic/Center Rehabilitation, Substance Use Disorder,Clinic/Center Mental Health (Including Community Mental Health Center)",
+      "address": "303 W LINCOLN AVE",
+      "city": "Anaheim",
+      "zip": "92805",
+      "phone": "(714) 520-7300"
+    },
+    {
+      "id": "oc-d976776d38bba3b2",
+      "name": "AMHS PACT TAY Anaheim",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "222 S HARBOR BLVD",
+      "city": "Anaheim",
+      "zip": "92805",
+      "phone": "(714) 517-6300"
+    },
+    {
+      "id": "oc-cdf362dfc3fbd637",
+      "name": "CYS Clarvida Project RENEW FSP",
+      "category": "Community/Behavioral Health",
+      "address": "1360 S ANAHEIM BLVD",
+      "city": "Anaheim",
+      "zip": "92805",
+      "phone": "(714) 689-1380"
+    },
+    {
+      "id": "oc-07420c6ecae3de50",
+      "name": "CYS Western Youth Services North",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "222 S HARBOR BLVD",
+      "city": "Anaheim",
+      "zip": "92805",
+      "phone": "(714) 871-5646"
+    },
+    {
+      "id": "oc-cab8b24020e11be2",
+      "name": "CYS Western Youth Services North MHSA",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "222 S HARBOR BLVD",
+      "city": "Anaheim",
+      "zip": "92805",
+      "phone": "(714) 871-5646"
+    },
+    {
+      "id": "oc-eb33322405009b1f",
+      "name": "GAIL ROSS",
+      "category": "Psychiatry & Neurology Psychiatry",
+      "address": "1025 S ANAHEIM BLVD",
+      "city": "Anaheim",
+      "zip": "92805",
+      "phone": "(949)6422734"
+    },
+    {
+      "id": "oc-6dba929db54aedf2",
+      "name": "AMHS Intensive Care Management Anaheim",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "222 S HARBOR BLVD",
+      "city": "Anaheim",
+      "zip": "92806",
+      "phone": "(714) 517-6300"
+    },
+    {
+      "id": "oc-0860cd074de0591a",
+      "name": "CYS Seneca OC North",
+      "category": "Community/Behavioral Health",
+      "address": "233 S QUINTANA DR",
+      "city": "Anaheim",
+      "zip": "92807",
+      "phone": "(714) 202-2106"
+    },
+    {
+      "id": "oc-ca0213a97cea7c84",
+      "name": "CYS North Region",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "120 S STATE COLLEGE BLVD",
+      "city": "Brea",
+      "zip": "92821",
+      "phone": "(714) 577-5400"
+    },
+    {
+      "id": "oc-9fd698a5b2365e2f",
+      "name": "CYS Child Guidance Center North",
+      "category": "Community/Behavioral Health",
+      "address": "680 LANGSDORF DR",
+      "city": "Fullerton",
+      "zip": "92831",
+      "phone": "(714) 871-9264"
+    },
+    {
+      "id": "oc-a150a5272b6fa264",
+      "name": "CYS Clarvida Fullerton",
+      "category": "Community/Behavioral Health",
+      "address": "1501 E ORANGETHORPE AVE",
+      "city": "Fullerton",
+      "zip": "92831",
+      "phone": "714-254-8473"
+    },
+    {
+      "id": "oc-8de82aa0a1f6b47e",
+      "name": "AMHS Intensive Care Management Fullerton",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "401 E IMPERIAL HWY",
+      "city": "Fullerton",
+      "zip": "92835",
+      "phone": "(714) 447-7000"
+    },
+    {
+      "id": "oc-c1dbc67d62f4b73d",
+      "name": "AMHS PACT TAY Fullerton",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "401 E IMPERIAL HWY",
+      "city": "Fullerton",
+      "zip": "92835",
+      "phone": "(714) 447-7000"
+    },
+    {
+      "id": "oc-5b96c6603f34c71d",
+      "name": "AMHS Project SHINE-OC FSP",
+      "category": "Clinic/Center Mental Health (Including Community Mental Health Center)",
+      "address": "12966 EUCLID ST",
+      "city": "Garden Grove",
+      "zip": "92840",
+      "phone": "(714)636-9095"
+    },
+    {
+      "id": "oc-00b821cca9172691",
+      "name": "AMHS TAO Central FSP",
+      "category": "Clinic/Center Mental Health (Including Community Mental Health Center)",
+      "address": "12141 BROOKHURST ST",
+      "city": "Garden Grove",
+      "zip": "92840",
+      "phone": "(714) 296-1934"
+    },
+    {
+      "id": "oc-bf42747f19c07e68",
+      "name": "AMHS Telecare Home First Central",
+      "category": "Clinic/Center Mental Health (Including Community Mental Health Center)",
+      "address": "12141 BROOKHURST ST",
+      "city": "Garden Grove",
+      "zip": "92840",
+      "phone": "(657) 261-7140"
+    },
+    {
+      "id": "oc-2fda578f87dc8ab6",
+      "name": "CYS Clarvida Garden Grove",
+      "category": "Community/Behavioral Health",
+      "address": "12966 EUCLID ST",
+      "city": "Garden Grove",
+      "zip": "92840",
+      "phone": "(714) 823-4770"
+    },
+    {
+      "id": "oc-40415c8caa905883",
+      "name": "CYS OC Asian and Pacific Islander Community Alliance",
+      "category": "Voluntary or Charitable",
+      "address": "12912 BROOKHURST ST",
+      "city": "Garden Grove",
+      "zip": "92840",
+      "phone": "714-636-9095"
+    },
+    {
+      "id": "oc-7686ba7aec3e848f",
+      "name": "CYS KCS FSP Project Focus",
+      "category": "Community/Behavioral Health",
+      "address": "13091 GALWAY ST",
+      "city": "Garden Grove",
+      "zip": "92844",
+      "phone": "714-539-4544"
+    },
+    {
+      "id": "oc-ac99d05c033ed27c",
+      "name": "AMHS Coastal Star Crisis Residential",
+      "category": "Community Based Residential Treatment Facility, Mental Illness",
+      "address": "401 S TUSTIN ST",
+      "city": "Orange",
+      "zip": "92866",
+      "phone": "714 289-3936"
+    },
+    {
+      "id": "oc-ecb2ef8e1a46a5d5",
+      "name": "AMHS Clarvida OASIS FSP",
+      "category": "Community/Behavioral Health",
+      "address": "1855 W KATELLA AVE",
+      "city": "Orange",
+      "zip": "92867",
+      "phone": "(714) 399-3480"
+    },
+    {
+      "id": "oc-3d6dbef306d545d1",
+      "name": "ADVANTAGE NEUROPSYCHIATRIC ASSOC",
+      "category": "Psychiatry & Neurology Psychiatry",
+      "address": "1010 W CHAPMAN AVE",
+      "city": "Orange",
+      "zip": "92868",
+      "phone": "(714) 633-4300"
+    },
+    {
+      "id": "oc-8ba33dc25175ba61",
+      "name": "AMHS CAT Orange",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "4000 W METROPOLITAN DR",
+      "city": "Orange",
+      "zip": "92868",
+      "phone": "(866) 830-6011"
+    },
+    {
+      "id": "oc-805c03946f290f75",
+      "name": "AMHS Collaborative Court Central",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "4000 W. METROPOLITAN DRIVE",
+      "city": "Orange",
+      "zip": "92868",
+      "phone": "(714)834-3132"
+    },
+    {
+      "id": "oc-5c9f6239ece618a5",
+      "name": "AMHS Exodus Crisis Residential Program Be Well Orange",
+      "category": "Community/Behavioral Health",
+      "address": "265 S ANITA DR",
+      "city": "Orange",
+      "zip": "92868",
+      "phone": "714 410-3505"
+    },
+    {
+      "id": "oc-c960914bcf54efed",
+      "name": "AMHS Exodus Crisis Stabilization Unit Be Well Orange",
+      "category": "Community/Behavioral Health",
+      "address": "265 S ANITA DR",
+      "city": "Orange",
+      "zip": "92868",
+      "phone": "714-410-3500"
+    },
+    {
+      "id": "oc-86f52a25d7252696",
+      "name": "AMHS ICM Older Adult Services",
+      "category": "Case Management",
+      "address": "4000 W METROPOLITAN DR",
+      "city": "Orange",
+      "zip": "92868",
+      "phone": "(714) 972-3700"
+    },
+    {
+      "id": "oc-188a65500683d432",
+      "name": "AMHS OAS MH Recovery",
+      "category": "Case Management",
+      "address": "4000 W METROPOLITAN DR",
+      "city": "Orange",
+      "zip": "92868",
+      "phone": "(714) 972-3700"
+    },
+    {
+      "id": "oc-2e176ae8b85a6a56",
+      "name": "CYS CAST (Child Abuse Services Team)",
+      "category": "Clinic/Center Adolescent and Children Mental Health,Case Management",
+      "address": "401 THE CITY DRIVE S",
+      "city": "Orange",
+      "zip": "92868",
+      "phone": "(714) 935-7545"
+    },
+    {
+      "id": "oc-2a2741aad703ab66",
+      "name": "CYS CAT",
+      "category": "Clinic/Center Adult Mental Health",
+      "address": "4000 W METROPOLITAN DR",
+      "city": "Orange",
+      "zip": "92868",
+      "phone": "714-834-5610"
+    },
+    {
+      "id": "oc-4cb967df30fc94bb",
+      "name": "CYS CCPU (Continuing Care Placement Unit)",
+      "category": "Clinic/Center Adolescent and Children Mental Health,Case Management",
+      "address": "800 N ECKHOFF ST",
+      "city": "Orange",
+      "zip": "92868",
+      "phone": "(714) 704-6110"
+    },
+    {
+      "id": "oc-b12a86223b40d56d",
+      "name": "CYS CEGU OCFC (Orangewood Children & Family Center)",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "301 THE CITY DRIVE S",
+      "city": "Orange",
+      "zip": "92868",
+      "phone": "(714) 935-6363"
+    },
+    {
+      "id": "oc-88ae1b3a299d50ea",
+      "name": "CYS CHOC Project HEALTH FSP",
+      "category": "Clinic/Center Mental Health (Including Community Mental Health Center)",
+      "address": "1120 W LA VETA AVE",
+      "city": "Orange",
+      "zip": "92868",
+      "phone": "(714) 509-8210"
+    },
+    {
+      "id": "oc-10c52619a44f34a7",
+      "name": "CYS East Region",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "500 CITY PKWY W",
+      "city": "Orange",
+      "zip": "92868",
+      "phone": "(714) 480-6600"
+    },
+    {
+      "id": "oc-9060587077b1e853",
+      "name": "OC PROGRESSIVE RECOVERY INC",
+      "category": "Psychiatry & Neurology Psychiatry",
+      "address": "1100 W STEWART DR",
+      "city": "Orange",
+      "zip": "92868",
+      "phone": "(714) 633-9111"
+    },
+    {
+      "id": "oc-5794f5dedab29b09",
+      "name": "PEI OC Center for Resiliency, Education and Wellness",
+      "category": "Clinic/Center Adolescent and Children Mental Health",
+      "address": "4000 W METROPOLITAN DR",
+      "city": "Orange",
+      "zip": "92868",
+      "phone": "(714) 480-5100"
+    },
+    {
+      "id": "oc-8d7802fdc3045ce5",
+      "name": "CYS South Coast Children's Society Wraparound",
+      "category": "Community/Behavioral Health",
+      "address": "701 W KIMBERLY AVE",
+      "city": "Placentia",
+      "zip": "92870",
+      "phone": "714-966-8666"
+    }
+  ]
+}
