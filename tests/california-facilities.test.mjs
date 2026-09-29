@@ -39,6 +39,17 @@ test('official county mental health plan access spans every California county an
   assert.equal(countyAccess.zipCounties['99999'], undefined)
 })
 
+test('every mapped California ZIP resolves only to counties with an official access contact', () => {
+  const names = new Set(countyAccess.countyPlans.map((plan) => plan.name))
+  const entries = Object.entries(countyAccess.zipCounties)
+  assert.ok(entries.length > 1800)
+  for (const [zip, counties] of entries) {
+    assert.match(zip, /^\d{5}$/)
+    assert.ok(counties.length > 0)
+    assert.ok(counties.every((name) => names.has(name)))
+  }
+})
+
 test('official Orange County MHP sites include real entries without personal provider data', () => {
   assert.ok(orangeSites.length >= 50)
   assert.equal(new Set(orangeSites.map((site) => site.id)).size, orangeSites.length)
@@ -46,6 +57,9 @@ test('official Orange County MHP sites include real entries without personal pro
   assert.equal(sites.length, 2)
   assert.ok(sites.every((site) => site.city === 'Fountain Valley'))
   assert.ok(orangeSites.every((site) => !('providers' in site) && site.name && site.zip && site.city))
+  const physicalCountySites = orangeSites.filter((site) => countyAccess.zipCounties[site.zip]?.includes('Orange'))
+  assert.equal(physicalCountySites.length, 98)
+  assert.ok(orangeSites.some((site) => site.city === 'Woodland Hills' && !physicalCountySites.includes(site)))
 })
 
 test('ZIP fallback is based on unambiguous official California facility counties', () => {

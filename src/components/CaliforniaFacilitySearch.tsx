@@ -81,6 +81,7 @@ export function CaliforniaFacilitySearch() {
   const [searched, setSearched] = useState<{ field: SearchField; value: string } | null>(null)
   const [error, setError] = useState("")
   const [manualCounty, setManualCounty] = useState("")
+  const [browseCity, setBrowseCity] = useState("")
   const [laSearch, setLaSearch] = useState<LaSearchState | null>(null)
   const laAbort = useRef<AbortController | null>(null)
   useEffect(() => () => laAbort.current?.abort(), [])
@@ -102,6 +103,7 @@ export function CaliforniaFacilitySearch() {
     laAbort.current?.abort()
     setLaSearch(null)
     setManualCounty("")
+    setBrowseCity("")
     const term = value.trim().replace(/\s+/g, " ")
     if (field === "zip" ? !/^\d{5}$/.test(term) : !/^[\p{L}\p{M}][\p{L}\p{M} .'-]{1,59}$/u.test(term)) {
       setError(field === "zip" ? "Enter a 5-digit California ZIP code." : "Enter a California city or county name.")
@@ -127,7 +129,7 @@ export function CaliforniaFacilitySearch() {
     ? countyAccess.countyPlans.filter((plan) => plan.name.toLocaleLowerCase("en-US") === searched.value.replace(/\s+county$/i, "").toLocaleLowerCase("en-US")).map((plan) => plan.name)
     : searched?.field === "city" ? [...new Set([
       ...facilitiesJson.filter((facility) => facility.city.toLocaleLowerCase("en-US") === searched.value.toLocaleLowerCase("en-US")).map((facility) => facility.county),
-      ...(orangeSnapshot.sites.some((site) => site.city.toLocaleLowerCase("en-US") === searched.value.toLocaleLowerCase("en-US")) ? ["Orange"] : []),
+      ...(orangeSnapshot.sites.some((site) => site.city.toLocaleLowerCase("en-US") === searched.value.toLocaleLowerCase("en-US") && countyAccess.zipCounties[site.zip as keyof typeof countyAccess.zipCounties]?.includes("Orange")) ? ["Orange"] : []),
       ...(sanDiegoSnapshot.clinics.some((clinic) => clinic.city.toLocaleLowerCase("en-US") === searched.value.toLocaleLowerCase("en-US")) ? ["San Diego"] : []),
     ])] : []
   const selectedCounty = manualCounty || (countyCandidates.length === 1 ? countyCandidates[0] : "")
@@ -138,12 +140,12 @@ export function CaliforniaFacilitySearch() {
     : []
   const orangeMatches = searched && (
     (searched.field === "zip" && matchedCounty === "Orange") ||
-    (searched.field === "city" && (!manualCounty || manualCounty === "Orange")) ||
+    (searched.field === "city" && selectedCounty === "Orange") ||
     (searched.field === "county" && /^orange(?: county)?$/i.test(searched.value))
   ) ? orangeSnapshot.sites.filter((site) => {
     const location = searched.field === "county" ? "Orange" : site[searched.field]
     const query = searched.field === "county" ? "Orange" : searched.value
-    return location.toLocaleLowerCase("en-US") === query.toLocaleLowerCase("en-US")
+    return location.toLocaleLowerCase("en-US") === query.toLocaleLowerCase("en-US") && (searched.field !== "city" || countyAccess.zipCounties[site.zip as keyof typeof countyAccess.zipCounties]?.includes("Orange"))
   }) : []
   const orangeCities = new Set(orangeMatches.map((site) => site.city))
   const orangeCity = searched?.field === "zip" && orangeCities.size === 1 ? orangeMatches[0].city : null
@@ -157,11 +159,17 @@ export function CaliforniaFacilitySearch() {
   }) : []
   const hasExactResults = matches.length > 0 || orangeMatches.length > 0 || sanDiegoMatches.length > 0 || Boolean(laSearch?.results.length)
   const noExactResults = !hasExactResults && !laSearch?.isLoading && !laSearch?.error
+  // These are county-wide browsing aids, never exact-ZIP or proximity matches.
+  const orangeElsewhere = searched?.field === "zip" && selectedCounty === "Orange" && orangeMatches.length === 0
+    ? orangeSnapshot.sites.filter((site) => countyAccess.zipCounties[site.zip as keyof typeof countyAccess.zipCounties]?.includes("Orange")).sort((a, b) => a.city.localeCompare(b.city) || a.name.localeCompare(b.name)) : []
+  const sanDiegoElsewhere = searched?.field === "zip" && selectedCounty === "San Diego" && sanDiegoMatches.length === 0
+    ? [...sanDiegoSnapshot.clinics].sort((a, b) => a.city.localeCompare(b.city) || a.name.localeCompare(b.name)) : []
 
   const onCountyChange = (county: string) => {
     laAbort.current?.abort()
     setLaSearch(null)
     setManualCounty(county)
+    setBrowseCity("")
   }
 
   return (
@@ -173,7 +181,7 @@ export function CaliforniaFacilitySearch() {
       <form onSubmit={onSubmit} className="mt-4 grid gap-3 sm:grid-cols-[minmax(0,12rem)_minmax(0,1fr)_auto] sm:items-end">
         <div>
           <label htmlFor="california-search-field" className="mb-1 block text-sm font-semibold text-stone-700">Search by</label>
-          <select id="california-search-field" className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} value={field} onChange={(event) => { laAbort.current?.abort(); setLaSearch(null); setManualCounty(""); setField(event.target.value as SearchField); setValue(""); setSearched(null); setError("") }}>
+          <select id="california-search-field" className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} value={field} onChange={(event) => { laAbort.current?.abort(); setLaSearch(null); setManualCounty(""); setBrowseCity(""); setField(event.target.value as SearchField); setValue(""); setSearched(null); setError("") }}>
             <option value="zip">ZIP code</option><option value="city">City</option><option value="county">County</option>
           </select>
         </div>
@@ -190,7 +198,7 @@ export function CaliforniaFacilitySearch() {
         <h4 className="font-semibold text-stone-900">Results for {searched.field === "zip" ? "ZIP" : searched.field} {searched.value}</h4>
         {searched.field === "zip" && countyCandidates.length === 1 && <p className="mt-2 text-sm text-stone-700">{orangeCity ? <>Listed sites: <strong>{orangeCity} · Orange County</strong>.</> : <>Suggested county: <strong>{countyCandidates[0]}</strong>.</>} The ZIP-to-county match is approximate; confirm your location.</p>}
         {searched.field === "zip" && countyCandidates.length > 1 && <p className="mt-2 text-sm text-stone-700">This ZIP may cross county boundaries. Choose your county below; the ZIP alone cannot identify your side of the boundary.</p>}
-        {searched.field === "zip" && countyCandidates.length === 0 && <p className="mt-2 text-sm text-stone-700">This ZIP is not in the available county crosswalk. Choose your county below to see its official contact.</p>}
+        {searched.field === "zip" && countyCandidates.length === 0 && <p className="mt-2 text-sm text-stone-700">We cannot confirm this ZIP belongs to California from the available ZIP-to-county crosswalk (newer and PO Box ZIPs may be missing). If you know your California county, choose it below for its official contact; otherwise verify the ZIP and county first.</p>}
         {countyCandidates.length === 1 && <details className="mt-2 text-sm text-stone-700"><summary className="cursor-pointer font-semibold text-teal-800">Change county</summary><p className="mt-1">The suggestion may not match your address. Choosing another county changes the county contact and hides location listings from the suggested county; it does not search a new provider directory.</p>
           <div className="mt-2"><label htmlFor="choose-county" className="mb-1 block font-semibold">Choose your county</label>
           <select id="choose-county" value={selectedCounty} onChange={(event) => onCountyChange(event.target.value)} className={`min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
@@ -227,6 +235,28 @@ export function CaliforniaFacilitySearch() {
         </section>}
         {selectedCounty && hasExactResults && <CountyPlanCard county={selectedCounty} compact />}
         {noExactResults && <p role="status" className="mt-4 text-sm text-stone-700">No exact {searched.field === "zip" ? "ZIP" : searched.field} listings were found in the connected sources{selectedCounty === "Los Angeles" && !laSearch ? " (LA live directory not yet searched)" : ""}. This does not mean there is no care nearby; ask your county plan for current providers or use local 211.</p>}
+        {orangeElsewhere.length > 0 && <details aria-label="Other Orange County provider sites" className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
+          <summary className="cursor-pointer font-semibold text-stone-900">{orangeElsewhere.length} provider sites elsewhere in Orange County (not exact-ZIP matches)</summary>
+          <p className="mt-2 text-sm text-stone-700">These official Orange County BHP snapshot sites are not necessarily near this ZIP, available, or appropriate for your needs. Choose a city you recognize to browse its sites; this is not a distance search. Ask the county plan or use its full directory for current options.</p>
+          <label htmlFor="orange-elsewhere-city" className="mt-3 block text-sm font-semibold text-stone-700">Show Orange County sites in city</label>
+          <select id="orange-elsewhere-city" value={browseCity} onChange={(event) => setBrowseCity(event.target.value)} className={`mt-1 min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
+            <option value="">All cities (first 10 by city, not distance)</option>
+            {[...new Set(orangeElsewhere.map((site) => site.city))].sort().map((city) => <option key={city} value={city}>{city}</option>)}
+          </select>
+          <div className="mt-3 grid gap-3 lg:grid-cols-2">{orangeElsewhere.filter((site) => !browseCity || site.city === browseCity).slice(0, 10).map((site) => <OrangeSiteCard key={site.id} site={site} />)}</div>
+          {orangeElsewhere.filter((site) => !browseCity || site.city === browseCity).length > 10 && <p className="mt-2 text-sm text-stone-700">Showing the first 10 alphabetically by city and name. Use the full official directory for the rest.</p>}
+        </details>}
+        {sanDiegoElsewhere.length > 0 && <details aria-label="Other San Diego County adult clinics" className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
+          <summary className="cursor-pointer font-semibold text-stone-900">{sanDiegoElsewhere.length} adult clinics elsewhere in San Diego County (not exact-ZIP matches)</summary>
+          <p className="mt-2 text-sm text-stone-700">These county-published outpatient clinics serve adults 18 and older. They are not necessarily near this ZIP or currently available. Choose a city you recognize; this is not a distance search. Confirm eligibility, cost, and appointments before visiting.</p>
+          <label htmlFor="san-diego-elsewhere-city" className="mt-3 block text-sm font-semibold text-stone-700">Show San Diego adult clinics in city</label>
+          <select id="san-diego-elsewhere-city" value={browseCity} onChange={(event) => setBrowseCity(event.target.value)} className={`mt-1 min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
+            <option value="">All cities (first 10 by city, not distance)</option>
+            {[...new Set(sanDiegoElsewhere.map((clinic) => clinic.city))].sort().map((city) => <option key={city} value={city}>{city}</option>)}
+          </select>
+          <div className="mt-3 grid gap-3 lg:grid-cols-2">{sanDiegoElsewhere.filter((clinic) => !browseCity || clinic.city === browseCity).slice(0, 10).map((clinic) => <SanDiegoClinicCard key={clinic.id} clinic={clinic} />)}</div>
+          {sanDiegoElsewhere.filter((clinic) => !browseCity || clinic.city === browseCity).length > 10 && <p className="mt-2 text-sm text-stone-700">Showing the first 10 alphabetically by city and name. Use the full official directory for the rest.</p>}
+        </details>}
         {matchedCounty && countyMatches.length > 0 && !hasExactResults && !laSearch?.isLoading && (
           <details className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
             <summary className="cursor-pointer font-semibold text-stone-900">Other licensed facilities elsewhere in {matchedCounty} County ({countyMatches.length}; not local matches)</summary>
