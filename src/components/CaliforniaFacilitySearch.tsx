@@ -12,6 +12,13 @@ const sanDiegoDirectoryUrl = "https://www.optumsandiego.com/content/SanDiego/san
 
 type Facility = (typeof facilitiesJson)[number]
 type SearchField = "zip" | "city" | "county"
+
+function ListedPhone({ phone }: { phone: string }) {
+  // Do not turn mixed numbers or extensions into a misleading one-number link.
+  const dialable = /^\(?\d{3}\)?[ .-]*\d{3}[ .-]*\d{4}$/.test(phone)
+  return dialable ? <a href={`tel:+1${phone.replace(/\D/g, "")}`} className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>{phone}</a> : <>{phone}</>
+}
+
 const sources: Record<Facility["source"], { name: string; url: string; date: string }> = {
   CDPH: {
     name: "California CDPH licensed healthcare facility listing",
@@ -34,7 +41,7 @@ function FacilityCard({ facility }: { facility: Facility }) {
       <p className="mt-2 text-sm text-stone-700">
         {[facility.address, `${facility.city}, CA ${facility.zip}`, `${facility.county} County`].filter(Boolean).join(" · ")}
       </p>
-      {facility.phone && <p className="mt-2 text-sm text-stone-700">Listed phone: {facility.phone}</p>}
+      {facility.phone && <p className="mt-2 text-sm text-stone-700">Listed phone: <ListedPhone phone={facility.phone} /></p>}
       <p className="mt-3 text-xs text-stone-600">
         Source: <a href={source.url} target="_blank" rel="noopener noreferrer" className={`rounded underline ${focusRing}`}>{source.name}</a> (snapshot {source.date}).
       </p>
@@ -48,7 +55,7 @@ function OrangeSiteCard({ site }: { site: (typeof orangeSnapshot.sites)[number] 
       <h5 className="font-bold text-stone-900">{site.name}</h5>
       <p className="mt-1 text-sm text-stone-700">{site.category}</p>
       <p className="mt-2 text-sm text-stone-700">{site.address} · {site.city}, CA {site.zip}</p>
-      {site.phone && <p className="mt-2 text-sm text-stone-700">Listed phone: {site.phone}</p>}
+      {site.phone && <p className="mt-2 text-sm text-stone-700">Listed phone: <ListedPhone phone={site.phone} /></p>}
     </article>
   )
 }
@@ -57,7 +64,7 @@ function SanDiegoClinicCard({ clinic }: { clinic: (typeof sanDiegoSnapshot.clini
   return <article className="rounded-xl border border-sage-200 bg-white p-5 shadow-sm">
     <h5 className="font-bold text-stone-900">{clinic.name}</h5>
     <p className="mt-2 text-sm text-stone-700">{clinic.address} · {clinic.city}, CA {clinic.zip}</p>
-    <p className="mt-2 text-sm text-stone-700">Listed phone: {clinic.phone}</p>
+    <p className="mt-2 text-sm text-stone-700">Listed phone: <ListedPhone phone={clinic.phone} /></p>
   </article>
 }
 

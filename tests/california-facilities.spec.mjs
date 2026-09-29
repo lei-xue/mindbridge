@@ -22,6 +22,7 @@ test('county-first search can browse official local sites by chosen city without
   await sites.getByLabel('Filter Orange County sites by city').selectOption('Irvine')
   await expect(sites.locator('article')).toHaveCount(1)
   await expect(sites.locator('article').first()).toContainText('Irvine')
+  await expect(sites.locator('article').first().getByRole('link', { name: '949-722-7118' })).toHaveAttribute('href', 'tel:+19497227118')
   await page.getByLabel('California county').selectOption('San Diego')
   await page.getByRole('button', { name: 'Find support options' }).click()
   const clinics = page.locator('section[aria-label="San Diego adult behavioral health clinics"]')
@@ -31,6 +32,18 @@ test('county-first search can browse official local sites by chosen city without
   await expect(clinics.locator('article')).toHaveCount(20)
   await clinics.getByLabel('Filter San Diego adult clinics by city').selectOption('Escondido')
   await expect(clinics.locator('article')).toHaveCount(2)
+  await expect(clinics.locator('article').first().getByRole('link', { name: '(760) 480-2255' })).toHaveAttribute('href', 'tel:+17604802255')
+})
+
+test('mixed-format licensed-facility phone remains text rather than a misleading dial link', async ({ page }) => {
+  await page.goto('/')
+  await page.getByLabel('California county').selectOption('Sacramento')
+  await page.getByRole('button', { name: 'Find support options' }).click()
+  const facilities = page.locator('details[aria-label="Statewide licensed-facility snapshot"]')
+  await facilities.locator('summary').click()
+  const mixed = facilities.locator('article').filter({ hasText: '(916) 483-8424, 977- 0949' })
+  await expect(mixed).toContainText('(916) 483-8424, 977- 0949')
+  await expect(mixed.locator('a[href^="tel:"]')).toHaveCount(0)
 })
 
 test('county selection exposes LA official directory without requiring ZIP or a network request', async ({ page }) => {
