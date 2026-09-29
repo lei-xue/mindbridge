@@ -16,6 +16,7 @@ import { btnCall, btnSecondary, focusRing } from "../lib/ui"
 export function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [query, setQuery] = useState("")
+  const [includeCrisis, setIncludeCrisis] = useState(false)
 
   useEffect(() => {
     if (searchParams.has("q")) {
@@ -52,10 +53,12 @@ export function HomePage() {
 
   const onClear = () => {
     setQuery("")
+    setIncludeCrisis(false)
     setSearchParams({}, { replace: true })
   }
 
-  const results = filterResources(filters)
+  const hasFilters = Object.values(filters).some(Boolean)
+  const results = filterResources(filters).filter((resource) => hasFilters || includeCrisis || !CRISIS_ENTRY_IDS.includes(resource.id))
   const crisisEntries = getResourcesByIds(CRISIS_ENTRY_IDS)
 
   return (
@@ -77,6 +80,7 @@ export function HomePage() {
               className={btnSecondary}
               onClick={(event) => {
                 event.preventDefault()
+                setIncludeCrisis(true)
                 const heading = document.getElementById("directory-heading")
                 heading?.focus()
                 heading?.scrollIntoView({
@@ -129,7 +133,7 @@ export function HomePage() {
             Looking for in-person support?
           </h2>
           <p className="mt-2 max-w-3xl text-stone-700">
-            Choose your county below to find its official Medi-Cal mental-health plan contact. Provider listings are incomplete and may not be free or available.
+            Choose a county for its Medi-Cal mental-health contact and available listings. Coverage is incomplete.
           </p>
           <CaliforniaFacilitySearch />
           <div className="mt-4 flex flex-wrap gap-3">
@@ -144,19 +148,9 @@ export function HomePage() {
             >
               Find your local 211 directory
             </a>
-            <a
-              href="https://dmh.lacounty.gov/pd/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={btnSecondary}
-            >
-              Los Angeles County DMH Provider Directory
-            </a>
+
           </div>
-          <p className="mt-3 max-w-3xl text-sm text-stone-600">
-            MindBridge does not request your GPS location. Any location details you choose to enter on
-            external directories are governed by their privacy practices.
-          </p>
+          <details className="mt-3 text-xs text-stone-600"><summary className="cursor-pointer">External directory privacy</summary><p className="mt-2">External directories have their own privacy policies for information you enter there.</p></details>
         </div>
       </section>
 
@@ -178,6 +172,7 @@ export function HomePage() {
           <p className="mt-4 text-sm font-semibold text-stone-700" aria-live="polite">
             Showing {results.length} of {RESOURCES.length} resources
           </p>
+          {!hasFilters && !includeCrisis && <p className="mt-1 text-sm text-stone-600">Crisis lines are above. <button type="button" onClick={() => setIncludeCrisis(true)} className={`rounded text-teal-800 underline ${focusRing}`}>Include crisis lines here</button></p>}
           {results.length > 0 ? (
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {results.map((resource) => (

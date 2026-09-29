@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom"
 import { DATA_LAST_REVIEWED } from "../data/meta"
 import { focusRing } from "../lib/ui"
+import orange from "../data/orange-provider-sites.json"
+import sanDiego from "../data/san-diego-adult-clinics.json"
+import butte from "../data/butte-adult-clinics.json"
 
 export function AboutPage() {
   return (
@@ -15,7 +18,7 @@ export function AboutPage() {
           support.
         </p>
         <p>
-          The curated crisis and support resources are free to contact. The California in-person search uses separate external data sources: a limited statewide licensed-facility snapshot, an Orange County provider-site snapshot, a San Diego County adult-clinic snapshot, an LA County directory search, and official county Medi-Cal mental-health plan contacts. These are not a complete list of providers. A listed facility or site is not necessarily free, open to new clients, or available without an appointment. Confirm cost, eligibility, hours, and availability directly. Use the filters on the{" "}
+          Crisis and support resources are free to contact. California in-person listings are incomplete and may not be free or accepting new clients. Confirm eligibility, cost, hours, and appointments directly. Use the filters on the{" "}
           <Link to="/" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>
             home page
           </Link>{" "}
@@ -46,6 +49,19 @@ export function AboutPage() {
           {DATA_LAST_REVIEWED}. Information may change — always confirm on the provider's official
           site.
         </p>
+
+        <h2 className="pt-2 text-lg font-bold text-stone-900">California data coverage</h2>
+        <ul className="list-disc space-y-2 pl-5 text-sm">
+          <li>Statewide licensing snapshots: CDPH Sep 1, 2026; DHCS Sep 11, 2026. Includes hospitals and rehabilitation centers, not a complete outpatient directory.</li>
+          <li>Orange County Medi-Cal BHP provider-site subset: retrieved {orange.retrievedAt}.</li>
+          <li>San Diego County adult outpatient-clinic subset (18+): retrieved {sanDiego.retrievedAt}.</li>
+          <li>Butte County adult outpatient-center subset (18+): retrieved {butte.retrievedAt}.</li>
+          <li>LA County DMH: live directory search, with location transfer disclosed before submission.</li>
+          <li>All 58 counties: DHCS Medi-Cal mental-health plan contacts, not full provider directories.</li>
+        </ul>
+        <p className="text-sm">Snapshot dates are not a guarantee of current availability. Source links are included with search results.</p>
+        <h2 className="pt-2 text-lg font-bold text-stone-900">Location privacy</h2>
+        <p className="text-sm">Manual county selection is always available. Device location is optional and requested only after you click. Coordinates are matched to simplified Census county boundaries in your browser, not sent to MindBridge or saved. Your browser's location service may use its own provider. Near boundaries or with poor accuracy, choose a county manually. This is not a nearest-clinic search.</p>
 
         <h2 className="pt-2 text-lg font-bold text-stone-900">Important</h2>
         <p className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-stone-800">

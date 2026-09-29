@@ -27,16 +27,13 @@ test("local support search offers the County directory and explains location pri
     "href",
     "https://www.211.org/about-us/your-local-211",
   )
-  const laDirectory = localSupport.getByRole("link", { name: "Los Angeles County DMH Provider Directory" })
-  await expect(laDirectory).toHaveAttribute("href", "https://dmh.lacounty.gov/pd/")
-  await expect(laDirectory).toHaveAttribute("target", "_blank")
-  await expect(laDirectory).toHaveAttribute("rel", "noopener noreferrer")
+  await expect(localSupport.getByRole("link", { name: "Los Angeles County DMH Provider Directory" })).toHaveCount(0)
   await expect(localSupport.getByRole("heading", { name: "Find in-person mental-health support in California" })).toBeVisible()
   await expect(localSupport.locator('form')).toHaveCount(1)
   await localSupport.getByText("Search coverage and privacy").click()
-  await expect(localSupport.getByText(/No GPS is used/).first()).toBeVisible()
+  await expect(localSupport.getByText(/Optional device location suggests a county/).first()).toBeVisible()
   await expect(localSupport.getByText(/Cloudflare processes that request/)).toBeVisible()
-  await expect(localSupport.getByRole("button", { name: /location/i })).toHaveCount(0)
+  await expect(localSupport.getByRole("button", { name: "Use current location" })).toBeVisible()
 })
 
 test("LA County city/ZIP search uses POST, keeps the query out of the URL, and discloses partial results", async ({ page }) => {
@@ -134,7 +131,7 @@ test("keyboard users can skip navigation and filter/clear results", async ({ pag
   for (let i = 0; i < 6; i += 1) await page.keyboard.press("Tab")
   await expect(clearButton).toBeFocused()
   await page.keyboard.press("Enter")
-  await expect(page.getByText("Showing 23 of 23 resources")).toBeVisible()
+  await expect(page.getByText("Showing 20 of 23 resources")).toBeVisible()
 })
 
 test("keyboard navigation exposes a visible brand focus and opens About", async ({ page }) => {
@@ -186,6 +183,7 @@ test("mobile directory has no horizontal overflow and crisis actions remain visi
 
 test("keyboard activation opens resource details", async ({ page }) => {
   await page.goto("/")
+  await page.getByRole("button", { name: "Include crisis lines here" }).click()
   const resourceLink = page.getByRole("link", { name: "988 Suicide & Crisis Lifeline", exact: true })
   await resourceLink.focus()
   await page.keyboard.press("Enter")
