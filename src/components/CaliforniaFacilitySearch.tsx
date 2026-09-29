@@ -3,6 +3,7 @@ import { LaCountyDirectoryResults, type LaSearchState, type SearchType } from ".
 import { searchLaCounty } from "../lib/laCountySearch"
 import facilitiesJson from "../data/california-facilities.json"
 import countyAccess from "../data/california-county-access.json"
+import countySites from "../data/california-county-sites.json"
 import orangeSnapshot from "../data/orange-provider-sites.json"
 import { btnSecondary, focusRing } from "../lib/ui"
 
@@ -52,11 +53,13 @@ function OrangeSiteCard({ site }: { site: (typeof orangeSnapshot.sites)[number] 
 function CountyPlanCard({ county, compact = false }: { county: string; compact?: boolean }) {
   const plan = countyAccess.countyPlans.find((entry) => entry.name === county)
   if (!plan) return null
+  const website = countySites.websites.find((entry) => entry.name === county)?.url
   const dial = plan.phone.match(/\(?\d{3}\)?[ .-]*\d{3}[ .-]*\d{4}/)?.[0].replace(/\D/g, "")
   return <section aria-label="County mental health plan" className={`mt-4 rounded-lg border border-teal-300 bg-white ${compact ? "p-3" : "p-4"}`}>
     <h5 className="font-semibold text-stone-900">{compact ? `${county} County access line` : `${county} County Mental Health Plan`}</h5>
     {!compact && <p className="mt-1 text-sm text-stone-700">Official county contact for Medi-Cal specialty mental-health services. Ask for current providers, eligibility, and an appointment; this is not a nearby clinic listing or a guarantee of free care.</p>}
     <p className="mt-2 text-sm text-stone-700">{compact ? "Medi-Cal specialty mental-health plan (not another local clinic): " : "Listed access phone: "}{plan.phone} {dial && <a href={`tel:${dial}`} className={`ml-2 rounded font-semibold text-teal-800 underline ${focusRing}`}>Call county plan</a>}</p>
+    {website && <p className="mt-2 text-sm text-stone-700"><a href={website} target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>Visit {county} County plan website</a> <span className="text-xs">(linked by DHCS; not necessarily a provider directory)</span></p>}
     <a href={countyAccess.source} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>DHCS county mental health plans</a>
   </section>
 }

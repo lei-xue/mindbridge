@@ -32,6 +32,16 @@ test('county search shows the official mental-health plan access line even witho
   await expect(page.getByText(/Colusa County Mental Health Plan/)).toBeVisible()
   await expect(page.getByText('(888) 793-6580')).toBeVisible()
   await expect(page.getByRole('link', { name: /DHCS county mental health plans/i })).toHaveAttribute('href', 'https://www.dhcs.ca.gov/individuals/county-mental-health-plan-information/')
+  await expect(page.getByRole('link', { name: 'Visit Colusa County plan website' })).toHaveCount(0)
+})
+
+test('a verified HTTPS county plan landing page is offered without calling it a provider directory', async ({ page }) => {
+  await page.goto('/')
+  await page.getByLabel('Search by').selectOption('county')
+  await page.getByLabel('California city, county, or ZIP').fill('Butte')
+  await page.getByRole('button', { name: 'Find support options' }).click()
+  await expect(page.getByRole('link', { name: 'Visit Butte County plan website' })).toHaveAttribute('href', 'https://www.buttecounty.net/159/Behavioral-Health')
+  await expect(page.getByText('linked by DHCS; not necessarily a provider directory')).toBeVisible()
 })
 
 test('a ZIP spanning counties asks the visitor to choose rather than assuming a county or calling LA', async ({ page }) => {

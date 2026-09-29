@@ -7,6 +7,17 @@ const zipCounties = JSON.parse(readFileSync(new URL('../src/data/california-zip-
 const orangeSnapshot = JSON.parse(readFileSync(new URL('../src/data/orange-provider-sites.json', import.meta.url)))
 const orangeSites = orangeSnapshot.sites
 const countyAccess = JSON.parse(readFileSync(new URL('../src/data/california-county-access.json', import.meta.url)))
+const countySites = JSON.parse(readFileSync(new URL('../src/data/california-county-sites.json', import.meta.url)))
+
+test('DHCS-linked county plan websites are HTTPS landing pages, not a claim of provider coverage', () => {
+  const names = new Set(countyAccess.countyPlans.map((plan) => plan.name))
+  assert.equal(countySites.source, countyAccess.source)
+  assert.ok(countySites.websites.length >= 15 && countySites.websites.length < names.size)
+  assert.equal(new Set(countySites.websites.map((site) => site.name)).size, countySites.websites.length)
+  assert.ok(countySites.websites.every((site) => names.has(site.name) && /^https:\/\/[^/]+/.test(site.url)))
+  assert.ok(countySites.websites.some((site) => site.name === 'Butte'))
+  assert.ok(!countySites.websites.some((site) => site.name === 'Colusa'))
+})
 
 test('official county mental health plan access spans every California county and ZIP matches can be ambiguous', () => {
   assert.equal(countyAccess.countyPlans.length, 58)
