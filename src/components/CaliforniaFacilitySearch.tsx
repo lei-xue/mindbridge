@@ -1,4 +1,6 @@
-import { useState, type FormEvent } from "react"
+import { useEffect, useRef, useState, type FormEvent } from "react"
+import { LaCountyDirectoryResults, type LaSearchState } from "./LaCountyDirectorySearch"
+import { searchLaCounty } from "../lib/laCountySearch"
 import facilitiesJson from "../data/california-facilities.json"
 import orangeSnapshot from "../data/orange-provider-sites.json"
 import zipCounties from "../data/california-zip-counties.json"
@@ -52,9 +54,14 @@ export function CaliforniaFacilitySearch() {
   const [value, setValue] = useState("")
   const [searched, setSearched] = useState<{ field: SearchField; value: string } | null>(null)
   const [error, setError] = useState("")
+  const [laSearch, setLaSearch] = useState<LaSearchState | null>(null)
+  const laAbort = useRef<AbortController | null>(null)
+  useEffect(() => () => laAbort.current?.abort(), [])
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    laAbort.current?.abort()
+    setLaSearch(null)
     const term = value.trim().replace(/\s+/g, " ")
     if (field === "zip" ? !/^\d{5}$/.test(term) : !/^[\p{L}\p{M}][\p{L}\p{M} .'-]{1,59}$/u.test(term)) {
       setError(field === "zip" ? "Enter a 5-digit California ZIP code." : "Enter a California city or county name.")
@@ -63,6 +70,20 @@ export function CaliforniaFacilitySearch() {
     }
     setError("")
     setSearched({ field, value: term })
+    const isLaZip = field === "zip" && zipCounties[term as keyof typeof zipCounties] === "Los Angeles"
+    const cityCounties = field === "city" ? new Set(facilitiesJson.filter((facility) => facility.city.toLocaleLowerCase("en-US") === term.toLocaleLowerCase("en-US")).map((facility) => facility.county)) : new Set<string>()
+    const isLaCity = field === "city" && cityCounties.size === 1 && cityCounties.has("Los Angeles")
+    if (isLaZip || isLaCity) {
+      const searchType = field === "zip" ? "zip" : "city"
+      const controller = new AbortController()
+      laAbort.current = controller
+      setLaSearch({ query: term, searchType, results: [], hasMore: false, isLoading: true, error: "" })
+      void searchLaCounty(searchType, term, controller.signal).then((payload) => {
+        if (!controller.signal.aborted) setLaSearch({ query: term, searchType, results: payload.results, hasMore: Boolean(payload.hasMore), isLoading: false, error: "" })
+      }).catch((caught: unknown) => {
+        if (!controller.signal.aborted) setLaSearch({ query: term, searchType, results: [], hasMore: false, isLoading: false, error: caught instanceof Error ? caught.message : "The directory search is temporarily unavailable." })
+      })
+    }
   }
 
   const matches = searched ? facilitiesJson.filter((facility) => {
@@ -87,24 +108,24 @@ export function CaliforniaFacilitySearch() {
 
   return (
     <div className="mt-5 rounded-xl border border-sage-200 bg-sage-50 p-4 sm:p-5">
-      <h3 className="text-lg font-bold text-stone-900">Search California licensed mental-health facilities</h3>
+      <h3 className="text-lg font-bold text-stone-900">Search California mental-health locations</h3>
       <p className="mt-1 text-sm text-stone-700">
-        A limited statewide snapshot of psychiatric hospitals, psychiatric health facilities, mental health rehabilitation centers, and psychology clinics, plus Orange County Behavioral Health Plan provider sites. These are <strong>not</strong> a complete directory of mental-health care, free services, or walk-in options.
+        One search shows the limited statewide license snapshot and Orange County provider sites; for recognized LA County ZIPs or cities, it also searches the live LA County DMH directory. These sources are not a complete directory of care, free services, or walk-in options.
       </p>
       <form onSubmit={onSubmit} className="mt-4 grid gap-3 sm:grid-cols-[minmax(0,12rem)_minmax(0,1fr)_auto] sm:items-end">
         <div>
           <label htmlFor="california-search-field" className="mb-1 block text-sm font-semibold text-stone-700">Search California facilities by</label>
-          <select id="california-search-field" className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} value={field} onChange={(event) => { setField(event.target.value as SearchField); setValue(""); setSearched(null); setError("") }}>
+          <select id="california-search-field" className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} value={field} onChange={(event) => { laAbort.current?.abort(); setLaSearch(null); setField(event.target.value as SearchField); setValue(""); setSearched(null); setError("") }}>
             <option value="zip">ZIP code</option><option value="city">City</option><option value="county">County</option>
           </select>
         </div>
         <div>
           <label htmlFor="california-search-value" className="mb-1 block text-sm font-semibold text-stone-700">California city, county, or ZIP</label>
-          <input id="california-search-value" type="text" inputMode={field === "zip" ? "numeric" : "text"} autoComplete="off" maxLength={field === "zip" ? 5 : 60} placeholder={field === "zip" ? "e.g. 92706" : field === "county" ? "e.g. Orange" : "e.g. Santa Ana"} className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} value={value} onChange={(event) => setValue(event.target.value)} />
+          <input id="california-search-value" type="text" inputMode={field === "zip" ? "numeric" : "text"} autoComplete="off" maxLength={field === "zip" ? 5 : 60} placeholder={field === "zip" ? "e.g. 92868" : field === "county" ? "e.g. Orange" : "e.g. Santa Ana"} className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} value={value} onChange={(event) => setValue(event.target.value)} />
         </div>
         <button type="submit" className={btnSecondary}>Find California facilities</button>
       </form>
-      <p className="mt-3 text-xs text-stone-600">The location you type is filtered in your browser; MindBridge does not send it to a search API or put it in the page URL. Facility information is a snapshot, not real-time availability.</p>
+      <p className="mt-3 text-xs text-stone-600">Local California and Orange County snapshots are filtered in your browser. If your ZIP or city is recognized as LA County, submitting also sends that query in a request body through Cloudflare to the LA County DMH directory; Cloudflare processes it and LA County may log IP/browser details. No GPS is used, and MindBridge does not put the location in the URL or intentionally store it. ZIP/city recognition is incomplete; if no live results appear, use the official county directory.</p>
       {error && <p role="alert" className="mt-3 text-sm font-semibold text-red-800">{error}</p>}
       {searched && <div className="mt-5" aria-live="polite">
         <h4 className="font-semibold text-stone-900">{matches.length} statewide licensed-facility listings for {searched.field} {searched.value}</h4>
@@ -117,6 +138,7 @@ export function CaliforniaFacilitySearch() {
             {orangeMatches.length > 20 && <p className="mt-2 text-sm text-stone-700">Showing the first 20 sites. Use the full official directory for the rest.</p>}
           </section>
         )}
+        {laSearch && <LaCountyDirectoryResults state={laSearch} />}
         {matchedCounty && matches.length === 0 && (
           <div className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
             <p className="font-semibold text-stone-900">ZIP maps to {matchedCounty} County in the state healthcare-facility snapshot.</p>

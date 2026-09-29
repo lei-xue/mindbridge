@@ -7,17 +7,17 @@ const zipCounties = JSON.parse(readFileSync(new URL('../src/data/california-zip-
 const orangeSnapshot = JSON.parse(readFileSync(new URL('../src/data/orange-provider-sites.json', import.meta.url)))
 const orangeSites = orangeSnapshot.sites
 
-test('official Orange County MHP sites include real entries for ZIP 92706 without personal provider data', () => {
+test('official Orange County MHP sites include real entries without personal provider data', () => {
   assert.ok(orangeSites.length >= 50)
   assert.equal(new Set(orangeSites.map((site) => site.id)).size, orangeSites.length)
-  const sites = orangeSites.filter((site) => site.zip === '92706')
+  const sites = orangeSites.filter((site) => site.zip === '92708')
   assert.equal(sites.length, 2)
-  assert.ok(sites.every((site) => site.city === 'Santa Ana'))
+  assert.ok(sites.every((site) => site.city === 'Fountain Valley'))
   assert.ok(orangeSites.every((site) => !('providers' in site) && site.name && site.zip && site.city))
 })
 
 test('ZIP fallback is based on unambiguous official California facility counties', () => {
-  assert.equal(zipCounties['92706'], 'Orange')
+  assert.equal(zipCounties['92708'], 'Orange')
   assert.equal(zipCounties['90012'], 'Los Angeles')
   assert.equal(zipCounties['99999'], undefined)
 })
@@ -38,5 +38,5 @@ test('statewide snapshot lists licensed or approved mental-health facilities acr
 
 test('Orange County listings are available even when an exact ZIP has no match', () => {
   assert.ok(facilities.filter((item) => item.county === 'Orange').length > 0)
-  assert.equal(facilities.filter((item) => item.zip === '92706').length, 0)
+  assert.equal(facilities.filter((item) => item.zip === '92708').length, 0)
 })

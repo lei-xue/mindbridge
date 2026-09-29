@@ -3,7 +3,6 @@ import { Link, useSearchParams } from "react-router-dom"
 import { CaliforniaFacilitySearch } from "../components/CaliforniaFacilitySearch"
 import { CrisisResourceCard } from "../components/CrisisResourceCard"
 import { FilterBar } from "../components/FilterBar"
-import { LaCountyDirectorySearch } from "../components/LaCountyDirectorySearch"
 import { ResourceCard } from "../components/ResourceCard"
 import {
   CRISIS_ENTRY_IDS,
@@ -120,7 +119,6 @@ export function HomePage() {
             Listings are not independently verified by MindBridge; confirm services, eligibility, and availability directly.
           </p>
           <CaliforniaFacilitySearch />
-          <LaCountyDirectorySearch />
           <div className="mt-4 flex flex-wrap gap-3">
             <a href="tel:211" className={btnCall}>
               Call 211
