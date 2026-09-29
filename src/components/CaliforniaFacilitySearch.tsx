@@ -5,7 +5,10 @@ import facilitiesJson from "../data/california-facilities.json"
 import countyAccess from "../data/california-county-access.json"
 import countySites from "../data/california-county-sites.json"
 import orangeSnapshot from "../data/orange-provider-sites.json"
+import sanDiegoSnapshot from "../data/san-diego-adult-clinics.json"
 import { btnSecondary, focusRing } from "../lib/ui"
+
+const sanDiegoDirectoryUrl = "https://www.optumsandiego.com/content/SanDiego/sandiego/en/community-resources/providerdirectory1.html"
 
 type Facility = (typeof facilitiesJson)[number]
 type SearchField = "zip" | "city" | "county"
@@ -48,6 +51,14 @@ function OrangeSiteCard({ site }: { site: (typeof orangeSnapshot.sites)[number] 
       {site.phone && <p className="mt-2 text-sm text-stone-700">Listed phone: {site.phone}</p>}
     </article>
   )
+}
+
+function SanDiegoClinicCard({ clinic }: { clinic: (typeof sanDiegoSnapshot.clinics)[number] }) {
+  return <article className="rounded-xl border border-sage-200 bg-white p-5 shadow-sm">
+    <h5 className="font-bold text-stone-900">{clinic.name}</h5>
+    <p className="mt-2 text-sm text-stone-700">{clinic.address} · {clinic.city}, CA {clinic.zip}</p>
+    <p className="mt-2 text-sm text-stone-700">Listed phone: {clinic.phone}</p>
+  </article>
 }
 
 function CountyPlanCard({ county, compact = false }: { county: string; compact?: boolean }) {
@@ -117,6 +128,7 @@ export function CaliforniaFacilitySearch() {
     : searched?.field === "city" ? [...new Set([
       ...facilitiesJson.filter((facility) => facility.city.toLocaleLowerCase("en-US") === searched.value.toLocaleLowerCase("en-US")).map((facility) => facility.county),
       ...(orangeSnapshot.sites.some((site) => site.city.toLocaleLowerCase("en-US") === searched.value.toLocaleLowerCase("en-US")) ? ["Orange"] : []),
+      ...(sanDiegoSnapshot.clinics.some((clinic) => clinic.city.toLocaleLowerCase("en-US") === searched.value.toLocaleLowerCase("en-US")) ? ["San Diego"] : []),
     ])] : []
   const selectedCounty = manualCounty || (countyCandidates.length === 1 ? countyCandidates[0] : "")
   const matches = rawMatches.filter((facility) => !manualCounty || facility.county === manualCounty)
@@ -135,7 +147,15 @@ export function CaliforniaFacilitySearch() {
   }) : []
   const orangeCities = new Set(orangeMatches.map((site) => site.city))
   const orangeCity = searched?.field === "zip" && orangeCities.size === 1 ? orangeMatches[0].city : null
-  const hasExactResults = matches.length > 0 || orangeMatches.length > 0 || Boolean(laSearch?.results.length)
+  const sanDiegoMatches = searched && (
+    (searched.field === "zip" && selectedCounty === "San Diego") ||
+    (searched.field === "city" && (!manualCounty || manualCounty === "San Diego")) ||
+    (searched.field === "county" && /^san diego(?: county)?$/i.test(searched.value))
+  ) ? sanDiegoSnapshot.clinics.filter((clinic) => {
+    if (searched.field === "county") return true
+    return clinic[searched.field].toLocaleLowerCase("en-US") === searched.value.toLocaleLowerCase("en-US")
+  }) : []
+  const hasExactResults = matches.length > 0 || orangeMatches.length > 0 || sanDiegoMatches.length > 0 || Boolean(laSearch?.results.length)
   const noExactResults = !hasExactResults && !laSearch?.isLoading && !laSearch?.error
 
   const onCountyChange = (county: string) => {
@@ -148,7 +168,7 @@ export function CaliforniaFacilitySearch() {
     <div className="mt-5 rounded-xl border border-sage-200 bg-sage-50 p-4 sm:p-5">
       <h3 className="text-lg font-bold text-stone-900">Find in-person mental-health support in California</h3>
       <p className="mt-1 text-sm text-stone-700">
-        Search for listings matching the ZIP, city, or county you enter. Orange County has a dated provider-site snapshot; LA County has a live directory search. Elsewhere, we may only have a few licensed facilities—not a complete provider directory. Every county has an official Medi-Cal mental-health plan contact that can help you ask about current providers.
+        Search for listings matching the ZIP, city, or county you enter. Orange County has a dated provider-site snapshot, San Diego County has a limited adult-clinic list, and LA County has a live directory search. Elsewhere, we may only have a few licensed facilities—not a complete provider directory. Every county has an official Medi-Cal mental-health plan contact that can help you ask about current providers.
       </p>
       <form onSubmit={onSubmit} className="mt-4 grid gap-3 sm:grid-cols-[minmax(0,12rem)_minmax(0,1fr)_auto] sm:items-end">
         <div>
@@ -163,7 +183,7 @@ export function CaliforniaFacilitySearch() {
         </div>
         <button type="submit" className={btnSecondary}>Find support options</button>
       </form>
-      <details className="mt-3 text-xs text-stone-600"><summary className="cursor-pointer font-semibold">Search coverage and privacy</summary><p className="mt-2">California and Orange County snapshots and approximate ZIP-to-county hints are filtered in your browser. Submitting an unambiguous LA County ZIP also sends it in a request body through Cloudflare to the LA County DMH directory. For cities or uncertain ZIPs, a separate LA search button asks first. Cloudflare processes that request and LA County may log IP/browser details. No GPS is used, and MindBridge does not put your location in the URL or intentionally store it. The 2020 Census ZIP approximation may cross county boundaries or miss newer/PO Box ZIPs; confirm your county before relying on a referral.</p></details>
+      <details className="mt-3 text-xs text-stone-600"><summary className="cursor-pointer font-semibold">Search coverage and privacy</summary><p className="mt-2">California, Orange County, and San Diego County snapshots and approximate ZIP-to-county hints are filtered in your browser. Submitting an unambiguous LA County ZIP also sends it in a request body through Cloudflare to the LA County DMH directory. For cities or uncertain ZIPs, a separate LA search button asks first. Cloudflare processes that request and LA County may log IP/browser details. No GPS is used, and MindBridge does not put your location in the URL or intentionally store it. The 2020 Census ZIP approximation may cross county boundaries or miss newer/PO Box ZIPs; confirm your county before relying on a referral.</p></details>
       <p className="mt-2 text-xs text-stone-700">For a ZIP mapped only to LA County, submitting also sends it through Cloudflare to the LA County DMH directory; LA County may log IP/browser details. Other live searches require a separate click. No GPS is used.</p>
       {error && <p role="alert" className="mt-3 text-sm font-semibold text-red-800">{error}</p>}
       {searched && <div className="mt-5" aria-live="polite">
@@ -195,6 +215,11 @@ export function CaliforniaFacilitySearch() {
             {orangeMatches.length > 20 && <p className="mt-2 text-sm text-stone-700">Showing the first 20 sites. Use the full official directory for the rest.</p>}
           </section>
         )}
+        {sanDiegoMatches.length > 0 && <section aria-label="San Diego adult behavioral health clinics" className="mt-4 rounded-lg border border-teal-300 bg-white p-4">
+          <h5 className="font-semibold text-stone-900">{sanDiegoMatches.length} adult clinic listings for {searched.field === "zip" ? "ZIP" : searched.field} {searched.value} · San Diego County</h5>
+          <p className="mt-1 text-xs text-stone-600">San Diego County's published outpatient behavioral health clinic list for adults 18 and older, retrieved {sanDiegoSnapshot.retrievedAt}. This is a limited snapshot, not its complete provider directory. Call to confirm eligibility, cost, appointment or walk-in rules, and hours before visiting.</p>
+          <div className="mt-3 grid gap-3 lg:grid-cols-2">{sanDiegoMatches.map((clinic) => <SanDiegoClinicCard key={clinic.id} clinic={clinic} />)}</div>
+        </section>}
         {matches.length > 0 && <section aria-label="Statewide licensed-facility snapshot" className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
           <h5 className="font-semibold text-stone-900">{matches.length} statewide licensed-facility listings for {searched.field} {searched.value}</h5>
           <p className="mt-1 text-xs text-stone-600">Licensed-facility matches · Limited, dated licensing snapshot (including hospitals and rehabilitation centers), not a general outpatient directory. A license does not establish availability or walk-in access.</p>
@@ -210,6 +235,7 @@ export function CaliforniaFacilitySearch() {
           </details>
         )}
         {(matchedCounty === "Orange" || orangeMatches.length > 0) && <p className="mt-4 text-sm text-stone-700">For the full, more frequently updated list, use the official <a href="https://bhpproviderdirectory.ochca.com/" target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>Orange County Behavioral Health Plan provider directory</a>.</p>}
+        {(selectedCounty === "San Diego" || sanDiegoMatches.length > 0) && <p className="mt-4 text-sm text-stone-700">For other programs and current details, use the <a href={sanDiegoDirectoryUrl} target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>Full San Diego County behavioral health provider directory</a> linked from the County BHS website.</p>}
         <p className="mt-4 text-xs text-stone-600">Confirm service type, eligibility, cost, and appointment requirements directly with each provider. Listings are not endorsements by MindBridge.</p>
       </div>}
     </div>

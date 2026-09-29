@@ -8,6 +8,16 @@ const orangeSnapshot = JSON.parse(readFileSync(new URL('../src/data/orange-provi
 const orangeSites = orangeSnapshot.sites
 const countyAccess = JSON.parse(readFileSync(new URL('../src/data/california-county-access.json', import.meta.url)))
 const countySites = JSON.parse(readFileSync(new URL('../src/data/california-county-sites.json', import.meta.url)))
+const sanDiego = JSON.parse(readFileSync(new URL('../src/data/san-diego-adult-clinics.json', import.meta.url)))
+
+test('San Diego BHS adult clinic subset has physical sites, not contact-only programs', () => {
+  assert.equal(sanDiego.source, 'https://www.sandiegocounty.gov/content/sdc/bhs/Outpatient_behavioral_health_centers.html')
+  assert.equal(sanDiego.clinics.length, 20)
+  assert.equal(new Set(sanDiego.clinics.map((clinic) => clinic.id)).size, sanDiego.clinics.length)
+  assert.equal(sanDiego.clinics.filter((clinic) => clinic.zip === '92025').length, 2)
+  assert.ok(sanDiego.clinics.every((clinic) => clinic.address && clinic.city && /^\d{5}$/.test(clinic.zip) && clinic.phone))
+  assert.ok(!sanDiego.clinics.some((clinic) => clinic.name === 'Survivors of Torture International'))
+})
 
 test('DHCS-linked county plan websites are HTTPS landing pages, not a claim of provider coverage', () => {
   const names = new Set(countyAccess.countyPlans.map((plan) => plan.name))

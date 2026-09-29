@@ -24,6 +24,33 @@ test('non-LA ZIP searches local records without calling the live LA API', async 
   expect(countyRequests).toEqual([])
 })
 
+test('San Diego adult clinic matches are separate from the statewide license snapshot', async ({ page }) => {
+  const countyRequests = []
+  page.on('request', (request) => { if (request.url().includes('/api/la-county/locations')) countyRequests.push(request.url()) })
+  await page.goto('/')
+  await page.getByLabel('California city, county, or ZIP').fill('92025')
+  await page.getByRole('button', { name: 'Find support options' }).click()
+  const clinics = page.locator('section[aria-label="San Diego adult behavioral health clinics"]')
+  await expect(clinics.getByRole('heading', { name: /2 adult clinic listings for ZIP 92025/ })).toBeVisible()
+  await expect(clinics.getByText('North Inland Mental Health Center', { exact: true })).toBeVisible()
+  await expect(clinics.getByText('Kinesis North Escondido', { exact: true })).toBeVisible()
+  await expect(clinics.getByText(/adults 18 and older/)).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Full San Diego County behavioral health provider directory' })).toHaveAttribute('href', 'https://www.optumsandiego.com/content/SanDiego/sandiego/en/community-resources/providerdirectory1.html')
+  expect(countyRequests).toEqual([])
+})
+
+test('San Diego city finds its adult clinics but changing county removes them', async ({ page }) => {
+  await page.goto('/')
+  await page.getByLabel('Search by').selectOption('city')
+  await page.getByLabel('California city, county, or ZIP').fill('Escondido')
+  await page.getByRole('button', { name: 'Find support options' }).click()
+  await expect(page.getByRole('heading', { name: /2 adult clinic listings for city Escondido/ })).toBeVisible()
+  await page.getByText('Change county').click()
+  await page.getByLabel('Choose your county').selectOption('Butte')
+  await expect(page.getByRole('heading', { name: /2 adult clinic listings for city Escondido/ })).toHaveCount(0)
+  await expect(page.getByText(/Butte County Mental Health Plan/)).toBeVisible()
+})
+
 test('county search shows the official mental-health plan access line even without local provider listings', async ({ page }) => {
   await page.goto('/')
   await page.getByLabel('Search by').selectOption('county')
