@@ -23,10 +23,11 @@ test("local support search offers the County directory and explains location pri
   await expect(laDirectory).toHaveAttribute("href", "https://dmh.lacounty.gov/pd/")
   await expect(laDirectory).toHaveAttribute("target", "_blank")
   await expect(laDirectory).toHaveAttribute("rel", "noopener noreferrer")
-  await expect(localSupport.getByRole("heading", { name: "Search California mental-health locations" })).toBeVisible()
+  await expect(localSupport.getByRole("heading", { name: "Find in-person mental-health support in California" })).toBeVisible()
   await expect(localSupport.locator('form')).toHaveCount(1)
-  await expect(localSupport.getByText(/No GPS is used/)).toBeVisible()
-  await expect(localSupport.getByText(/Cloudflare processes it/)).toBeVisible()
+  await localSupport.getByText("Search coverage and privacy").click()
+  await expect(localSupport.getByText(/No GPS is used/).first()).toBeVisible()
+  await expect(localSupport.getByText(/Cloudflare processes that request/)).toBeVisible()
   await expect(localSupport.getByRole("button", { name: /location/i })).toHaveCount(0)
 })
 
@@ -52,12 +53,12 @@ test("LA County city/ZIP search uses POST, keeps the query out of the URL, and d
 
   await page.goto("/")
   await page.getByLabel("California city, county, or ZIP").fill("9001")
-  await page.getByRole("button", { name: "Find California facilities" }).click()
+  await page.getByRole("button", { name: "Find support options" }).click()
   await expect(page.getByRole("alert")).toHaveText("Enter a 5-digit California ZIP code.")
   expect(requests).toHaveLength(0)
 
   await page.getByLabel("California city, county, or ZIP").fill("90012")
-  await page.getByRole("button", { name: "Find California facilities" }).click()
+  await page.getByRole("button", { name: "Find support options" }).click()
   await expect(page.getByRole("heading", { name: "1 directory listing for ZIP 90012" })).toBeVisible()
   await expect(page.getByRole("heading", { name: "First directory listing" })).toBeVisible()
   await expect(page.getByText(/Languages listed:/)).toBeHidden()
@@ -71,20 +72,23 @@ test("LA County city/ZIP search uses POST, keeps the query out of the URL, and d
   await expect(page).not.toHaveURL(/90012/)
 })
 
-test("one city search includes live LA results only for a recognized LA city", async ({ page }) => {
+test("city search only sends location to LA after a separate click", async ({ page }) => {
   const requests = []
   await page.route("**/api/la-county/locations", async (route) => {
     requests.push(JSON.parse(route.request().postData() || "{}"))
     await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ results: [], hasMore: false }) })
   })
   await page.goto("/")
-  await page.getByLabel("Search California facilities by").selectOption("city")
+  await page.getByLabel("Search by").selectOption("city")
   await page.getByLabel("California city, county, or ZIP").fill("Pasadena")
-  await page.getByRole("button", { name: "Find California facilities" }).click()
+  await page.getByRole("button", { name: "Find support options" }).click()
+  await expect(page.getByRole("button", { name: "Search live LA County directory" })).toBeVisible()
+  expect(requests).toEqual([])
+  await page.getByRole("button", { name: "Search live LA County directory" }).click()
   await expect(page.getByRole("heading", { name: "0 directory listings for city Pasadena" })).toBeVisible()
   expect(requests).toEqual([{ searchType: "city", value: "Pasadena" }])
   await page.getByLabel("California city, county, or ZIP").fill("Santa Ana")
-  await page.getByRole("button", { name: "Find California facilities" }).click()
+  await page.getByRole("button", { name: "Find support options" }).click()
   await expect(page.getByText(/Orange County BHP provider sites for city Santa Ana/)).toBeVisible()
   await expect(page.getByRole("heading", { name: "Live LA County DMH directory" })).toHaveCount(0)
   expect(requests).toHaveLength(1)

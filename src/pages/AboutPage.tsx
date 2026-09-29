@@ -15,9 +15,7 @@ export function AboutPage() {
           support.
         </p>
         <p>
-          Every resource listed is free to use, and every listing shows its hours and how to
-          connect: by phone, by text, or through the provider's official website. Use the filters on
-          the{" "}
+          The curated crisis and support resources are free to contact. The California in-person search uses separate external data sources: a limited statewide licensed-facility snapshot, an Orange County provider-site snapshot, an LA County directory search, and official county Medi-Cal mental-health plan contacts. These are not a complete list of providers. A listed facility or site is not necessarily free, open to new clients, or available without an appointment. Confirm cost, eligibility, hours, and availability directly. Use the filters on the{" "}
           <Link to="/" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>
             home page
           </Link>{" "}

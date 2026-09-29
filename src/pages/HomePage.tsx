@@ -66,7 +66,7 @@ export function HomePage() {
             You are not alone.
           </h1>
           <p className="mt-3 max-w-2xl text-lg text-stone-700 sm:text-xl">
-            Find free, confidential mental health support.
+            Find free crisis and support resources, or explore in-person options whose cost and eligibility you must confirm.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a href="tel:988" className={btnCall}>
@@ -113,10 +113,7 @@ export function HomePage() {
             Looking for in-person support?
           </h2>
           <p className="mt-2 max-w-3xl text-stone-700">
-            Search once to find a suggested county and its official mental health plan contact across California.
-            Los Angeles County also has live DMH directory results; Orange County has a provider-site snapshot.
-            Elsewhere, facility listings are limited—not a complete provider directory. You can also use 211.
-            Confirm services, eligibility, and availability directly.
+            Search for local listings where we have them, or find your county's official Medi-Cal mental-health plan contact to ask about current providers. Orange County has a dated provider-site snapshot and LA County has a live directory search; elsewhere we have only a limited licensed-facility snapshot. This is not complete statewide provider coverage, and listed services are not guaranteed free or available.
           </p>
           <CaliforniaFacilitySearch />
           <div className="mt-4 flex flex-wrap gap-3">
