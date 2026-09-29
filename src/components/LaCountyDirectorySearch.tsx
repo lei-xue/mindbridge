@@ -40,17 +40,20 @@ function ResultCard({ result }: { result: DirectoryResult }) {
     <article className="rounded-xl border border-sage-200 bg-white p-5 shadow-sm">
       <h4 className="text-lg font-bold text-stone-900">{result.name}</h4>
       {address && <p className="mt-2 text-sm leading-relaxed text-stone-700">{address}</p>}
-      {result.phones.length > 0 && <p className="mt-2 text-sm text-stone-700"><span className="font-semibold">Phone:</span> {result.phones.join(" · ")}</p>}
-      {result.hours.length > 0 && <p className="mt-2 text-sm text-stone-700"><span className="font-semibold">Listed hours:</span> {formatHours(result.hours)}</p>}
-      {result.languages.length > 0 && <p className="mt-2 text-sm text-stone-700"><span className="font-semibold">Languages listed:</span> {result.languages.join(", ")}</p>}
-      {result.populations.length > 0 && <p className="mt-2 text-sm text-stone-700"><span className="font-semibold">Populations listed:</span> {result.populations.join(", ")}</p>}
-      {result.accessibility.length > 0 && <p className="mt-2 text-sm text-stone-700"><span className="font-semibold">Accessibility / location note:</span> {result.accessibility.join("; ")}</p>}
+      {result.phones.length > 0 && <p className="mt-2 text-sm text-stone-700"><span className="font-semibold">Phones as listed:</span> {result.phones.join(" · ")}</p>}
       {result.websites.length > 0 && (
         <ul className="mt-3 flex flex-wrap gap-2" aria-label={`Websites for ${result.name}`}>
           {result.websites.map((site) => <li key={site.url}><a href={site.url} target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>{site.label}</a></li>)}
         </ul>
       )}
-      {result.lastUpdated && <p className="mt-3 text-xs text-stone-500">Directory record last updated: {formatRecordDate(result.lastUpdated)}</p>}
+      {(result.hours.length > 0 || result.languages.length > 0 || result.populations.length > 0 || result.accessibility.length > 0 || result.lastUpdated) && <details className="mt-3 text-sm text-stone-700">
+        <summary className="cursor-pointer font-semibold text-teal-800">Listed hours, languages &amp; accessibility (verify with provider)</summary>
+        {result.hours.length > 0 && <p className="mt-2"><span className="font-semibold">Listed hours:</span> {formatHours(result.hours)}</p>}
+        {result.languages.length > 0 && <p className="mt-2"><span className="font-semibold">Languages listed:</span> {result.languages.join(", ")}</p>}
+        {result.populations.length > 0 && <p className="mt-2"><span className="font-semibold">Populations listed:</span> {result.populations.join(", ")}</p>}
+        {result.accessibility.length > 0 && <p className="mt-2"><span className="font-semibold">Accessibility / location note:</span> {result.accessibility.join("; ")}</p>}
+        {result.lastUpdated && <p className="mt-2 text-xs text-stone-500">Directory record last updated: {formatRecordDate(result.lastUpdated)}</p>}
+      </details>}
     </article>
   )
 }

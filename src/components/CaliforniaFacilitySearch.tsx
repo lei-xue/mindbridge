@@ -105,6 +105,8 @@ export function CaliforniaFacilitySearch() {
     const query = searched.field === "county" ? "Orange" : searched.value
     return location.toLocaleLowerCase("en-US") === query.toLocaleLowerCase("en-US")
   }) : []
+  const hasExactResults = matches.length > 0 || orangeMatches.length > 0 || Boolean(laSearch?.results.length)
+  const noExactResults = !hasExactResults && !laSearch?.isLoading && !laSearch?.error
 
   return (
     <div className="mt-5 rounded-xl border border-sage-200 bg-sage-50 p-4 sm:p-5">
@@ -128,8 +130,8 @@ export function CaliforniaFacilitySearch() {
       <p className="mt-3 text-xs text-stone-600">Local California and Orange County snapshots are filtered in your browser. If your ZIP or city is recognized as LA County, submitting also sends that query in a request body through Cloudflare to the LA County DMH directory; Cloudflare processes it and LA County may log IP/browser details. No GPS is used, and MindBridge does not put the location in the URL or intentionally store it. ZIP/city recognition is incomplete; if no live results appear, use the official county directory.</p>
       {error && <p role="alert" className="mt-3 text-sm font-semibold text-red-800">{error}</p>}
       {searched && <div className="mt-5" aria-live="polite">
-        <h4 className="font-semibold text-stone-900">{matches.length} statewide licensed-facility listings for {searched.field} {searched.value}</h4>
-        {matches.length ? <div className="mt-3 grid gap-3 lg:grid-cols-2">{matches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div> : <p className="mt-2 text-sm text-stone-700">No listed facilities in that exact {searched.field === "zip" ? "ZIP" : searched.field} in this state-licensing snapshot. This does not mean there is no care nearby. Try searching by city or county, or use your local 211 directory.</p>}
+        <h4 className="font-semibold text-stone-900">Results for {searched.field === "zip" ? "ZIP" : searched.field} {searched.value}</h4>
+        {laSearch && <LaCountyDirectoryResults state={laSearch} />}
         {orangeMatches.length > 0 && (
           <section aria-label="Orange County Behavioral Health Plan sites" className="mt-4 rounded-lg border border-teal-300 bg-white p-4">
             <h5 className="font-semibold text-stone-900">{orangeMatches.length} Orange County BHP provider sites for {searched.field === "zip" ? "ZIP" : searched.field} {searched.value}</h5>
@@ -138,16 +140,21 @@ export function CaliforniaFacilitySearch() {
             {orangeMatches.length > 20 && <p className="mt-2 text-sm text-stone-700">Showing the first 20 sites. Use the full official directory for the rest.</p>}
           </section>
         )}
-        {laSearch && <LaCountyDirectoryResults state={laSearch} />}
-        {matchedCounty && matches.length === 0 && (
-          <div className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
-            <p className="font-semibold text-stone-900">ZIP maps to {matchedCounty} County in the state healthcare-facility snapshot.</p>
-            <p className="mt-1 text-sm text-stone-700">{countyMatches.length} other licensed facility listings elsewhere in {matchedCounty} County. These are not necessarily close to your ZIP, available, or walk-in services.</p>
+        {matches.length > 0 && <section aria-label="Statewide licensed-facility snapshot" className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
+          <h5 className="font-semibold text-stone-900">{matches.length} statewide licensed-facility listings for {searched.field} {searched.value}</h5>
+          <p className="mt-1 text-xs text-stone-600">Limited licensing snapshot; a listed license does not establish availability or walk-in access.</p>
+          <div className="mt-3 grid gap-3 lg:grid-cols-2">{matches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div>
+        </section>}
+        {noExactResults && <p role="status" className="mt-4 text-sm text-stone-700">No exact {searched.field === "zip" ? "ZIP" : searched.field} listings were found in the connected sources. This does not mean there is no care nearby; try the official county directory or local 211.</p>}
+        {matchedCounty && !hasExactResults && !laSearch?.isLoading && (
+          <details className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
+            <summary className="cursor-pointer font-semibold text-stone-900">Other licensed facilities elsewhere in {matchedCounty} County ({countyMatches.length}; not local matches)</summary>
+            <p className="mt-2 text-sm text-stone-700">This ZIP maps to {matchedCounty} County in a partial state healthcare-facility snapshot. These facilities may be far from your ZIP and may not offer the service you need, have openings, or accept walk-ins.</p>
             {countyMatches.length > 0 && <div className="mt-3 grid gap-3 lg:grid-cols-2">{countyMatches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div>}
-          </div>
+          </details>
         )}
         {(matchedCounty === "Orange" || orangeMatches.length > 0) && <p className="mt-4 text-sm text-stone-700">For the full, more frequently updated list, use the official <a href="https://bhpproviderdirectory.ochca.com/" target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>Orange County Behavioral Health Plan provider directory</a>.</p>}
-        <p className="mt-4 text-xs text-stone-600">Confirm service type, who is eligible, cost, and whether appointments or referrals are required directly with the facility. A listed license is not a recommendation by MindBridge.</p>
+        <p className="mt-4 text-xs text-stone-600">Confirm service type, eligibility, cost, and appointment requirements directly with each provider. Listings are not endorsements by MindBridge.</p>
       </div>}
     </div>
   )
