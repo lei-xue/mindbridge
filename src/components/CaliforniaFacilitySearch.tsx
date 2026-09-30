@@ -40,10 +40,11 @@ export function CaliforniaFacilitySearch() {
   const [locationMessage, setLocationMessage] = useState("")
   const [preciseRetry, setPreciseRetry] = useState(false)
   const locationRequest = useRef(0)
+  const locationTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const [laSearch, setLaSearch] = useState<LaSearchState | null>(null)
   const laAbort = useRef<AbortController | null>(null)
-  useEffect(() => () => { locationRequest.current++; laAbort.current?.abort() }, [])
-  const cancelLocation = () => { locationRequest.current++; setLocating(false); setLocationMessage(""); setPreciseRetry(false) }
+  useEffect(() => () => { locationRequest.current++; clearTimeout(locationTimer.current); laAbort.current?.abort() }, [])
+  const cancelLocation = () => { locationRequest.current++; clearTimeout(locationTimer.current); setLocating(false); setLocationMessage(""); setPreciseRetry(false) }
   const useCurrentLocation = () => {
     if (!navigator.geolocation) { setLocationMessage(s.ca.locationUnavailable); return }
     laAbort.current?.abort()
@@ -51,7 +52,17 @@ export function CaliforniaFacilitySearch() {
     const request = ++locationRequest.current
     setLocating(true)
     setLocationMessage("")
-    navigator.geolocation.getCurrentPosition(async position => {
+    clearTimeout(locationTimer.current)
+    const fail = (code: number) => {
+      if (request !== locationRequest.current) return
+      locationRequest.current++
+      clearTimeout(locationTimer.current)
+      setLocating(false); setPreciseRetry(code === 2 || code === 3)
+      setLocationMessage(code === 1 ? s.ca.locationDenied : code === 3 ? s.ca.locationTimeout : s.ca.locationFailed)
+    }
+    // Browser timeout does not reliably cover permission prompts or the lazy boundary download.
+    locationTimer.current = setTimeout(() => fail(3), 12000)
+    try { navigator.geolocation.getCurrentPosition(async position => {
       if (request !== locationRequest.current) return
       let county: string | null
       try {
@@ -60,19 +71,18 @@ export function CaliforniaFacilitySearch() {
         county = suggestCounty(position.coords.latitude, position.coords.longitude, position.coords.accuracy)
       } catch {
         if (request !== locationRequest.current) return
+        locationRequest.current++; clearTimeout(locationTimer.current)
         setLocating(false); setLocationMessage(s.ca.boundaryLoadFailed); return
       }
+      locationRequest.current++; clearTimeout(locationTimer.current)
       setLocating(false); setPreciseRetry(false)
       if (!county) { setLocationMessage(s.ca.noCountySuggested); return }
       laAbort.current?.abort(); setLaSearch(null); setManualCounty(""); setBrowseCity("*")
       setSearched({ field: "county", value: county, source: "location" })
       setError(""); setValue(county); setField("county")
       setLocationMessage(s.ca.showingCounty())
-    }, failure => {
-      if (request !== locationRequest.current) return
-      setLocating(false); setPreciseRetry(failure.code === 2 || failure.code === 3)
-      setLocationMessage(failure.code === 1 ? s.ca.locationDenied : failure.code === 3 ? s.ca.locationTimeout : s.ca.locationFailed)
-    }, { enableHighAccuracy: preciseRetry, timeout: 20000, maximumAge: 60000 })
+    }, failure => fail(failure.code), { enableHighAccuracy: preciseRetry, timeout: 10000, maximumAge: 60000 }) }
+    catch { fail(2) }
   }
   const runLaSearch = (searchType: SearchType, term: string) => {
     laAbort.current?.abort()

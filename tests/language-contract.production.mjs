@@ -35,7 +35,7 @@ test('switch preserves page, public filters and history while updating document 
 test('Spanish keyword and issue filters work without persisting search text', async ({ page }) => {
   await page.goto('/es')
   await page.locator('#filter-q').fill('ansiedad')
-  await expect(page.locator('#directory tr[data-resource]')).not.toHaveCount(0)
+  await expect(page.locator('#directory article')).not.toHaveCount(0)
   await expect(page.locator('#directory')).toContainText('Ansiedad')
   expect(page.url()).not.toContain('ansiedad')
   expect(await page.evaluate(() => [localStorage.length, sessionStorage.length])).toEqual([0, 0])

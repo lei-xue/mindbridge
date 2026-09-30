@@ -25,7 +25,7 @@ for (const county of ['Fresno', 'Orange', 'San Diego', 'Butte']) {
     if (county === 'Butte') await expect(region.locator('tr[data-provider^="butte-"]')).toHaveCount(butte.clinics.length)
     await expect(region.locator('tr[data-provider^="county-"]')).toHaveCount(1)
     await expect(region.getByRole('link', { name: 'Call county plan' })).toBeVisible()
-    await expect(page.locator('#directory tr[data-resource]')).toHaveCount(23)
+    await expect(page.locator('#directory article')).toHaveCount(23)
     expect(page.url()).not.toContain(county)
     expect(requests).toEqual([])
   })

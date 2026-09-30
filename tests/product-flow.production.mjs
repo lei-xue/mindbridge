@@ -26,16 +26,16 @@ for (const locale of ['en', 'es']) {
       await expect(search.locator('tr[data-provider^="oc-"]')).toHaveCount(1)
     })
   }
-  test(`${locale} all 23 resource table rows expose a visible details link that really opens their page`, async ({ page }) => {
+  test(`${locale} all 23 original resource cards expose a visible details link that really opens their page`, async ({ page }) => {
     test.setTimeout(90000)
     const home = locale === 'es' ? '/es' : '/'
     await page.goto(home)
-    const cards = page.locator('#directory tr[data-resource]')
+    const cards = page.locator('#directory article')
     await expect(cards).toHaveCount(23)
     const resources = await cards.evaluateAll(cards => cards.map(card => ({ name: card.querySelector('h3').textContent, href: card.querySelector('a[href*="/resource/"]').getAttribute('href') })))
     expect(new Set(resources.map(r => r.href)).size).toBe(23)
     for (const resource of resources) {
-      const card = page.locator('#directory tr[data-resource]').filter({ has: page.getByRole('heading', { name: resource.name, exact: true }) })
+      const card = page.locator('#directory article').filter({ has: page.getByRole('heading', { name: resource.name, exact: true }) })
       const link = card.getByRole('link', { name: /Details|Detalles/ })
       await expect(link).toBeVisible()
       await expect(card.locator('a[href*="/resource/"]')).toHaveCount(1)
@@ -43,7 +43,7 @@ for (const locale of ['en', 'es']) {
       await expect(page).toHaveURL(new RegExp(resource.href + '$'))
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(resource.name)
       await page.goBack()
-      await expect(page.locator('#directory tr[data-resource]')).toHaveCount(23)
+      await expect(page.locator('#directory article')).toHaveCount(23)
     }
   })
 }

@@ -16,7 +16,7 @@ test('granted permission with unavailable position offers a precise retry, not a
  await expect(page.getByLabel('California county')).toHaveValue('Butte')
  const options=await page.evaluate(()=>window.geoOptions)
  expect(options[0].maximumAge).toBe(60000)
- expect(options[0].timeout).toBe(20000)
+ expect(options[0].timeout).toBe(10000)
  expect(options[1].enableHighAccuracy).toBe(true)
 })
 
