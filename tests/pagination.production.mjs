@@ -2,6 +2,8 @@ import { test, expect } from '@playwright/test'
 import { readFileSync } from 'node:fs'
 import { visitProviderPages } from './provider-pages.mjs'
 const licenses = JSON.parse(readFileSync(new URL('../src/data/california-facilities.json', import.meta.url)))
+const primaryCare = JSON.parse(readFileSync(new URL('../src/data/california-primary-care.json', import.meta.url)))
+const sfIds = ['county-San Francisco', ...licenses.filter(f => f.county === 'San Francisco').map(f => `license-${f.id}`), ...primaryCare.clinics.filter(f => f.county === 'San Francisco').map(f => `hcai-${f.id}`)]
 const local = page => page.locator('section[aria-labelledby="local-support-heading"]')
 for (const locale of ['en', 'es']) {
   const next = locale === 'es' ? 'Siguiente' : 'Next'
@@ -18,19 +20,22 @@ for (const locale of ['en', 'es']) {
       await expect(local(page).locator('tr[data-provider]')).toHaveCount(5)
       await expect(pager.getByRole('button', { name: previous, exact: true })).toBeDisabled()
       await expect(pager.getByRole('button', { name: locale === 'es' ? 'Página 1' : 'Page 1', exact: true })).toHaveAttribute('aria-current', 'page')
-      await expect(local(page).locator('[data-pagination-summary]')).toContainText(locale === 'es' ? '1–5 de 6' : '1–5 of 6')
+      await expect(local(page).locator('[data-pagination-summary]')).toContainText(`1–5 ${locale === 'es' ? 'de' : 'of'} ${sfIds.length}`)
       const box = await pager.boundingBox()
       const table = await local(page).getByRole('table').boundingBox()
       expect(box.y).toBeGreaterThanOrEqual(table.y + table.height)
       for (const button of await pager.getByRole('button').all()) expect((await button.boundingBox()).height).toBeGreaterThanOrEqual(44)
       await pager.getByRole('button', { name: next, exact: true }).focus()
       await page.keyboard.press('Enter')
-      await expect(local(page).locator('tr[data-provider]')).toHaveCount(1)
-      await expect(local(page).locator('tr[data-provider]')).toContainText('San Francisco Mental Health Rehabilitation Center')
+      await expect(local(page).locator('tr[data-provider]')).toHaveCount(5)
+      await expect(local(page).locator('tr[data-provider]').first()).toContainText('San Francisco Mental Health Rehabilitation Center')
+      await pager.getByRole('button', { name: new RegExp(`^(Page|Página) ${Math.ceil(sfIds.length / 5)}$`) }).click()
+      const lastCount = sfIds.length % 5 || 5
+      await expect(local(page).locator('tr[data-provider]')).toHaveCount(lastCount)
       await expect(pager.getByRole('button', { name: next, exact: true })).toBeDisabled()
-      await expect(local(page).locator('[data-pagination-summary]')).toContainText(locale === 'es' ? '6–6 de 6' : '6–6 of 6')
+      await expect(local(page).locator('[data-pagination-summary]')).toContainText(`${sfIds.length - lastCount + 1}–${sfIds.length} ${locale === 'es' ? 'de' : 'of'} ${sfIds.length}`)
       const entries = await visitProviderPages(local(page))
-      expect(entries.map(entry => entry.id)).toEqual(['county-San Francisco', ...licenses.filter(f => f.county === 'San Francisco').map(f => `license-${f.id}`)])
+      expect(entries.map(entry => entry.id)).toEqual(sfIds)
       expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false)
       await expect(page.locator('#directory article')).toHaveCount(23)
     })
@@ -45,7 +50,7 @@ for (const locale of ['en', 'es']) {
     await expect(pager.getByRole('button', { name: next, exact: true })).toBeDisabled()
     expect(await local(page).locator('tr[data-provider]').count()).toBeLessThanOrEqual(5)
     await page.locator('#local-city-filter').selectOption('Irvine')
-    await expect(local(page).locator('tr[data-provider]')).toHaveCount(2)
+    await expect(local(page).locator('tr[data-provider]')).toHaveCount(2 + primaryCare.clinics.filter(clinic => clinic.county === 'Orange' && clinic.city.toLowerCase() === 'irvine').length)
     await expect(pager).toHaveCount(0)
     await page.locator('#local-city-filter').selectOption('*')
     await expect(local(page).locator('tr[data-provider="county-Orange"]')).toBeVisible()

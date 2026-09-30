@@ -8,6 +8,7 @@ import countySites from "../data/california-county-sites.json"
 import orange from "../data/orange-provider-sites.json"
 import sanDiego from "../data/san-diego-adult-clinics.json"
 import butte from "../data/butte-adult-clinics.json"
+import primaryCare from "../data/california-primary-care.json"
 import { btnCall, btnSecondary, focusRing } from "../lib/ui"
 import { AddressLink } from "./AddressLink"
 import { DirectoryTable, type TableRow } from "./DirectoryTable"
@@ -25,8 +26,8 @@ const sdDirectory = "https://www.optumsandiego.com/content/SanDiego/sandiego/en/
 const laDirectory = "https://dmh.lacounty.gov/pd/"
 
 function ListedPhone({ phone }: { phone: string }) {
-  const dialable = /^\(?\d{3}\)?[ .-]*\d{3}[ .-]*\d{4}$/.test(phone)
-  return dialable ? <a href={`tel:+1${phone.replace(/\D/g, "")}`} className={`inline-flex min-h-11 items-center rounded font-semibold text-teal-800 underline ${focusRing}`}>{phone}</a> : <span>{phone || "—"}</span>
+  const dial = phone.match(/^(?:\+?1[ .-]*)?(\(?\d{3}\)?[ .-]*\d{3}[ .-]*\d{4})(?:\s*(?:ext\.?|x|#)\s*(\d{1,6}))?$/i)
+  return dial ? <a href={`tel:+1${dial[1].replace(/\D/g, "")}${dial[2] ? `;ext=${dial[2]}` : ""}`} className={`inline-flex min-h-11 items-center rounded font-semibold text-teal-800 underline ${focusRing}`}>{phone}</a> : <span>{phone || "—"}</span>
 }
 
 export function CaliforniaFacilitySearch() {
@@ -114,20 +115,25 @@ export function CaliforniaFacilitySearch() {
     if (field === "zip" && counties?.length === 1 && counties[0] === "Los Angeles") runLaSearch("zip", term)
   }
   const same = (a: string, b: string) => a.toLocaleLowerCase("en-US") === b.toLocaleLowerCase("en-US")
-  const zipCandidates = searched?.field === "zip" ? countyAccess.zipCounties[searched.value as keyof typeof countyAccess.zipCounties] ?? [] : []
+  const zipCandidates = searched?.field === "zip" ? [...new Set([
+    ...(countyAccess.zipCounties[searched.value as keyof typeof countyAccess.zipCounties] ?? []),
+    ...primaryCare.clinics.filter(clinic => clinic.zip.slice(0, 5) === searched.value).map(clinic => clinic.county),
+  ])] : []
   const countyCandidates = searched?.field === "zip" ? zipCandidates : searched?.field === "county" ? [searched.value] : searched ? [...new Set([
     ...facilities.filter(f => same(f.city, searched.value)).map(f => f.county),
+    ...primaryCare.clinics.filter(clinic => same(clinic.city, searched.value)).map(clinic => clinic.county),
     ...(orange.sites.some(site => same(site.city, searched.value) && countyAccess.zipCounties[site.zip as keyof typeof countyAccess.zipCounties]?.includes("Orange")) ? ["Orange"] : []),
     ...(sanDiego.clinics.some(clinic => same(clinic.city, searched.value)) ? ["San Diego"] : []),
     ...(butte.clinics.some(clinic => same(clinic.city, searched.value)) ? ["Butte"] : []),
   ])] : []
   const selectedCounty = manualCounty || (countyCandidates.length === 1 ? countyCandidates[0] : "")
-  const matchesQuery = (city: string, zip: string, county: string) => Boolean(searched && (searched.field === "county" ? same(county, searched.value) : same(searched.field === "zip" ? zip : city, searched.value)) && (!manualCounty || same(county, manualCounty)))
+  const matchesQuery = (city: string, zip: string, county: string) => Boolean(searched && (searched.field === "county" ? same(county, searched.value) : same(searched.field === "zip" ? zip.slice(0, 5) : city, searched.value)) && (!manualCounty || same(county, manualCounty)))
   const listings: Listing[] = searched ? [
     ...facilities.filter(f => matchesQuery(f.city, f.zip, f.county)).map(f => ({ id: `license-${f.id}`, name: f.name, city: f.city, address: f.address, zip: f.zip, phone: f.phone || "", category: f.category, source: licenseSources[f.source as keyof typeof licenseSources], sourceLabel: f.source, date: f.source === "CDPH" ? "2026-09-01" : "2026-09-11" })),
     ...orange.sites.filter(site => countyAccess.zipCounties[site.zip as keyof typeof countyAccess.zipCounties]?.includes("Orange") && matchesQuery(site.city, site.zip, "Orange") && (searched.field !== "zip" || selectedCounty === "Orange")).map(site => ({ id: `oc-${site.id}`, name: site.name, city: site.city, address: site.address, zip: site.zip, phone: site.phone || "", category: site.category, source: ocDirectory, sourceLabel: "OC BHP", date: orange.retrievedAt })),
     ...sanDiego.clinics.filter(clinic => matchesQuery(clinic.city, clinic.zip, "San Diego") && (searched.field !== "zip" || selectedCounty === "San Diego")).map(clinic => ({ id: `sd-${clinic.id}`, name: clinic.name, city: clinic.city, address: clinic.address, zip: clinic.zip, phone: clinic.phone, category: s.table.adults, source: sdDirectory, sourceLabel: "San Diego BHS", date: sanDiego.retrievedAt })),
     ...butte.clinics.filter(clinic => matchesQuery(clinic.city, clinic.zip, "Butte") && (searched.field !== "zip" || selectedCounty === "Butte")).map(clinic => ({ id: `butte-${clinic.id}`, name: clinic.name, city: clinic.city, address: clinic.address, zip: clinic.zip, phone: clinic.phone, category: s.table.adults, source: clinic.source, sourceLabel: s.ca.butteOfficial, date: butte.retrievedAt })),
+    ...primaryCare.clinics.filter(clinic => matchesQuery(clinic.city, clinic.zip, clinic.county) && (searched.field !== "zip" || selectedCounty === clinic.county)).map(clinic => ({ id: `hcai-${clinic.id}`, name: clinic.name, city: clinic.city, address: clinic.address, zip: clinic.zip, phone: clinic.phone, category: s.table.primaryMental, source: primaryCare.source, sourceLabel: primaryCare.sourceLabel, date: primaryCare.sourceExtractedAt })),
     ...(laSearch?.results ?? []).map(result => ({ id: `la-${result.id}`, name: result.name, city: result.address.city, address: result.address.lines.join(" · "), zip: result.address.postalCode, phone: result.phones.join(" · "), category: "LA County DMH", source: laDirectory, sourceLabel: "LA DMH", date: result.lastUpdated || "", extra: <>
       {result.websites.map(site => <p key={site.url}><a href={site.url} target="_blank" rel="noopener noreferrer" className={`underline ${focusRing}`}>{site.label}</a></p>)}
       {result.hours.length > 0 && <p>{s.la.listedHours} {result.hours.map(h => `${h.days.join(", ")}: ${h.opens && h.closes ? `${h.opens}–${h.closes}` : s.la.hoursNotSpecified}`).join("; ")}</p>}
@@ -136,13 +142,13 @@ export function CaliforniaFacilitySearch() {
       {result.accessibility.length > 0 && <p>{s.la.accessibility} {result.accessibility.join("; ")}</p>}
     </> })),
   ] : []
-  const cityOptions = [...new Set(listings.map(row => row.city))].sort()
+  const cityOptions = [...new Map([...listings].reverse().map(row => [row.city.toLocaleLowerCase("en-US"), row.city])).values()].sort()
   const visibleListings = listings.filter(row => browseCity === "*" || same(row.city, browseCity))
   const plan = countyAccess.countyPlans.find(p => p.name === selectedCounty)
   const website = countySites.websites.find(p => p.name === selectedCounty)?.url
   const linkClass = `inline-flex min-h-11 items-center rounded text-teal-800 underline ${focusRing}`
   const rows: TableRow[] = visibleListings.map(row => ({ id: row.id, cells: [
-    <h4 key="name" className="font-semibold">{row.name}</h4>, <div key="type"><span lang={row.category === s.table.adults ? undefined : "en"}>{row.category}</span>{row.extra && <div className="mt-2 space-y-1 text-xs">{row.extra}</div>}</div>,
+    <h4 key="name" className="font-semibold">{row.name}</h4>, <div key="type"><span lang={row.category === s.table.adults || row.id.startsWith("hcai-") ? undefined : "en"}>{row.category}</span>{row.extra && <div className="mt-2 space-y-1 text-xs">{row.extra}</div>}</div>,
     row.address ? <AddressLink key="address" address={`${row.address} · ${row.city}, CA ${row.zip}`} /> : `${row.city}, CA ${row.zip}`,
     <div key="phone">{row.id.startsWith("la-") ? row.phone.split(" · ").filter(Boolean).map(phone => <ListedPhone key={phone} phone={phone} />) : <ListedPhone phone={row.phone} />}</div>,
     <Fragment key="source"><a className={linkClass} href={row.source} target="_blank" rel="noopener noreferrer">{row.sourceLabel}</a>{row.date && <p className="text-xs text-stone-500">{row.date}</p>}</Fragment>,

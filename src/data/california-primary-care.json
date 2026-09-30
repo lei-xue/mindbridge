@@ -1,0 +1,5448 @@
+{
+  "source": "https://data.chhs.ca.gov/dataset/primary-care-clinic-annual-utilization-data",
+  "download": "https://data.chhs.ca.gov/dataset/445db6df-3987-4145-af34-0d7cc3c0e5eb/resource/96244225-eb39-4c21-a7e8-18cdd70b5b33/download/pcc25_util_data_prelim.xlsx",
+  "sourceLabel": "HCAI · 2025",
+  "reportYear": 2025,
+  "sourceExtractedAt": "2026-05-04",
+  "retrievedAt": "2026-09-30",
+  "sha256": "e357d6383cabb6b2f30788df3afcb1c755e3ab4a924ef2ef5f2a29c4e0a9a67a",
+  "scope": "Primary care clinics reporting mental health services in 2025; open and operating in the source report. Not a current-availability or free-care directory.",
+  "selection": {
+    "sheet": "Page 1-8",
+    "HEALTH_SERV_MENTAL_HEALTH": "X",
+    "FAC_OPERATED_THIS_YR": "Yes",
+    "LICENSE_STATUS": "Open"
+  },
+  "reviewedReportRows": 1079,
+  "clinicCount": 603,
+  "countyCount": 48,
+  "clinics": [
+    {
+      "id": "306014254",
+      "name": "AHF HEALTHCARE CENTER - OAKLAND",
+      "address": "400 30TH ST, STE 300",
+      "city": "OAKLAND",
+      "zip": "94609",
+      "phone": "5106280949",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014200",
+      "name": "ASHLAND FREE MEDICAL CLINIC",
+      "address": "50 E LEWELLING BLVD, STE S5",
+      "city": "SAN LORENZO",
+      "zip": "94580",
+      "phone": "5104072632",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014381",
+      "name": "AXIS COMMUNITY HEALTH",
+      "address": "5925 W LAS POSITAS BLVD, STE 100",
+      "city": "PLEASANTON",
+      "zip": "94588",
+      "phone": "9254621755",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014387",
+      "name": "BAY AREA COMMUNITY HEALTH - IRVINGTON DAVE CLINIC",
+      "address": "40910 FREMONT BLVD.",
+      "city": "FREMONT",
+      "zip": "94538",
+      "phone": "5107708040",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014156",
+      "name": "BAY AREA COMMUNITY HEALTH - LIBERTY CLINIC",
+      "address": "39500 LIBERTY ST",
+      "city": "FREMONT",
+      "zip": "94538",
+      "phone": "5107708040",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014339",
+      "name": "BAY AREA COMMUNITY HEALTH - MOWRY II",
+      "address": "1999 MOWRY AVE",
+      "city": "FREMONT",
+      "zip": "94538",
+      "phone": "5107708040",
+      "county": "Alameda"
+    },
+    {
+      "id": "306013347",
+      "name": "CASA DEL SOL",
+      "address": "1501 FRUITVALE AVE",
+      "city": "OAKLAND",
+      "zip": "94601",
+      "phone": "510-535-4130",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014163",
+      "name": "CENTER FOR ELDERS INDEPENDENCE",
+      "address": "1497 ALCATRAZ AVE",
+      "city": "BERKELEY",
+      "zip": "94702",
+      "phone": "5104331150",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014243",
+      "name": "CENTER FOR ELDERS INDEPENDENCE",
+      "address": "7200 BANCROFT AVE, STE 188",
+      "city": "OAKLAND",
+      "zip": "94605",
+      "phone": "5104331150",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014116",
+      "name": "CENTER FOR ELDERS INDEPENDENCE (CLINIC)",
+      "address": "1955 SAN PABLO AVE",
+      "city": "OAKLAND",
+      "zip": "94612",
+      "phone": "5104331150",
+      "county": "Alameda"
+    },
+    {
+      "id": "306010376",
+      "name": "CENTER FOR ELDERS' INDEPENDENCE",
+      "address": "1850 FAIRWAY DR",
+      "city": "SAN LEANDRO",
+      "zip": "94577",
+      "phone": "5104331150",
+      "county": "Alameda"
+    },
+    {
+      "id": "306011006",
+      "name": "CHENMING & MARGARET HU MEDICAL CENTER",
+      "address": "818 WEBSTER ST",
+      "city": "OAKLAND",
+      "zip": "94607-4220",
+      "phone": "5109866800",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014205",
+      "name": "CLINICA ALTA VISTA",
+      "address": "1515 FRUITVALE AVE",
+      "city": "OAKLAND",
+      "zip": "94601",
+      "phone": "510-535-6300",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014336",
+      "name": "DAVIS STREET PRIMARY CARE CLINIC",
+      "address": "3081 TEAGARDEN ST",
+      "city": "SAN LEANDRO",
+      "zip": "94577",
+      "phone": "5103474620",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014272",
+      "name": "FRANK KIANG MEDICAL CENTER",
+      "address": "250 E 18TH ST, STE 2",
+      "city": "OAKLAND",
+      "zip": "94606",
+      "phone": "5107353888",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014188",
+      "name": "LA CLINICA  DE LA RAZA",
+      "address": "3451 E 12TH ST",
+      "city": "OAKLAND",
+      "zip": "94601",
+      "phone": "510-535-3700",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014359",
+      "name": "LIFELONG TRUST HEALTH CENTER",
+      "address": "386 14TH ST",
+      "city": "OAKLAND",
+      "zip": "94612",
+      "phone": "510-981-4100",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014240",
+      "name": "NATIVE AMERICAN HEALTH CENTER",
+      "address": "2950 INTERNATIONAL BLVD",
+      "city": "OAKLAND",
+      "zip": "94601",
+      "phone": "510-485-5948",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014245",
+      "name": "ORDER OF MALTA CLINIC OF NORTHERN CALIFORNIA",
+      "address": "2121 HARRISON ST, STE 120",
+      "city": "OAKLAND",
+      "zip": "94612",
+      "phone": "510-587-3000",
+      "county": "Alameda"
+    },
+    {
+      "id": "306010715",
+      "name": "ROOTS COMMUNITY HEALTH CENTER",
+      "address": "7272 MACARTHUR BLVD",
+      "city": "OAKLAND",
+      "zip": "94605",
+      "phone": "5107771177",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014311",
+      "name": "ROOTS COMMUNITY HEALTH CENTER",
+      "address": "9925 INTERNATIONAL BLVD, STE 5",
+      "city": "OAKLAND",
+      "zip": "94603",
+      "phone": "5107771177",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014194",
+      "name": "TIBURCIO VASQUEZ HEALTH CENTER",
+      "address": "22331 MISSION BLVD",
+      "city": "HAYWARD",
+      "zip": "94541",
+      "phone": "510-293-2310",
+      "county": "Alameda"
+    },
+    {
+      "id": "306014338",
+      "name": "TIBURCIO VASQUEZ HEALTH CENTER, INC",
+      "address": "16110 E 14TH ST",
+      "city": "SAN LEANDRO",
+      "zip": "94578",
+      "phone": "510-398-7500",
+      "county": "Alameda"
+    },
+    {
+      "id": "306011057",
+      "name": "TIBURCIO VASQUEZ HEALTH CENTER, INC.",
+      "address": "33255  9TH ST",
+      "city": "UNION CITY",
+      "zip": "94587-2137",
+      "phone": "510-293-2311",
+      "county": "Alameda"
+    },
+    {
+      "id": "306010992",
+      "name": "WEST OAKLAND HEALTH CENTER",
+      "address": "700 ADELINE ST",
+      "city": "OAKLAND",
+      "zip": "94607",
+      "phone": "510-835-9610",
+      "county": "Alameda"
+    },
+    {
+      "id": "306044016",
+      "name": "AMPLA HEALTH CHICO MEDICAL, DENTAL & PEDIATRICS",
+      "address": "680 COHASSET RD",
+      "city": "CHICO",
+      "zip": "95926",
+      "phone": "530-342-4395",
+      "county": "Butte"
+    },
+    {
+      "id": "306044166",
+      "name": "AMPLA HEALTH OROVILLE MEDICAL & DENTAL",
+      "address": "2800 LINCOLN ST",
+      "city": "OROVILLE",
+      "zip": "95966",
+      "phone": "530-534-7500",
+      "county": "Butte"
+    },
+    {
+      "id": "306040425",
+      "name": "CHILDREN'S HEALTH CENTER",
+      "address": "1515 SPRINGFIELD DR, STE 175",
+      "city": "CHICO",
+      "zip": "95928",
+      "phone": "5307811440",
+      "county": "Butte"
+    },
+    {
+      "id": "306040438",
+      "name": "FEATHER RIVER TRIBAL HEALTH WELLNESS CENTER",
+      "address": "2201 5TH AVE",
+      "city": "OROVILLE",
+      "zip": "95965",
+      "phone": "530-534-5394",
+      "county": "Butte"
+    },
+    {
+      "id": "306042284",
+      "name": "FEATHER RIVER TRIBAL HEALTH, INC.",
+      "address": "2145 5TH AVE",
+      "city": "OROVILLE",
+      "zip": "95965",
+      "phone": "530-534-5394",
+      "county": "Butte"
+    },
+    {
+      "id": "306044148",
+      "name": "NORTHERN VALLEY INDIAN HEALTH, INC",
+      "address": "845 W EAST AVE",
+      "city": "CHICO",
+      "zip": "95926",
+      "phone": "5308969400",
+      "county": "Butte"
+    },
+    {
+      "id": "306040807",
+      "name": "NORTHERN VALLEY INDIAN HEALTH, INC.",
+      "address": "1990 CONCORD AVE",
+      "city": "CHICO",
+      "zip": "95928",
+      "phone": "5308093300",
+      "county": "Butte"
+    },
+    {
+      "id": "306054013",
+      "name": "MACT MEDICAL CLINIC SAN ANDREAS",
+      "address": "1113 HWY 49",
+      "city": "SAN ANDREAS",
+      "zip": "95249",
+      "phone": "209-755-1400",
+      "county": "Calaveras"
+    },
+    {
+      "id": "306074172",
+      "name": "BRIGHTER BEGINNINGS FAMILY HEALTH CLINIC",
+      "address": "2727 MACDONALD AVE",
+      "city": "RICHMOND",
+      "zip": "94804",
+      "phone": "510-236-6990",
+      "county": "Contra Costa"
+    },
+    {
+      "id": "306070655",
+      "name": "CENTER FOR ELDERS INDEPENDENCE",
+      "address": "1465 CIVIC CT",
+      "city": "CONCORD",
+      "zip": "94520",
+      "phone": "5104331150",
+      "county": "Contra Costa"
+    },
+    {
+      "id": "306074159",
+      "name": "LA CLINICA MONUMENT",
+      "address": "2000 SIERRA RD",
+      "city": "CONCORD",
+      "zip": "94518",
+      "phone": "925-363-2000",
+      "county": "Contra Costa"
+    },
+    {
+      "id": "306074083",
+      "name": "LA CLINICA PITTSBURG - MEDICAL",
+      "address": "2240 GLADSTONE DR, STE 4",
+      "city": "PITTSBURG",
+      "zip": "94565",
+      "phone": "925-431-2117",
+      "county": "Contra Costa"
+    },
+    {
+      "id": "306074080",
+      "name": "LIFELONG BROOKSIDE COMMUNITY HEALTH CENTER SAN PABLO",
+      "address": "2023 VALE RD, STE 107",
+      "city": "SAN PABLO",
+      "zip": "94806",
+      "phone": "510-981-4100",
+      "county": "Contra Costa"
+    },
+    {
+      "id": "306070603",
+      "name": "LIFELONG WILLIAM JENKINS HEALTH CENTER",
+      "address": "150 HARBOUR WAY",
+      "city": "RICHMOND",
+      "zip": "94801",
+      "phone": "510-981-4100",
+      "county": "Contra Costa"
+    },
+    {
+      "id": "306073663",
+      "name": "PLANNED PARENTHOOD OF CONTRA COSTA-CONCORD CENTER",
+      "address": "2185 PACHECO ST",
+      "city": "CONCORD",
+      "zip": "94520",
+      "phone": "(925) 676-0300",
+      "county": "Contra Costa"
+    },
+    {
+      "id": "306084005",
+      "name": "DEL NORTE COMMUNITY HEALTH CENTER",
+      "address": "550 E WASHINGTON BLVD, STE 100",
+      "city": "CRESCENT CITY",
+      "zip": "95531",
+      "phone": "7074656925",
+      "county": "Del Norte"
+    },
+    {
+      "id": "306084007",
+      "name": "UNITED INDIAN HEALTH SERVICES, INC.",
+      "address": "1675 NORTHCREST DR",
+      "city": "CRESCENT CITY",
+      "zip": "95531",
+      "phone": "707-825-5000",
+      "county": "Del Norte"
+    },
+    {
+      "id": "306105115",
+      "name": "ARIA COMMUNITY HEALTH CENTER RIVERDALE",
+      "address": "3554 W MOUNT WHITNEY AVE",
+      "city": "RIVERDALE",
+      "zip": "93656",
+      "phone": "5593864500",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100760",
+      "name": "BLACKSTONE COMMUNITY HEALTH CENTER",
+      "address": "1685 E HOME AVE",
+      "city": "FRESNO",
+      "zip": "93728",
+      "phone": "833-678-2781",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100674",
+      "name": "CENTRAL FRESNO COMMUNITY HEALTH CENTER",
+      "address": "4711 W ASHLAN AVE",
+      "city": "FRESNO",
+      "zip": "93722",
+      "phone": "5592036660",
+      "county": "Fresno"
+    },
+    {
+      "id": "306105140",
+      "name": "CENTRAL VALLEY INDIAN HEALTH, BULLARD CLINIC",
+      "address": "255 W BULLARD AVE, STE 109",
+      "city": "CLOVIS",
+      "zip": "93612",
+      "phone": "559-325-5715",
+      "county": "Fresno"
+    },
+    {
+      "id": "306105112",
+      "name": "CLOVIS COMMUNITY HEALTH CENTER",
+      "address": "180 W SHAW AVE, STE B",
+      "city": "CLOVIS",
+      "zip": "93612",
+      "phone": "5592036600",
+      "county": "Fresno"
+    },
+    {
+      "id": "306104012",
+      "name": "ELM COMMUNITY HEALTH CENTER",
+      "address": "2740 S ELM AVE",
+      "city": "FRESNO",
+      "zip": "93706",
+      "phone": "559-457-5200",
+      "county": "Fresno"
+    },
+    {
+      "id": "306105094",
+      "name": "ELM WOMEN'S & PEDIATRIC COMMUNITY HEALTH CENTER",
+      "address": "2760 S ELM AVE",
+      "city": "FRESNO",
+      "zip": "93706",
+      "phone": "559-457-5314",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100373",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "5166 E OLIVE AVE",
+      "city": "FRESNO",
+      "zip": "93727",
+      "phone": "5597374700",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100776",
+      "name": "FIREBAUGH COMMUNITY HEALTH CENTER",
+      "address": "689 N ST",
+      "city": "FIREBAUGH",
+      "zip": "93622",
+      "phone": "5596593037",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100650",
+      "name": "FRESNO AMERICAN INDIAN HEALTH PROJECT",
+      "address": "1551 E SHAW AVE, STE 128 , 139",
+      "city": "FRESNO",
+      "zip": "93710",
+      "phone": "559-320-0490",
+      "county": "Fresno"
+    },
+    {
+      "id": "306105117",
+      "name": "GASTON MIDDLE SCHOOL HEALTH AND WELLNESS CENTER",
+      "address": "1120 E CHURCH AVENUE",
+      "city": "FRESNO",
+      "zip": "93706",
+      "phone": "559-457-6995",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100022",
+      "name": "KINGSBURG COMMUNITY HEALTH CENTER",
+      "address": "121 W SIERRA ST",
+      "city": "KINGSBURG",
+      "zip": "93631",
+      "phone": "5593265320",
+      "county": "Fresno"
+    },
+    {
+      "id": "306105097",
+      "name": "NORTH FINE COMMUNITY HEALTH CENTER",
+      "address": "1945 N FINE AVE, STE 100",
+      "city": "FRESNO",
+      "zip": "93727",
+      "phone": "559-457-5800",
+      "county": "Fresno"
+    },
+    {
+      "id": "306105106",
+      "name": "NORTH MARKS MEDICAL CLINIC",
+      "address": "4011 N MARKS AVE",
+      "city": "FRESNO",
+      "zip": "93722",
+      "phone": "5592556476",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100515",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "4646 N 1ST ST",
+      "city": "FRESNO",
+      "zip": "93726",
+      "phone": "661-459-1900",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100938",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "1530 E MANNING AVE",
+      "city": "REEDLEY",
+      "zip": "93654",
+      "phone": "661-459-1900",
+      "county": "Fresno"
+    },
+    {
+      "id": "306105138",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "925 G ST",
+      "city": "REEDLEY",
+      "zip": "93654",
+      "phone": "661-459-1900",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100021",
+      "name": "SAN JOAQUIN HEALTH CENTER",
+      "address": "21890 COLORADO AVE",
+      "city": "SAN JOAQUIN",
+      "zip": "93660",
+      "phone": "5596932462",
+      "county": "Fresno"
+    },
+    {
+      "id": "306105139",
+      "name": "TODOS PARA LA SALUD",
+      "address": "4420 N 1ST ST, STE 123",
+      "city": "FRESNO",
+      "zip": "93726",
+      "phone": "5592315366",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100685",
+      "name": "UNIT HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "313 W SHAW AVE",
+      "city": "CLOVIS",
+      "zip": "93612",
+      "phone": "5596466618",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100023",
+      "name": "UNITED HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "2848 W ASHLAN AVE",
+      "city": "FRESNO",
+      "zip": "93705",
+      "phone": "5596466618",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100025",
+      "name": "UNITED HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "4340 E JENSEN AVE",
+      "city": "FRESNO",
+      "zip": "93725",
+      "phone": "5596466618",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100026",
+      "name": "UNITED HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "290 N WAYTE LN, STE 1200-1400, 1600-1800, 2100-2700",
+      "city": "FRESNO",
+      "zip": "93701",
+      "phone": "5596466618",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100031",
+      "name": "UNITED HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "4615 N 1ST ST",
+      "city": "FRESNO",
+      "zip": "93726",
+      "phone": "5596466618",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100353",
+      "name": "UNITED HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "1570 7TH ST",
+      "city": "SANGER",
+      "zip": "93657",
+      "phone": "5596466618",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100535",
+      "name": "UNITED HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "17008 13TH ST",
+      "city": "HURON",
+      "zip": "93234",
+      "phone": "5596466618",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100605",
+      "name": "UNITED HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "429 E MANNING AVE",
+      "city": "PARLIER",
+      "zip": "93648",
+      "phone": "5596466618",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100653",
+      "name": "UNITED HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "6810 N MILBURN AVE",
+      "city": "FRESNO",
+      "zip": "93722",
+      "phone": "5596466618",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100666",
+      "name": "UNITED HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "1780 E BULLARD AVE",
+      "city": "FRESNO",
+      "zip": "93710",
+      "phone": "5596466618",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100714",
+      "name": "UNITED HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "1110 N BLACKSTONE AVE",
+      "city": "FRESNO",
+      "zip": "93701",
+      "phone": "5596466618",
+      "county": "Fresno"
+    },
+    {
+      "id": "306100719",
+      "name": "UNITED HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "645 S MINNEWAWA AVE",
+      "city": "FRESNO",
+      "zip": "93727",
+      "phone": "5596466618",
+      "county": "Fresno"
+    },
+    {
+      "id": "306104041",
+      "name": "UNITED HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "121 BARBOZA ST",
+      "city": "MENDOTA",
+      "zip": "93640",
+      "phone": "5596466618",
+      "county": "Fresno"
+    },
+    {
+      "id": "306105116",
+      "name": "UNITED HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "1790 E MANNING AVE",
+      "city": "REEDLEY",
+      "zip": "93654",
+      "phone": "5596466618",
+      "county": "Fresno"
+    },
+    {
+      "id": "306105035",
+      "name": "WEST FRESNO COMMUNITY HEALTH CENTER",
+      "address": "302 FRESNO ST, STE 101",
+      "city": "FRESNO",
+      "zip": "93706",
+      "phone": "559-457-5700",
+      "county": "Fresno"
+    },
+    {
+      "id": "306114003",
+      "name": "NORTHERN VALLEY INDIAN HEALTH, INC.",
+      "address": "207 N BUTTE ST",
+      "city": "WILLOWS",
+      "zip": "95988",
+      "phone": "5309344641",
+      "county": "Glenn"
+    },
+    {
+      "id": "306124039",
+      "name": "EUREKA COMMUNITY HEALTH CENTER",
+      "address": "2200 TYDD ST",
+      "city": "EUREKA",
+      "zip": "95501",
+      "phone": "707-441-1624",
+      "county": "Humboldt"
+    },
+    {
+      "id": "306124044",
+      "name": "FORTUNA COMMUNITY HEALTH CENTER",
+      "address": "3750 ROHNERVILLE RD",
+      "city": "FORTUNA",
+      "zip": "95540",
+      "phone": "707-725-6101",
+      "county": "Humboldt"
+    },
+    {
+      "id": "306120020",
+      "name": "HUMBOLDT OPEN DOOR CLINIC",
+      "address": "1150 FOSTER AVE",
+      "city": "ARCATA",
+      "zip": "95521",
+      "phone": "707-826-8610",
+      "county": "Humboldt"
+    },
+    {
+      "id": "306124017",
+      "name": "MCKINLEYVILLE COMMUNITY HEALTH CENTER",
+      "address": "1644 CENTRAL AVE, STE A,B,C,D,E, & F",
+      "city": "MCKINLEYVILLE",
+      "zip": "95519",
+      "phone": "707-839-3068",
+      "county": "Humboldt"
+    },
+    {
+      "id": "306121917",
+      "name": "REDWOODS RURAL HEALTH CENTER, INC",
+      "address": "101 WEST COAST RD",
+      "city": "REDWAY",
+      "zip": "95560",
+      "phone": "7079232783",
+      "county": "Humboldt"
+    },
+    {
+      "id": "306124030",
+      "name": "TELEHEALTH AND VISITING SPECIALIST CENTER",
+      "address": "2426 BUHNE ST",
+      "city": "EUREKA",
+      "zip": "95501",
+      "phone": "7074434593",
+      "county": "Humboldt"
+    },
+    {
+      "id": "306124024",
+      "name": "UNITED INDIAN HEALTH SERVICES, INC.",
+      "address": "1600 WEEOT WAY",
+      "city": "ARCATA",
+      "zip": "95521",
+      "phone": "707-825-5000",
+      "county": "Humboldt"
+    },
+    {
+      "id": "306124016",
+      "name": "WILLOW CREEK COMMUNITY HEALTH CENTER",
+      "address": "38883 CALIFORNIA 299",
+      "city": "WILLOW CREEK",
+      "zip": "95573",
+      "phone": "5306293111",
+      "county": "Humboldt"
+    },
+    {
+      "id": "306131254",
+      "name": "INNERCARE - CALEXICO",
+      "address": "223 W COLE BLVD",
+      "city": "CALEXICO",
+      "zip": "92231",
+      "phone": "7603572020",
+      "county": "Imperial"
+    },
+    {
+      "id": "306130502",
+      "name": "INNERCARE - EL CENTRO",
+      "address": "852 E DANENBERG DR",
+      "city": "EL CENTRO",
+      "zip": "92243",
+      "phone": "7603522257",
+      "county": "Imperial"
+    },
+    {
+      "id": "306134005",
+      "name": "INNERCARE - NILAND",
+      "address": "8027 HIGHWAY 111",
+      "city": "NILAND",
+      "zip": "92257",
+      "phone": "7603590110",
+      "county": "Imperial"
+    },
+    {
+      "id": "306134014",
+      "name": "INNERCARE - WINTERHAVEN",
+      "address": "2133 WINTERHAVEN DR",
+      "city": "WINTERHAVEN",
+      "zip": "92283",
+      "phone": "7605383073",
+      "county": "Imperial"
+    },
+    {
+      "id": "306130675",
+      "name": "INNERCARE- BRAWLEY",
+      "address": "900 MAIN ST",
+      "city": "BRAWLEY",
+      "zip": "92227",
+      "phone": "7603446471",
+      "county": "Imperial"
+    },
+    {
+      "id": "306154167",
+      "name": "34TH STREET COMMUNITY HEALTH CENTER",
+      "address": "2000 PHYSICIANS BLVD",
+      "city": "BAKERSFIELD",
+      "zip": "93301",
+      "phone": "661-324-1455",
+      "county": "Kern"
+    },
+    {
+      "id": "306154136",
+      "name": "ARVIN COMMUNITY HEALTH CENTER",
+      "address": "1305 BEAR MOUNTAIN BLVD",
+      "city": "ARVIN",
+      "zip": "93203",
+      "phone": "661-854-3131",
+      "county": "Kern"
+    },
+    {
+      "id": "306150644",
+      "name": "COMPREHENSIVE CARE CENTER",
+      "address": "625 34TH ST, SUITE 100 & 200",
+      "city": "BAKERSFIELD",
+      "zip": "93301",
+      "phone": "833-678-2781",
+      "county": "Kern"
+    },
+    {
+      "id": "306150608",
+      "name": "DELANO WALK-IN-CLINIC",
+      "address": "425 DEL SOL PKWY",
+      "city": "DELANO",
+      "zip": "93215",
+      "phone": "6617254780",
+      "county": "Kern"
+    },
+    {
+      "id": "306150057",
+      "name": "EAST BAKERSFIELD COMMUNITY HEALTH CENTER",
+      "address": "815 MARTIN LUTHER KING BLVD",
+      "city": "BAKERSFIELD",
+      "zip": "93307",
+      "phone": "661-322-3905",
+      "county": "Kern"
+    },
+    {
+      "id": "306154188",
+      "name": "EAST NILES COMMUNITY HEALTH CENTER",
+      "address": "7800 NILES ST",
+      "city": "BAKERSFIELD",
+      "zip": "93306",
+      "phone": "661-328-4284",
+      "county": "Kern"
+    },
+    {
+      "id": "306150749",
+      "name": "GREENFIELD COMMUNITY HEALTH CENTER",
+      "address": "9001 S H ST",
+      "city": "BAKERSFIELD",
+      "zip": "93307",
+      "phone": "833-678-2781",
+      "county": "Kern"
+    },
+    {
+      "id": "306151071",
+      "name": "LAMONT COMMUNITY HEALTH CENTER",
+      "address": "8787 HALL RD",
+      "city": "LAMONT",
+      "zip": "93241",
+      "phone": "661-845-3731",
+      "county": "Kern"
+    },
+    {
+      "id": "306150014",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "277 E FRONT ST",
+      "city": "BUTTONWILLOW",
+      "zip": "93206",
+      "phone": "661-459-1900",
+      "county": "Kern"
+    },
+    {
+      "id": "306150023",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "21138 PASO ROBLES HWY",
+      "city": "LOST HILLS",
+      "zip": "93249",
+      "phone": "6614591900",
+      "county": "Kern"
+    },
+    {
+      "id": "306150415",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "4900 CALIFORNIA AVE, STE 100-B",
+      "city": "BAKERSFIELD",
+      "zip": "93309",
+      "phone": "661-459-1900",
+      "county": "Kern"
+    },
+    {
+      "id": "306150441",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "912 FREMONT ST",
+      "city": "DELANO",
+      "zip": "93215",
+      "phone": "661-459-1900",
+      "county": "Kern"
+    },
+    {
+      "id": "306150443",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "1701 STINE RD",
+      "city": "BAKERSFIELD",
+      "zip": "93309",
+      "phone": "661-459-1900",
+      "county": "Kern"
+    },
+    {
+      "id": "306150732",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "3800 Mall View Rd",
+      "city": "Bakersfield",
+      "zip": "93306",
+      "phone": "661-459-1900",
+      "county": "Kern"
+    },
+    {
+      "id": "306150768",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "6700 NILES ST, STE 185",
+      "city": "BAKERSFIELD",
+      "zip": "93306",
+      "phone": "661-459-1900",
+      "county": "Kern"
+    },
+    {
+      "id": "306154028",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "2101 7TH ST, STE A-F",
+      "city": "WASCO",
+      "zip": "93280",
+      "phone": "6614591900",
+      "county": "Kern"
+    },
+    {
+      "id": "306154042",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "1100 4TH ST",
+      "city": "TAFT",
+      "zip": "93268",
+      "phone": "6614591900",
+      "county": "Kern"
+    },
+    {
+      "id": "306154114",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "655 S CENTRAL VALLEY HWY",
+      "city": "SHAFTER",
+      "zip": "93263",
+      "phone": "6614591900",
+      "county": "Kern"
+    },
+    {
+      "id": "306154137",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "161 N MILL ST",
+      "city": "TEHACHAPI",
+      "zip": "93561",
+      "phone": "6614591900",
+      "county": "Kern"
+    },
+    {
+      "id": "306154146",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "3409 CALLOWAY DR, STE 300",
+      "city": "BAKERSFIELD",
+      "zip": "93312",
+      "phone": "661-459-1900",
+      "county": "Kern"
+    },
+    {
+      "id": "306154156",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "1133 CHELSEA ST",
+      "city": "RIDGECREST",
+      "zip": "93555",
+      "phone": "6614591900",
+      "county": "Kern"
+    },
+    {
+      "id": "306154161",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "1014 CALLOWAY DR, STE F",
+      "city": "BAKERSFIELD",
+      "zip": "93312",
+      "phone": "661-459-1900",
+      "county": "Kern"
+    },
+    {
+      "id": "306154173",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "4600 PANAMA LN, STE 102B",
+      "city": "BAKERSFIELD",
+      "zip": "93313",
+      "phone": "6614591900",
+      "county": "Kern"
+    },
+    {
+      "id": "306154190",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "210 N CHESTER AVE",
+      "city": "BAKERSFIELD",
+      "zip": "93308",
+      "phone": "661-459-1900",
+      "county": "Kern"
+    },
+    {
+      "id": "306154191",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "4151 MEXICALI DR",
+      "city": "BAKERSFIELD",
+      "zip": "93313",
+      "phone": "661-459-1900",
+      "county": "Kern"
+    },
+    {
+      "id": "306154203",
+      "name": "OMNI FAMILY HEALTH",
+      "address": "659 CENTRAL VALLEY HWY",
+      "city": "SHAFTER",
+      "zip": "93263",
+      "phone": "661-459-1900",
+      "county": "Kern"
+    },
+    {
+      "id": "306154113",
+      "name": "SOUTH BAKERSFIELD COMMUNITY HEALTH CENTER",
+      "address": "2400 WIBLE RD, STE 14",
+      "city": "BAKERSFIELD",
+      "zip": "93304",
+      "phone": "661-835-1240",
+      "county": "Kern"
+    },
+    {
+      "id": "306164039",
+      "name": "ARIA COMMUNITY HEALTH CENTER AMC",
+      "address": "148 E KINGS ST",
+      "city": "AVENAL",
+      "zip": "93204",
+      "phone": "5593864500",
+      "county": "Kings"
+    },
+    {
+      "id": "306164040",
+      "name": "ARIA COMMUNITY HEALTH CENTER KETTLEMAN CITY",
+      "address": "304 BECKY PEASE ST",
+      "city": "KETTLEMAN CITY",
+      "zip": "93239",
+      "phone": "5593864500",
+      "county": "Kings"
+    },
+    {
+      "id": "306164041",
+      "name": "ARIA COMMUNITY HEALTH CENTER STRATFORD",
+      "address": "20326 MAIN ST",
+      "city": "STRATFORD",
+      "zip": "93266",
+      "phone": "5593864500",
+      "county": "Kings"
+    },
+    {
+      "id": "306160389",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "250 W 5TH ST",
+      "city": "HANFORD",
+      "zip": "93230",
+      "phone": "559-737-4700",
+      "county": "Kings"
+    },
+    {
+      "id": "306160371",
+      "name": "UNITED HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "250 E HANFORD ARMONA RD",
+      "city": "LEMOORE",
+      "zip": "93245",
+      "phone": "5596466618",
+      "county": "Kings"
+    },
+    {
+      "id": "306164038",
+      "name": "UNITED HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "1000 CHITTENDEN AVE",
+      "city": "CORCORAN",
+      "zip": "93212",
+      "phone": "5596466618",
+      "county": "Kings"
+    },
+    {
+      "id": "306174006",
+      "name": "LAKE COUNTY TRIBAL HEALTH CONSORTIUM",
+      "address": "925 BEVINS CT",
+      "city": "LAKEPORT",
+      "zip": "95453",
+      "phone": "7072638382",
+      "county": "Lake"
+    },
+    {
+      "id": "306170808",
+      "name": "LAKE COUNTY TRIBAL HEALTH SOUTHSHORE CLINIC",
+      "address": "14440 OLYMPIC DR",
+      "city": "CLEARLAKE",
+      "zip": "95422",
+      "phone": "7075332760",
+      "county": "Lake"
+    },
+    {
+      "id": "306174013",
+      "name": "SUTTER LAKESIDE COMMUNITY CLINIC",
+      "address": "5196 HILL RD E, STE 300",
+      "city": "LAKEPORT",
+      "zip": "95453",
+      "phone": "7072636885",
+      "county": "Lake"
+    },
+    {
+      "id": "306174015",
+      "name": "TRIBAL HEALTH PEDIATRICS AND OBSTETRICS",
+      "address": "359 LAKEPORT BLVD",
+      "city": "LAKEPORT",
+      "zip": "95453",
+      "phone": "7075332740",
+      "county": "Lake"
+    },
+    {
+      "id": "306184010",
+      "name": "NORTHEASTERN HEALTH CENTER",
+      "address": "1850 SPRING RIDGE DR",
+      "city": "SUSANVILLE",
+      "zip": "96130",
+      "phone": "5302515000",
+      "county": "Lassen"
+    },
+    {
+      "id": "306190639",
+      "name": "3C COMMUNITY CLINIC",
+      "address": "3030 W OLYMPIC BLVD, STE 206",
+      "city": "LOS ANGELES",
+      "zip": "90006",
+      "phone": "2133222666",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197781",
+      "name": "AAA COMPREHENSIVE HEALTHCARE, INC.",
+      "address": "7451 LANKERSHIM BLVD",
+      "city": "NORTH HOLLYWOOD",
+      "zip": "91605",
+      "phone": "818 503 9800",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197824",
+      "name": "AHF HEALTHCARE CENTER - DOWNTOWN",
+      "address": "1400 S GRAND AVE, STE 801",
+      "city": "LOS ANGELES",
+      "zip": "90015",
+      "phone": "2137419727",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190784",
+      "name": "AHF HEALTHCARE CENTER - HOLLYWOOD",
+      "address": "4905 HOLLYWOOD BLVD",
+      "city": "LOS ANGELES",
+      "zip": "90027",
+      "phone": "3236620492",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190030",
+      "name": "AHF HEALTHCARE CENTER / VALLEY",
+      "address": "4940 VAN NUYS BLVD, STE 200",
+      "city": "SHERMAN OAKS",
+      "zip": "91403",
+      "phone": "8183802626",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306194615",
+      "name": "AHF HEALTHCARE CENTER-WESTSIDE HEALTHCARE CLINIC",
+      "address": "99 N LA CIENEGA BLVD, STE 200",
+      "city": "BEVERLY HILLS",
+      "zip": "90211",
+      "phone": "3106579353",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190863",
+      "name": "AIRPORT MARINA COUNSELING SERVICES",
+      "address": "7891 LA TIJERA BLVD",
+      "city": "LOS ANGELES",
+      "zip": "90045",
+      "phone": "310-670-1410",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197953",
+      "name": "ALL FOR HEALTH, HEALTH FOR ALL, INC",
+      "address": "8134 FOOTHILL BLVD",
+      "city": "SUNLAND",
+      "zip": "91040",
+      "phone": "8184093020",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190050",
+      "name": "ALL FOR HEALTH, HEALTH FOR ALL, INC.",
+      "address": "500 N CENTRAL AVE, STE 440",
+      "city": "GLENDALE",
+      "zip": "91203",
+      "phone": "8184093020",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190381",
+      "name": "ALL FOR HEALTH, HEALTH FOR ALL, INC.",
+      "address": "2048 MONTROSE AVE",
+      "city": "MONTROSE",
+      "zip": "91020",
+      "phone": "8184093020",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190595",
+      "name": "ALL FOR HEALTH, HEALTH FOR ALL, INC.",
+      "address": "5160 VINELAND AVE, UNIT 109",
+      "city": "NORTH HOLLYWOOD",
+      "zip": "91601",
+      "phone": "8184093020",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197090",
+      "name": "ALL FOR HEALTH, HEALTH FOR ALL, INC.",
+      "address": "519 E BROADWAY",
+      "city": "GLENDALE",
+      "zip": "91205",
+      "phone": "8184093020",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197670",
+      "name": "ALL FOR HEALTH, HEALTH FOR ALL, INC.",
+      "address": "303 S GLENOAKS BLVD, STE 9",
+      "city": "BURBANK",
+      "zip": "91502",
+      "phone": "8184093020",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198067",
+      "name": "ALL FOR HEALTH, HEALTH FOR ALL, INC.",
+      "address": "800 S CENTRAL AVE, STE 308",
+      "city": "GLENDALE",
+      "zip": "91204",
+      "phone": "8184093020",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190503",
+      "name": "ALL-INCLUSIVE COMMUNITY HEALTH CENTER",
+      "address": "17114 DEVONSHIRE ST, STE 200",
+      "city": "NORTHRIDGE",
+      "zip": "91325",
+      "phone": "818-646-1771",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196197",
+      "name": "ALL-INCLUSIVE COMMUNITY HEALTH CENTER",
+      "address": "3920 EAGLE ROCK BLVD, STE A",
+      "city": "LOS ANGELES",
+      "zip": "90065",
+      "phone": "323-255-5225",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197569",
+      "name": "ALL-INCLUSIVE COMMUNITY HEALTH CENTER",
+      "address": "1311 N SAN FERNANDO BLVD",
+      "city": "BURBANK",
+      "zip": "91504",
+      "phone": "818-843-9900",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190021",
+      "name": "ALLMED OF LOS ANGELES INC",
+      "address": "11001 MAIN ST , STE 301E",
+      "city": "EL MONTE",
+      "zip": "91731",
+      "phone": "6264434300",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197858",
+      "name": "ALTAMED MEDICAL GROUP - PICO RIVERA, PASSONS",
+      "address": "6336 PASSONS BLVD",
+      "city": "PICO RIVERA",
+      "zip": "90660",
+      "phone": "888-499-9303",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190500",
+      "name": "ALTAMED MEDICAL GROUP - WESTLAKE, 3RD STREET",
+      "address": "2100 W 3RD ST, STE 400",
+      "city": "LOS ANGELES",
+      "zip": "90057",
+      "phone": "888-499-9303",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198295",
+      "name": "ANGELES COMMUNITY HEALTH CENTER - HUNTINGTON PARK",
+      "address": "6208 SEVILLE AVE",
+      "city": "HUNTINGTON PARK",
+      "zip": "90255",
+      "phone": "866-981-3002",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198407",
+      "name": "ANGELES COMMUNITY HEALTH CENTER - LOS ANGELES",
+      "address": "1919 W 7TH ST, FLOOR 2ND",
+      "city": "LOS ANGELES",
+      "zip": "90057",
+      "phone": "8669813002",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190022",
+      "name": "APEX COMMUNITY HEALTH CENTER, INC.",
+      "address": "18040 SHERMAN WAY, STE 204",
+      "city": "RESEDA",
+      "zip": "91335",
+      "phone": "8186254444",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198056",
+      "name": "APLA HEALTH & WELLNESS - DAVID GEFFEN CENTER",
+      "address": "611 S KINGSLEY DR, STE. 301",
+      "city": "LOS ANGELES",
+      "zip": "90005",
+      "phone": "2132011600",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190893",
+      "name": "APLA HEALTH & WELLNESS - LONG BEACH CENTER",
+      "address": "1043 ELM AVE, STE 302",
+      "city": "LONG BEACH",
+      "zip": "90813",
+      "phone": "5622477740",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197797",
+      "name": "APLA HEALTH & WELLNESS CENTER - BALDWIN HILLS",
+      "address": "3743  S LA BREA AVE",
+      "city": "LOS ANGELES",
+      "zip": "90016",
+      "phone": "3233299900",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306191135",
+      "name": "ARROYO VISTA FAMILY HEALTH CENTER",
+      "address": "6000 N FIGUEROA ST",
+      "city": "LOS ANGELES",
+      "zip": "90042",
+      "phone": "(323) 254-5291",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197165",
+      "name": "ARROYO VISTA FAMILY HEALTH CENTER-ES HUNTINGTON DRIVE",
+      "address": "4837 HUNTINGTON DR N",
+      "city": "LOS ANGELES",
+      "zip": "90032",
+      "phone": "(323) 254-5291",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196696",
+      "name": "ARROYO VISTA FAMILY HEALTH CENTER-LINCOLN HEIGHTS",
+      "address": "2411 N BROADWAY",
+      "city": "LOS ANGELES",
+      "zip": "90031",
+      "phone": "(323) 254-5291",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306194983",
+      "name": "ASIAN PACIFIC HEALTH CARE VENTURE, INC - LOS FELIZ HEALTHCARE CENTER",
+      "address": "1530 HILLHURST AVE",
+      "city": "LOS ANGELES",
+      "zip": "90027",
+      "phone": "323.644.3880",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197701",
+      "name": "BARTZ-ALTADONNA COMMUNITY HEALTH CENTER",
+      "address": "43322 GINGHAM AVE",
+      "city": "LANCASTER",
+      "zip": "93535",
+      "phone": "6618744050",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306194813",
+      "name": "BELL GARDENS COMMUNITY HEALTH CENTER",
+      "address": "6912 AJAX AVE",
+      "city": "BELL GARDENS",
+      "zip": "90201",
+      "phone": "(562)867-7999",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306194613",
+      "name": "BELL GARDENS FAMILY MEDICAL CENTER",
+      "address": "6501 GARFIELD AVE",
+      "city": "BELL GARDENS",
+      "zip": "90201",
+      "phone": "5629289600",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306194482",
+      "name": "BRANDMAN CENTERS FOR SENIOR CARE, INC",
+      "address": "7150 TAMPA AVE",
+      "city": "RESEDA",
+      "zip": "91335",
+      "phone": "8187748444",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306194705",
+      "name": "CENTRAL CITY COMMUNITY HEALTH CENTER",
+      "address": "5970 S CENTRAL AVE",
+      "city": "LOS ANGELES",
+      "zip": "90001",
+      "phone": "3237240019",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198038",
+      "name": "CENTRAL CITY COMMUNITY HEALTH CENTER, INC.",
+      "address": "13742 AMAR RD",
+      "city": "LA PUENTE",
+      "zip": "91746",
+      "phone": "3237240019",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198039",
+      "name": "CENTRAL CITY COMMUNITY HEALTH CENTER, INC.",
+      "address": "10050 GARVEY AVE, STE 111",
+      "city": "EL MONTE",
+      "zip": "91733",
+      "phone": "3237240019",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198040",
+      "name": "CENTRAL CITY COMMUNITY HEALTH CENTER, INC.",
+      "address": "4126 MAINE AVE",
+      "city": "BALDWIN PARK",
+      "zip": "91706",
+      "phone": "3237240019",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196981",
+      "name": "CENTRAL NEIGHBORHOOD HEALTH FOUNDATION",
+      "address": "2707 S CENTRAL AVE",
+      "city": "LOS ANGELES",
+      "zip": "90011",
+      "phone": "2135365815",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197171",
+      "name": "CHILDREN'S CLINIC AT THE LONG BEACH MULTI-SER CTR FOR THE HOMELESS",
+      "address": "1301 W 12TH  ST",
+      "city": "LONG BEACH",
+      "zip": "90813",
+      "phone": "844-822-4646",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306191109",
+      "name": "CHINATOWN SERVICE CENTER FAMILY HEALTH CLINIC",
+      "address": "767 N HILL ST, STE 200",
+      "city": "LOS ANGELES",
+      "zip": "90012",
+      "phone": "213-808-1702",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197040",
+      "name": "CLARIS HEALTH",
+      "address": "11500 W OLYMPIC BLVD, STE 570",
+      "city": "LOS ANGELES",
+      "zip": "90064",
+      "phone": "310-268-8400",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190800",
+      "name": "CLINICA BIENESTAR",
+      "address": "5326 E BEVERLY BLVD",
+      "city": "LOS ANGELES",
+      "zip": "90022",
+      "phone": "8665906411",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196513",
+      "name": "CLINICA MONSENOR OSCAR A. ROMERO",
+      "address": "2032 MARENGO ST",
+      "city": "LOS ANGELES",
+      "zip": "90033",
+      "phone": "3239897700",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306194031",
+      "name": "CLINICA MSR. OSCAR A ROMERO",
+      "address": "123 S ALVARADO ST",
+      "city": "LOS ANGELES",
+      "zip": "90057",
+      "phone": "3239897700",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190753",
+      "name": "COMMERCE FAMILY MEDICAL CENTER",
+      "address": "6001 E WASHINGTON BLVD",
+      "city": "LOS ANGELES",
+      "zip": "90040",
+      "phone": "5629289600",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198346",
+      "name": "COMMUNITY MEDICAL WELLNESS CENTERS, USA",
+      "address": "1360 E ANAHEIM ST, STE 101",
+      "city": "LONG BEACH",
+      "zip": "90813",
+      "phone": "5622700324",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198326",
+      "name": "COMMUNITY MEDICINE INC",
+      "address": "8540 ALONDRA BLVD, STE B-2",
+      "city": "PARAMOUNT",
+      "zip": "90723",
+      "phone": "5626022508",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197050",
+      "name": "COMPLETE CARE COMMUNITY HEALTH CENTER",
+      "address": "2928 E CESAR E CHAVEZ AVE",
+      "city": "LOS ANGELES",
+      "zip": "90033",
+      "phone": "3232666700",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190035",
+      "name": "COMPLETE CARE COMMUNITY HEALTH CENTER-HUNTINGTON PARK",
+      "address": "7301 STATE ST",
+      "city": "HUNTINGTON PARK",
+      "zip": "90255",
+      "phone": "323-581-5120",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196892",
+      "name": "COMPLETE CARE HEALTH CENTER - SOUTH GATE",
+      "address": "5831 FIRESTONE BLVD, STE E",
+      "city": "SOUTH GATE",
+      "zip": "90280",
+      "phone": "(562) 806-7545",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196855",
+      "name": "COMPREHENSIVE COMMUNITY HEALTH CENTERS, INC",
+      "address": "801 S CHEVY CHASE DR, STE 250",
+      "city": "GLENDALE",
+      "zip": "91205",
+      "phone": "818-265-2264",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306191327",
+      "name": "COMPREHENSIVE COMMUNITY HEALTH CENTERS, INC. - SUNLAND",
+      "address": "8316 FOOTHILL BLVD",
+      "city": "SUNLAND",
+      "zip": "91040",
+      "phone": "818-265-2264",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196528",
+      "name": "COMPREHENSIVE COMMUNITY HEALTH CTR. INC-EAGLE ROCK",
+      "address": "1704 COLORADO BLVD",
+      "city": "LOS ANGELES",
+      "zip": "90041",
+      "phone": "818-265-2264",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306191053",
+      "name": "EAST VALLEY COMMUNITY HEALTH CENTER",
+      "address": "420 S GLENDORA AVE",
+      "city": "WEST COVINA",
+      "zip": "91790",
+      "phone": "626-919-4333",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197914",
+      "name": "EAST VALLEY COMMUNITY HEALTH CENTER INC.",
+      "address": "1555 S GAREY AVE",
+      "city": "POMONA",
+      "zip": "91766",
+      "phone": "9096208088",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197723",
+      "name": "EAST VALLEY COMMUNITY HEALTH CENTER, INC. - VILLACORTA SCHOOL CLINIC",
+      "address": "17840 VILLA CORTA ST",
+      "city": "LA PUENTE",
+      "zip": "91744",
+      "phone": "626-919-5724",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196548",
+      "name": "EDISON PACIFIC",
+      "address": "437 S PACIFIC AVE",
+      "city": "GLENDALE",
+      "zip": "91204",
+      "phone": "8184093020",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197559",
+      "name": "EISNER HEALTH FAMILY MEDICINE CENTER AT CALIFORNIA HOSPITAL",
+      "address": "1400 S GRAND AVE, STE 101",
+      "city": "LOS ANGELES",
+      "zip": "90015",
+      "phone": "2137475542",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198085",
+      "name": "EISNER PEDIATRIC & FAMILY CENTER - WOMEN'S HEALTH CENTER",
+      "address": "1513 S GRAND AVE, STE 220 & 250",
+      "city": "LOS ANGELES",
+      "zip": "90015",
+      "phone": "2137475542",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198274",
+      "name": "EISNER PEDIATRIC & FAMILY MEDICAL CENTER - SHERMAN OAKS DENTAL",
+      "address": "15477 VENTURA BLVD, STE 300",
+      "city": "SHERMAN OAKS",
+      "zip": "91403",
+      "phone": "8189070322",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197955",
+      "name": "EL PROYECTO DEL BARRIO, INC, BALDWIN PARK COMMUNITY CLINIC",
+      "address": "3942 MAINE AVE",
+      "city": "BALDWIN PARK",
+      "zip": "91706",
+      "phone": "6266789296",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198343",
+      "name": "ELIZABETH HEALTH CENTER - NECC",
+      "address": "2822 E FLORENCE AVE",
+      "city": "HUNTINGTON PARK",
+      "zip": "90255",
+      "phone": "323.923.1900",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196123",
+      "name": "FAMILY HEALTH CENTER",
+      "address": "1760-70 N ORANGE GROVE AVE., STE. 101",
+      "city": "POMONA",
+      "zip": "91767",
+      "phone": "909-469-9494",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197675",
+      "name": "FLORENCE MEDICAL CLINIC",
+      "address": "1039 W FLORENCE AVE",
+      "city": "LOS ANGELES",
+      "zip": "90044",
+      "phone": "3237761500",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197912",
+      "name": "FREMONT WELLNESS CENTER",
+      "address": "7821 AVALON BLVD",
+      "city": "LOS ANGELES",
+      "zip": "90003",
+      "phone": "3237895610",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306274059",
+      "name": "GARFIELD HEALTH CENTER",
+      "address": "210 N GARFIELD AVE, STE 203",
+      "city": "MONTEREY PARK",
+      "zip": "91754",
+      "phone": "6263077397",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190629",
+      "name": "GARFIELD HEALTH CENTER - ROSEMEAD",
+      "address": "7740 GARVEY AVE, STE B100-B102",
+      "city": "ROSEMEAD",
+      "zip": "91770",
+      "phone": "6269270838",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190752",
+      "name": "GARFIELD HEALTH CENTER-ATLANTIC",
+      "address": "701 S ATLANTIC BLVD, STE 200",
+      "city": "MONTEREY PARK",
+      "zip": "91754",
+      "phone": "6263009085",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198195",
+      "name": "GARFIELD HEALTH CENTER-ATLANTIC",
+      "address": "701 S ATLANTIC BLVD, STE 100",
+      "city": "MONTEREY PARK",
+      "zip": "91754",
+      "phone": "6263009980",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190363",
+      "name": "HARBOR COMMUNITY CLINIC",
+      "address": "593 W 6TH  ST",
+      "city": "SAN PEDRO",
+      "zip": "90731",
+      "phone": "3105470202",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190040",
+      "name": "HEALING TO YOU WILMINGTON COMPREHENSIVE COMMUNITY CLINIC",
+      "address": "1703 NORTH AVALON BLVD",
+      "city": "WILMINGTON",
+      "zip": "90744",
+      "phone": "3106841247",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190669",
+      "name": "HERALD CHRISTIAN HEALTH CENTER",
+      "address": "3401 AEROJET AVE",
+      "city": "EL MONTE",
+      "zip": "91731",
+      "phone": "6262868700",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198094",
+      "name": "HERALD CHRISTIAN HEALTH CENTER",
+      "address": "1661 HANOVER RD, STE 103",
+      "city": "CITY OF INDUSTRY",
+      "zip": "91748",
+      "phone": "6262868700",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198203",
+      "name": "HERALD CHRISTIAN HEALTH CENTER",
+      "address": "8841 GARVEY AVE",
+      "city": "ROSEMEAD",
+      "zip": "91770",
+      "phone": "6262868700",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306194775",
+      "name": "INST. FOR MULTICULTURAL COUNSELING & ED. SVC. INC.",
+      "address": "3580 WILSHIRE BLVD, STE 2000",
+      "city": "LOS ANGELES",
+      "zip": "90010",
+      "phone": "2133811250",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196569",
+      "name": "INSTITUTE FOR MULTICULTURAL COUNSELING AND EDUCATION",
+      "address": "431 N BRAND BLVD, STE 202",
+      "city": "GLENDALE",
+      "zip": "91203",
+      "phone": "8182404311",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306194433",
+      "name": "JEFFREY GOODMAN SPECIAL CARE CLINIC",
+      "address": "1625 SCHRADER BLVD",
+      "city": "LOS ANGELES",
+      "zip": "90028",
+      "phone": "323-993-7500",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306194783",
+      "name": "JHA GERIATRIC CLINIC",
+      "address": "18855 VICTORY BLVD",
+      "city": "RESEDA",
+      "zip": "91335",
+      "phone": "8187743000",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197450",
+      "name": "JWCH INSTITUTE, INC, MEDICAL CLINIC/WEINGART CENTER",
+      "address": "522 S SAN PEDRO ST",
+      "city": "LOS ANGELES",
+      "zip": "90013",
+      "phone": "(562)867-7999",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196808",
+      "name": "JWCH NORWALK REGIONAL HEALTH CENTER",
+      "address": "12360 FIRESTONE BLVD",
+      "city": "NORWALK",
+      "zip": "90650",
+      "phone": "(562)867-7999",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197865",
+      "name": "KEDREN COMMUNITY CARE CLINIC",
+      "address": "4211 AVALON BLVD, STE A",
+      "city": "LOS ANGELES",
+      "zip": "90011",
+      "phone": "323-233-0425",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198034",
+      "name": "KHEIR WILSHIRE CLINIC",
+      "address": "3255 WILSHIRE BLVD, STE 120",
+      "city": "LOS ANGELES",
+      "zip": "90010",
+      "phone": "213-235-2500",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190751",
+      "name": "LOS ANGELES CHRISTIAN HEALTH CENTERS",
+      "address": "325 E 7TH ST",
+      "city": "LOS ANGELES",
+      "zip": "90014",
+      "phone": "2138931960",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196173",
+      "name": "LOS ANGELES MISSION COLLEGE, STUDENT HEALTH CENTER",
+      "address": "13356 ELDRIDGE AVE",
+      "city": "SYLMAR",
+      "zip": "91342",
+      "phone": "8183626182",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198287",
+      "name": "LOU COLEN CHILDREN'S HEALTH & WELLNESS CENTER",
+      "address": "4700 INGLEWOOD BLVD, STE 101",
+      "city": "LOS ANGELES",
+      "zip": "90230",
+      "phone": "3106647941",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197614",
+      "name": "MEDICAL MISSION ADVENTURES",
+      "address": "134 N KENWOOD ST, FLOOR 3 UNIT 330",
+      "city": "GLENDALE",
+      "zip": "91206",
+      "phone": "6263600800",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306194138",
+      "name": "MISSION CITY COMMUNITY NETWORK, INC.",
+      "address": "15206 PARTHENIA ST",
+      "city": "NORTH HILLS",
+      "zip": "91343",
+      "phone": "8188953100",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197763",
+      "name": "MISSION CITY COMMUNITY NETWORK, INC.  - PRAIRIE",
+      "address": "301 N PRAIRIE AVE, STE 311",
+      "city": "INGLEWOOD",
+      "zip": "90301",
+      "phone": "8188953100",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197646",
+      "name": "MISSION CITY COMMUNITY NETWORK, INC. - ORANGE GROVE",
+      "address": "1818 N ORANGE GROVE AVE",
+      "city": "POMONA",
+      "zip": "91767",
+      "phone": "8188953100",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198400",
+      "name": "MISSION CITY COMMUNITY NETWORK, INC. - SEPULVEDA",
+      "address": "8527 SEPULVEDA BLVD.",
+      "city": "NORTH HILLS",
+      "zip": "91343",
+      "phone": "8188953100",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197844",
+      "name": "NECC GAGE HEALTH CENTER",
+      "address": "2975 ZOE AVE",
+      "city": "HUNTINGTON PARK",
+      "zip": "90255",
+      "phone": "(323) 826-9449",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190365",
+      "name": "NEWHALL HEALTH CENTER",
+      "address": "23413 LYONS AVE",
+      "city": "SANTA CLARITA",
+      "zip": "91355",
+      "phone": "8185937500",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197331",
+      "name": "NEWHALL HEALTH CENTER",
+      "address": "23772 NEWHALL AVE",
+      "city": "NEWHALL",
+      "zip": "91321",
+      "phone": "661-291-1777",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198492",
+      "name": "NOBLEQUEST HEALTH FOUNDATION",
+      "address": "14435 HAMLIN ST, STE 108",
+      "city": "VAN NUYS",
+      "zip": "91401",
+      "phone": "8189977117",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197557",
+      "name": "NORTHEAST COMMUNITY CLINIC",
+      "address": "200 E ANAHEIM ST",
+      "city": "WILMINGTON",
+      "zip": "90744",
+      "phone": "(310) 522-8700",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197630",
+      "name": "NORTHEAST COMMUNITY CLINIC - HAWTHORNE",
+      "address": "4455 W 117TH ST, STE 300",
+      "city": "HAWTHORNE",
+      "zip": "90250",
+      "phone": "(310) 219-2000",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190962",
+      "name": "NORTHEAST VALLEY HEALTH - PACOIMA HEALTH CENTER",
+      "address": "12756 VAN NUYS BLVD",
+      "city": "PACOIMA",
+      "zip": "91331",
+      "phone": "8188960531",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190567",
+      "name": "NORTHEAST VALLEY HEALTH CORPORATION",
+      "address": "1600 SAN FERNANDO RD, BUILDING C",
+      "city": "SAN FERNANDO",
+      "zip": "91340",
+      "phone": "818 365-8086",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198432",
+      "name": "NORTHEAST VALLEY HEALTH CORPORATION - VAN NUYS ADULT HEALTH",
+      "address": "14624 SHERMAN WAY, FLOOR 6",
+      "city": "VAN NUYS",
+      "zip": "91405",
+      "phone": "818-9886335",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190504",
+      "name": "PACOIMA WOMEN'S HEALTH CENTER",
+      "address": "12759 VAN NUYS BLVD.",
+      "city": "PACOIMA",
+      "zip": "91331",
+      "phone": "818 485-8250",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197671",
+      "name": "PARKTREE COMMUNITY HEALTH CENTER",
+      "address": "1450 E HOLT AVE",
+      "city": "POMONA",
+      "zip": "91767",
+      "phone": "9096307927",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190611",
+      "name": "PLANNED PARENTHOOD OF PASADENA",
+      "address": "1045 N LAKE AVE",
+      "city": "PASADENA",
+      "zip": "91104",
+      "phone": "6267945737",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190545",
+      "name": "PRIORITY CARE MEDICAL GROUP - PANORAMA CITY",
+      "address": "8727 VAN NUYS BLVD, SUITE 105",
+      "city": "PANORAMA CITY",
+      "zip": "91402",
+      "phone": "8186493332",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198026",
+      "name": "R.O.A.D.S. COMMUNITY CARE CLINIC",
+      "address": "121 S LONG BEACH BLVD",
+      "city": "COMPTON",
+      "zip": "90221",
+      "phone": "3106275850",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190048",
+      "name": "ROADS COMMUNITY CLINIC - EAST LONG BEACH",
+      "address": "4800 E LOS COYOTES DIAGONAL",
+      "city": "LONG BEACH",
+      "zip": "90815",
+      "phone": "562-506-1313",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196887",
+      "name": "S MARK TAPER FOUNDATION CHILDREN'S CLINIC FAMILY HEALTH CENTER",
+      "address": "455 E. COLUMBIA ST, STE 201",
+      "city": "LONG BEACH",
+      "zip": "90806",
+      "phone": "844-822-4646",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197981",
+      "name": "SAN FERNANDO COMMUNITY HEALTH CENTER",
+      "address": "732 MOTT ST, STE 100/110",
+      "city": "SAN FERNANDO",
+      "zip": "91340",
+      "phone": "8189635690",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190404",
+      "name": "SAN JUDAS COMMUNITY HEALTH CENTER, INC.",
+      "address": "1080 N WESTERN AVE.",
+      "city": "LOS ANGELES",
+      "zip": "90029",
+      "phone": "3239573737",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190547",
+      "name": "SAN JUDAS COMMUNITY HEALTH CENTER, INC.",
+      "address": "2972 WILSHIRE BLVD, FLOOR 1,2",
+      "city": "LOS ANGELES",
+      "zip": "90010",
+      "phone": "2134840000",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196865",
+      "name": "SANTA CLARITA HEALTH CENTER",
+      "address": "18533 SOLEDAD CANYON RD",
+      "city": "CANYON COUNTRY",
+      "zip": "91351",
+      "phone": "661-673-8800",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190763",
+      "name": "SANTO NINO HEALTH CENTER",
+      "address": "14427 CHASE ST, STE 100",
+      "city": "PANORAMA CITY",
+      "zip": "91402",
+      "phone": "8188307751",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190027",
+      "name": "SCV DENTAL AND WELLNESS CENTER",
+      "address": "17909 SOLEDAD CANYON RD, FLOOR 2ND",
+      "city": "SANTA CLARITA",
+      "zip": "91387",
+      "phone": "8188960531",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198476",
+      "name": "SERENITY CARE HEALTH GROUP",
+      "address": "1930 E ANAHEIM ST",
+      "city": "LONG BEACH",
+      "zip": "90813",
+      "phone": "5624784102",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190678",
+      "name": "SFV HEALTH CENTER, INC.",
+      "address": "8426 SUNLAND BLVD",
+      "city": "SUN VALLEY",
+      "zip": "91352",
+      "phone": "8185044514",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190023",
+      "name": "SO-CAL COMMUNITY HEALTH CENTER",
+      "address": "9700 WOODMAN AVE, STE A-10",
+      "city": "ARLETA",
+      "zip": "91331",
+      "phone": "818-746-2626",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306191356",
+      "name": "SOUTH CENTRAL FAMILY HEALTH CENTER",
+      "address": "4425 S CENTRAL AVE",
+      "city": "LOS ANGELES",
+      "zip": "90011",
+      "phone": "323-908-4200",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197779",
+      "name": "SOUTH GATE COMMUNITY CLINIC",
+      "address": "5720 IMPERIAL HWY, STE N-O",
+      "city": "SOUTH GATE",
+      "zip": "90280",
+      "phone": "3237761500",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197431",
+      "name": "SOUTHERN CALIFORNIA MEDICAL CENTER - PICO RIVERA",
+      "address": "8825 WHITTIER BLVD",
+      "city": "PICO RIVERA",
+      "zip": "90660",
+      "phone": "(532) 699-3333",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197169",
+      "name": "SOUTHERN CALIFORNIA MEDICAL CENTER, INC.",
+      "address": "12100 VALLEY BLVD, STE 109A",
+      "city": "EL MONTE",
+      "zip": "91732",
+      "phone": "(626) 575-7500",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197306",
+      "name": "ST JOHN'S WELL CHILD AND FAMILY CENTER",
+      "address": "808 W 58TH ST",
+      "city": "LOS ANGELES",
+      "zip": "90037",
+      "phone": "3235411411",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190670",
+      "name": "ST. ANTHONY MEDICAL CENTERS - COMPTON",
+      "address": "1145 E COMPTON BLVD",
+      "city": "COMPTON",
+      "zip": "90221",
+      "phone": "310-367-5555",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190745",
+      "name": "ST. JOHN'S COMMUNITY HEALTH",
+      "address": "1060 W. EXPOSITION BLVD",
+      "city": "LOS ANGELES",
+      "zip": "90007",
+      "phone": "3235411411",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197796",
+      "name": "ST. JOHN'S WELL CHILD AND FAMILY CENTER",
+      "address": "808 W 58TH ST",
+      "city": "LOS ANGELES",
+      "zip": "90037",
+      "phone": "3235411411",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198021",
+      "name": "ST. JOHN'S WELL CHILD AND FAMILY CENTER",
+      "address": "326 W 23RD ST",
+      "city": "LOS ANGELES",
+      "zip": "90007",
+      "phone": "3235411411",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197151",
+      "name": "SUN VALLEY HEALTH CENTER",
+      "address": "7223 FAIR AVE",
+      "city": "SUN VALLEY",
+      "zip": "91352",
+      "phone": "8184324400",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306195048",
+      "name": "T.H.E. CLINIC AT RUTH TEMPLE HEALTH CENTER",
+      "address": "3834 S WESTERN AVE",
+      "city": "LOS ANGELES",
+      "zip": "90062",
+      "phone": "3237301920",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198292",
+      "name": "T.H.E. HEALTH AND WELLNESS CENTER AT LA BREA",
+      "address": "3721 S LA BREA AVE",
+      "city": "LOS ANGELES",
+      "zip": "90016",
+      "phone": "3237301920",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190422",
+      "name": "TENDER CARE COMMUNITY CLINIC",
+      "address": "7862 FIRESTONE BLVD",
+      "city": "DOWNEY",
+      "zip": "90241",
+      "phone": "5628697007",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197841",
+      "name": "THE ACHIEVABLE CLINIC",
+      "address": "5901 GREEN VALLEY CIR, STE 405",
+      "city": "CULVER CITY",
+      "zip": "90230",
+      "phone": "4242667474",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306195054",
+      "name": "THE CHILDEN'S CLINIC FAMILY HEALTH CENTER WESTSIDE",
+      "address": "2125 SANTA FE AVE",
+      "city": "LONG BEACH",
+      "zip": "90810",
+      "phone": "844-822-4646",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196625",
+      "name": "THE CHILDREN'S CLINIC FAMILY HEALTH CENTER AT CESAR CHAVEZ",
+      "address": "730 W 3RD ST",
+      "city": "LONG BEACH",
+      "zip": "90802",
+      "phone": "844-822-4646",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198095",
+      "name": "THE CHILDREN'S CLINIC FAMILY HEALTH CENTER CABRILLO GATEWAY",
+      "address": "2000 SAN GABRIEL AVE",
+      "city": "LONG BEACH",
+      "zip": "90810",
+      "phone": "844-822-4646",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198097",
+      "name": "THE CHILDREN'S CLINIC FAMILY HEALTH CENTER ROOSEVELT",
+      "address": "1574 LINDEN AVE",
+      "city": "LONG BEACH",
+      "zip": "90813",
+      "phone": "844-822-4646",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196497",
+      "name": "THE CHILDREN'S CLINIC FAMILY HLTH CTR. /N. LONGBEACH",
+      "address": "1060 E 70TH ST",
+      "city": "LONG BEACH",
+      "zip": "90805",
+      "phone": "844-822-4646",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190306",
+      "name": "THE SABAN COMMUNITY CLINIC - BEVERLY HEALTH CENTER",
+      "address": "8405 BEVERLY BLVD",
+      "city": "LOS ANGELES",
+      "zip": "90048",
+      "phone": "3236531990",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306194414",
+      "name": "THE SABAN COMMUNITY CLINIC - HOLLYWOOD HEALTH CENTER",
+      "address": "6043 HOLLYWOOD BLVD",
+      "city": "LOS ANGELES",
+      "zip": "90028",
+      "phone": "3236531990",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196283",
+      "name": "THE SABAN COMMUNITY CLINIC - HOLLYWOOD WILSHIRE HEALTH CENTER",
+      "address": "5205 MELROSE AVE",
+      "city": "LOS ANGELES",
+      "zip": "90038",
+      "phone": "3236531990",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196500",
+      "name": "THE VASEK POLAK CHILDREN'S CLINIC FAM. HLTH. CENTER",
+      "address": "1057 PINE AVE",
+      "city": "LONG BEACH",
+      "zip": "90813",
+      "phone": "844-822-4646",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306196234",
+      "name": "UMMA COMMUNITY CLINIC",
+      "address": "711 W FLORENCE AVE",
+      "city": "LOS ANGELES",
+      "zip": "90044",
+      "phone": "3237895610",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190479",
+      "name": "UNICARE COMMUNITY HEALTH CENTER, INC.",
+      "address": "2409 N BROADWAY",
+      "city": "LOS ANGELES",
+      "zip": "90031",
+      "phone": "909-988-2555",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190792",
+      "name": "UNITED AMERICAN INDIAN INVOLVEMENT INC.",
+      "address": "1453 W TEMPLE ST",
+      "city": "LOS ANGELES",
+      "zip": "90026",
+      "phone": "2132023970",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197581",
+      "name": "UNIVERSAL COMMUNITY HEALTH CENTER",
+      "address": "1005 E WASHINGTON BLVD, STE A",
+      "city": "LOS ANGELES",
+      "zip": "90021",
+      "phone": "3232333100",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190564",
+      "name": "VALLEY COMMUNITY HEALTHCARE",
+      "address": "6801 COLDWATER CANYON AVE",
+      "city": "NORTH HOLLYWOOD",
+      "zip": "91605",
+      "phone": "8187638836",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198018",
+      "name": "VALLEY COMMUNITY HEALTHCARE",
+      "address": "9119 HASKELL AVE",
+      "city": "NORTH HILLS",
+      "zip": "91343",
+      "phone": "8187638836",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190817",
+      "name": "VENICE FAMILY CLINIC",
+      "address": "604 ROSE AVE",
+      "city": "VENICE",
+      "zip": "90291",
+      "phone": "3106647941",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306194818",
+      "name": "VENICE FAMILY CLINIC - ROBERT LEVINE FAMILY HEALTH.",
+      "address": "905 VENICE BLVD",
+      "city": "VENICE",
+      "zip": "90291",
+      "phone": "3106647941",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306194819",
+      "name": "VENICE FAMILY CLINIC SIMMS/MANN HEALTH AND WELLNESS CENTER",
+      "address": "2509 PICO BLVD",
+      "city": "SANTA MONICA",
+      "zip": "90405",
+      "phone": "3106647941",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198494",
+      "name": "VIA CARE 607",
+      "address": "607 S. ATLANTIC BLVD.",
+      "city": "LOS ANGELES",
+      "zip": "90022",
+      "phone": "3232689191",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190781",
+      "name": "VIA CARE COMMUNITY HEALTH CENTER",
+      "address": "4476 TWEEDY BLVD, STE B",
+      "city": "SOUTH GATE",
+      "zip": "90280-6359",
+      "phone": "3232689191",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197068",
+      "name": "VIA CARE COMMUNITY HEALTH CENTER",
+      "address": "507 S ATLANTIC BLVD",
+      "city": "LOS ANGELES",
+      "zip": "90022",
+      "phone": "3232689191",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197842",
+      "name": "WELLNESS CENTER AT JEFFERSON HIGH SCHOOL",
+      "address": "3410 HOOPER AVE",
+      "city": "LOS ANGELES",
+      "zip": "90011",
+      "phone": "323-908-4200",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198053",
+      "name": "WESLEY HEALTH CENTERS (DOWNEY)",
+      "address": "8530 FIRESTONE BLVD",
+      "city": "DOWNEY",
+      "zip": "90241",
+      "phone": "(562)867-7999",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198296",
+      "name": "WESLEY HEALTH CENTERS (HACIENDA HEIGHTS)",
+      "address": "15898 E GALE AVE",
+      "city": "HACIENDA HEIGHTS",
+      "zip": "91745",
+      "phone": "(562)867-7999",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198429",
+      "name": "WESLEY HEALTH CENTERS (VERMONT)",
+      "address": "954 N VERMONT AVE",
+      "city": "LOS ANGELES",
+      "zip": "90029",
+      "phone": "(562)867-7999",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306197778",
+      "name": "WESTSIDE FAMILY HEALTH CENTER",
+      "address": "3861 SEPULVEDA BLVD",
+      "city": "CULVER CITY",
+      "zip": "90230",
+      "phone": "310-450-4773",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306198405",
+      "name": "WHITE MEMORIAL COMMUNITY HEALTH CENTER",
+      "address": "1828 E CESAR E CHAVEZ AVE, STE 5000",
+      "city": "LOS ANGELES",
+      "zip": "90033",
+      "phone": "323-987-1200",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306191038",
+      "name": "WILMINGTON COMMUNITY CLINIC",
+      "address": "1009 N AVALON BLVD",
+      "city": "WILMINGTON",
+      "zip": "90744",
+      "phone": "3105495760",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306190744",
+      "name": "WYNK'S CLINIC",
+      "address": "1788 S SAN GABRIEL BLVD, STE 101",
+      "city": "SAN GABRIEL",
+      "zip": "91776",
+      "phone": "6266566253",
+      "county": "Los Angeles"
+    },
+    {
+      "id": "306214044",
+      "name": "BOLINAS COMMUNITY HEALTH CENTER",
+      "address": "88 MESA RD",
+      "city": "BOLINAS",
+      "zip": "94924-9713",
+      "phone": "7075597500",
+      "county": "Marin"
+    },
+    {
+      "id": "306214025",
+      "name": "CENTER POINT, INC.",
+      "address": "1601 2ND ST",
+      "city": "SAN RAFAEL",
+      "zip": "94901",
+      "phone": "4154566655",
+      "county": "Marin"
+    },
+    {
+      "id": "306214048",
+      "name": "MARIN CITY HEALTH AND WELLNESS CENTER",
+      "address": "630 DRAKE AVE",
+      "city": "SAUSALITO",
+      "zip": "94965",
+      "phone": "4153398814",
+      "county": "Marin"
+    },
+    {
+      "id": "306214045",
+      "name": "MARIN COMMUNITY CLINIC - SAN RAFAEL",
+      "address": "3110 KERNER BLVD",
+      "city": "SAN RAFAEL",
+      "zip": "94901",
+      "phone": "4154481500",
+      "county": "Marin"
+    },
+    {
+      "id": "306210750",
+      "name": "MARIN COMMUNITY CLINICS - NOVATO SOUTH",
+      "address": "6090 REDWOOD BLVD",
+      "city": "NOVATO",
+      "zip": "94945",
+      "phone": "4154481500",
+      "county": "Marin"
+    },
+    {
+      "id": "306214028",
+      "name": "MARIN TREATMENT CENTER",
+      "address": "1466 LINCOLN AVE",
+      "city": "SAN RAFAEL",
+      "zip": "94901",
+      "phone": "4154573755",
+      "county": "Marin"
+    },
+    {
+      "id": "306214058",
+      "name": "PLANNED PARENTHOOD SAN RAFAEL CENTER",
+      "address": "2 H ST",
+      "city": "SAN RAFAEL",
+      "zip": "94901",
+      "phone": "(415) 459-4907",
+      "county": "Marin"
+    },
+    {
+      "id": "306214009",
+      "name": "POINT REYES MEDICAL CLINIC",
+      "address": "3 6TH ST",
+      "city": "POINT REYES",
+      "zip": "94956",
+      "phone": "7075597500",
+      "county": "Marin"
+    },
+    {
+      "id": "306214057",
+      "name": "RITTER HEALTH CENTER",
+      "address": "16 RITTER ST",
+      "city": "SAN RAFAEL",
+      "zip": "94901",
+      "phone": "4154578182",
+      "county": "Marin"
+    },
+    {
+      "id": "306220485",
+      "name": "COMMUNITY HEALTH CENTERS OF AMERICA",
+      "address": "5320 STATE HIGHWAY 49 N, STE I",
+      "city": "MARIPOSA",
+      "zip": "95338",
+      "phone": "(209)441-8383",
+      "county": "Mariposa"
+    },
+    {
+      "id": "306234010",
+      "name": "CONSOLIDATED TRIBAL HEALTH PROJECT, INC.",
+      "address": "6991 N STATE ST",
+      "city": "REDWOOD VALLEY",
+      "zip": "95470",
+      "phone": "7074855115",
+      "county": "Mendocino"
+    },
+    {
+      "id": "306231010",
+      "name": "LONG VALLEY HEALTH CENTER",
+      "address": "50 BRANSCOMB RD",
+      "city": "LAYTONVILLE",
+      "zip": "95454",
+      "phone": "707-984-6131",
+      "county": "Mendocino"
+    },
+    {
+      "id": "306231463",
+      "name": "ROUND VALLEY INDIAN HEALTH CENTER, INC.",
+      "address": "STATE HWY 162 AND BIGGAR LN",
+      "city": "COVELO",
+      "zip": "95428",
+      "phone": "707-983-6181",
+      "county": "Mendocino"
+    },
+    {
+      "id": "306244051",
+      "name": "CASTLE FAMILY HEALTH CENTER AT BLOSS",
+      "address": "1251 GROVE AVE",
+      "city": "ATWATER",
+      "zip": "95301",
+      "phone": "209-358-8425",
+      "county": "Merced"
+    },
+    {
+      "id": "306244049",
+      "name": "CASTLE FAMILY HEALTH CENTER AT CASTLE",
+      "address": "3605 HOSPITAL RD",
+      "city": "ATWATER",
+      "zip": "95301",
+      "phone": "209-381-2000",
+      "county": "Merced"
+    },
+    {
+      "id": "306244048",
+      "name": "GOLDEN VALLEY HEALTH CENTER",
+      "address": "3940 SANDPIPER AVENUE",
+      "city": "MERCED",
+      "zip": "95340",
+      "phone": "2093814104",
+      "county": "Merced"
+    },
+    {
+      "id": "306242279",
+      "name": "GOLDEN VALLEY HEALTH CENTER - LOS BANOS",
+      "address": "821 TEXAS AVE",
+      "city": "LOS BANOS",
+      "zip": "93635",
+      "phone": "2098261045",
+      "county": "Merced"
+    },
+    {
+      "id": "306240945",
+      "name": "GOLDEN VALLEY HEALTH CENTER - MERCED",
+      "address": "847 W CHILDS AVE",
+      "city": "MERCED",
+      "zip": "95341",
+      "phone": "2093837441",
+      "county": "Merced"
+    },
+    {
+      "id": "306242217",
+      "name": "GOLDEN VALLEY HEALTH CENTER - PLANADA",
+      "address": "9235 E BROADWAY ST",
+      "city": "PLANADA",
+      "zip": "95365",
+      "phone": "2093820253",
+      "county": "Merced"
+    },
+    {
+      "id": "306244010",
+      "name": "GOLDEN VALLEY HEALTH CENTER - WOMEN'S HEALTH-MERCED",
+      "address": "797 W CHILDS AVE",
+      "city": "MERCED",
+      "zip": "95341",
+      "phone": "2093835871",
+      "county": "Merced"
+    },
+    {
+      "id": "306244057",
+      "name": "HILMAR HEALTH CENTER",
+      "address": "7970 LANDER AVE, STE A/B",
+      "city": "HILMAR",
+      "zip": "95324",
+      "phone": "209-850-3500",
+      "county": "Merced"
+    },
+    {
+      "id": "306240787",
+      "name": "LIVINGSTON COMMUNITYHEALTH",
+      "address": "600 B ST, BUILDING B",
+      "city": "LIVINGSTON",
+      "zip": "95334",
+      "phone": "209-850-3500",
+      "county": "Merced"
+    },
+    {
+      "id": "306274085",
+      "name": "CLINICA DE SALUD DEL VALLE DE SALINAS-KING CITY",
+      "address": "122 E SAN ANTONIO DR",
+      "city": "KING CITY",
+      "zip": "93930",
+      "phone": "8313855945",
+      "county": "Monterey"
+    },
+    {
+      "id": "306274093",
+      "name": "CSVS NORTH MAIN",
+      "address": "2180 N MAIN ST",
+      "city": "SALINAS",
+      "zip": "93906",
+      "phone": "8314432190",
+      "county": "Monterey"
+    },
+    {
+      "id": "306280494",
+      "name": "OLE HEALTH",
+      "address": "300 HARTLE CT.",
+      "city": "NAPA",
+      "zip": "94559",
+      "phone": "866-268-4489",
+      "county": "Napa"
+    },
+    {
+      "id": "306281467",
+      "name": "OLE HEALTH",
+      "address": "1141 PEAR TREE LN, STE 100",
+      "city": "NAPA",
+      "zip": "94558",
+      "phone": "866-268-4489",
+      "county": "Napa"
+    },
+    {
+      "id": "306280762",
+      "name": "PLANNED PARENTHOOD NAPA CENTER",
+      "address": "935 TRANCAS ST, UNIT 4D",
+      "city": "NAPA",
+      "zip": "94558",
+      "phone": "(707) 252-8050",
+      "county": "Napa"
+    },
+    {
+      "id": "306294021",
+      "name": "CHAPA-DE INDIAN HEALTH PROGRAM, INC.",
+      "address": "1350 E MAIN ST",
+      "city": "GRASS VALLEY",
+      "zip": "95945",
+      "phone": "5304778545",
+      "county": "Nevada"
+    },
+    {
+      "id": "306294009",
+      "name": "SIERRA FAMILY MEDICAL CLINIC, INC.",
+      "address": "15301 TYLER FOOTE RD",
+      "city": "NEVADA CITY",
+      "zip": "95959",
+      "phone": "5302923478",
+      "county": "Nevada"
+    },
+    {
+      "id": "306294027",
+      "name": "WESTERN SIERRA MEDICAL CENTER",
+      "address": "844 OLD TUNNEL RD",
+      "city": "GRASS VALLEY",
+      "zip": "95945",
+      "phone": "530-274-9762",
+      "county": "Nevada"
+    },
+    {
+      "id": "306300026",
+      "name": "ALL FOR HEALTH, HEALTH FOR ALL, INC.",
+      "address": "25500 RANCHO NIGUEL RD, STE 250",
+      "city": "LAGUNA NIGUEL",
+      "zip": "92677",
+      "phone": "8184093020",
+      "county": "Orange"
+    },
+    {
+      "id": "306304335",
+      "name": "CAMINO HEALTH CENTER",
+      "address": "30300 CAMINO CAPISTRANO",
+      "city": "SAN JUAN CAPISTRANO",
+      "zip": "92675",
+      "phone": "9492402030",
+      "county": "Orange"
+    },
+    {
+      "id": "306304613",
+      "name": "CAMINO HEALTH CENTER - LAKE FOREST",
+      "address": "22481 ASPAN ST, STE A",
+      "city": "LAKE FOREST",
+      "zip": "92630",
+      "phone": "9492402030",
+      "county": "Orange"
+    },
+    {
+      "id": "306300659",
+      "name": "CENTER FOR INHERITED BLOOD DISORDERS",
+      "address": "701 S PARKER ST., STE 1000 & 1100",
+      "city": "ORANGE",
+      "zip": "92868",
+      "phone": "7142211200",
+      "county": "Orange"
+    },
+    {
+      "id": "306304383",
+      "name": "CENTRAL CITY COMMUNITY HEALTH CENTER",
+      "address": "12116 BEACH BLVD",
+      "city": "STANTON",
+      "zip": "90680",
+      "phone": "3237240019",
+      "county": "Orange"
+    },
+    {
+      "id": "306304371",
+      "name": "CENTRAL CITY COMMUNITY HEALTH CENTER, INC.",
+      "address": "2237 W BALL RD",
+      "city": "ANAHEIM",
+      "zip": "92804",
+      "phone": "3237240019",
+      "county": "Orange"
+    },
+    {
+      "id": "306304489",
+      "name": "CENTRAL CITY COMMUNITY HEALTH CENTER, INC.",
+      "address": "12511 BROOKHURST ST",
+      "city": "GARDEN GROVE",
+      "zip": "92840",
+      "phone": "3237240019",
+      "county": "Orange"
+    },
+    {
+      "id": "306300021",
+      "name": "CENTRAL CITY COMMUNITY HEALTH CENTER, INC. - LINCOLN 1",
+      "address": "1820 W LINCOLN AVE",
+      "city": "ANAHEIM",
+      "zip": "92801",
+      "phone": "3237240019",
+      "county": "Orange"
+    },
+    {
+      "id": "306304272",
+      "name": "CHOC CLINIC AT THE BOYS AND GIRLS CLUB OF S.A.",
+      "address": "1000 HIGHLAND ST",
+      "city": "SANTA ANA",
+      "zip": "92703",
+      "phone": "714-509-4837",
+      "county": "Orange"
+    },
+    {
+      "id": "306304363",
+      "name": "CHOC CLINIC GARDEN GROVE",
+      "address": "10602 CHAPMAN AVE",
+      "city": "GARDEN GROVE",
+      "zip": "92840",
+      "phone": "714-509-7921",
+      "county": "Orange"
+    },
+    {
+      "id": "306300671",
+      "name": "CHOC ORANGE CLINIC",
+      "address": "3745 W CHAPMAN AVE, FLOOR 1",
+      "city": "ORANGE",
+      "zip": "92868",
+      "phone": "714-509-4316",
+      "county": "Orange"
+    },
+    {
+      "id": "306304155",
+      "name": "CLINICA CHOC PARA NINOS",
+      "address": "406 S MAIN ST",
+      "city": "SANTA ANA",
+      "zip": "92701",
+      "phone": "714-509-4815",
+      "county": "Orange"
+    },
+    {
+      "id": "306304576",
+      "name": "FAMILIES TOGETHER OF ORANGE COUNTY",
+      "address": "661 W FIRST ST, STE G",
+      "city": "TUSTIN",
+      "zip": "92780",
+      "phone": "7146583000",
+      "county": "Orange"
+    },
+    {
+      "id": "306300667",
+      "name": "FAMILIES TOGETHER OF ORANGE COUNTY - MOBILE CLINIC",
+      "address": "621 W 1ST ST",
+      "city": "TUSTIN",
+      "zip": "92780",
+      "phone": "7146583000",
+      "county": "Orange"
+    },
+    {
+      "id": "306300668",
+      "name": "FAMILY HEALTH MATTERS COMMUNITY CLINIC HEALTH CENTER",
+      "address": "1182 N EUCLID ST",
+      "city": "ANAHEIM",
+      "zip": "92801",
+      "phone": "714-441-0411",
+      "county": "Orange"
+    },
+    {
+      "id": "306304415",
+      "name": "FRIENDS OF FAMILY HEALTH CENTER",
+      "address": "501 S IDAHO ST, STE 100 & 190",
+      "city": "LA HABRA",
+      "zip": "90631",
+      "phone": "562-690-0400",
+      "county": "Orange"
+    },
+    {
+      "id": "306304608",
+      "name": "FRIENDS OF FAMILY HEALTH CENTER",
+      "address": "13152 NEWPORT AVE, STE B",
+      "city": "TUSTIN",
+      "zip": "92780",
+      "phone": "(714) 263-8600",
+      "county": "Orange"
+    },
+    {
+      "id": "306304423",
+      "name": "HURTT FAMILY HEALTH CLINIC",
+      "address": "1 HOPE DR",
+      "city": "TUSTIN",
+      "zip": "92782",
+      "phone": "7142470300",
+      "county": "Orange"
+    },
+    {
+      "id": "306301325",
+      "name": "HURTT FAMILY HEALTH CLINIC - ANAHEIM",
+      "address": "947 S. ANAHEIM BLVD., STE 250",
+      "city": "ANAHEIM",
+      "zip": "92805",
+      "phone": "714-247-0300",
+      "county": "Orange"
+    },
+    {
+      "id": "306304555",
+      "name": "HURTT FAMILY HEALTH CLINIC - SANTA ANA",
+      "address": "1100-B N TUSTIN AVE, STE A, D & F",
+      "city": "SANTA ANA",
+      "zip": "92705",
+      "phone": "7142470300",
+      "county": "Orange"
+    },
+    {
+      "id": "306304431",
+      "name": "HURTT FAMILY MOBILE CLINIC",
+      "address": "1 HOPE DR",
+      "city": "TUSTIN",
+      "zip": "92782",
+      "phone": "7142470300",
+      "county": "Orange"
+    },
+    {
+      "id": "306304483",
+      "name": "KOREAN  COMMUNITY SERVICES",
+      "address": "7212 ORANGETHORPE AVE, STE 9A",
+      "city": "BUENA PARK",
+      "zip": "90621",
+      "phone": "7145036550",
+      "county": "Orange"
+    },
+    {
+      "id": "306300596",
+      "name": "KRISTINA SERGEYEVA FAMILY HEALTH CENTER",
+      "address": "27800 MEDICAL CENTER RD, STE 110",
+      "city": "MISSION VIEJO",
+      "zip": "92691",
+      "phone": "9498663600",
+      "county": "Orange"
+    },
+    {
+      "id": "306301235",
+      "name": "LAGUNA BEACH COMMUNITY CLINIC, INC",
+      "address": "362 3RD ST",
+      "city": "LAGUNA BEACH",
+      "zip": "92651",
+      "phone": "9494940761",
+      "county": "Orange"
+    },
+    {
+      "id": "306300230",
+      "name": "LESTONNAC FREE CLINIC",
+      "address": "1215 E CHAPMAN AVE",
+      "city": "ORANGE",
+      "zip": "92866-2137",
+      "phone": "714-633-4600",
+      "county": "Orange"
+    },
+    {
+      "id": "306304516",
+      "name": "LIVINGSTONE COMMUNITY HEALTH CLINIC",
+      "address": "12362 BEACH BLVD, STE 10",
+      "city": "STANTON",
+      "zip": "90680",
+      "phone": "7142489500",
+      "county": "Orange"
+    },
+    {
+      "id": "306304465",
+      "name": "NHAN HOA COMPREHENSIVE HEALTH CLINIC",
+      "address": "7761 GARDEN GROVE BLVD",
+      "city": "GARDEN GROVE",
+      "zip": "92841",
+      "phone": "714-898-8888",
+      "county": "Orange"
+    },
+    {
+      "id": "306304038",
+      "name": "PLANNED PARENTHOOD/ORANGE AND SAN BERNARDINO CO",
+      "address": "303 W LINCOLN AVE, STE 105",
+      "city": "ANAHEIM",
+      "zip": "92805",
+      "phone": "7146336373",
+      "county": "Orange"
+    },
+    {
+      "id": "306300743",
+      "name": "RADIANT HEALTH CENTERS",
+      "address": "17982 SKY PARK CIR, STE M",
+      "city": "IRVINE",
+      "zip": "92614",
+      "phone": "9498095700",
+      "county": "Orange"
+    },
+    {
+      "id": "306300626",
+      "name": "SANO COMMUNITY HEALTH CENTER, INC.",
+      "address": "700 W. 19TH ST., STE A& B",
+      "city": "COSTA MESA",
+      "zip": "92627",
+      "phone": "9498663600",
+      "county": "Orange"
+    },
+    {
+      "id": "306304470",
+      "name": "SERVE THE PEOPLE COMMUNITY HEALTH CENTER",
+      "address": "1206 E 17TH ST, STE 101",
+      "city": "SANTA ANA",
+      "zip": "92701",
+      "phone": "714-352-2911",
+      "county": "Orange"
+    },
+    {
+      "id": "306304013",
+      "name": "SHARE OUR SELVES COMMUNITY HEALTH CENTER",
+      "address": "1550 SUPERIOR AVE",
+      "city": "COSTA MESA",
+      "zip": "92627",
+      "phone": "949-270-2100",
+      "county": "Orange"
+    },
+    {
+      "id": "306304561",
+      "name": "SOS CHILDREN AND FAMILY HEALTH CENTER",
+      "address": "307 PLACENTIA AVE, STE 107",
+      "city": "NEWPORT BEACH",
+      "zip": "92663",
+      "phone": "949-270-2100",
+      "county": "Orange"
+    },
+    {
+      "id": "306304571",
+      "name": "SOS-EL SOL WELLNESS CENTER",
+      "address": "1014 N. BROADWAY",
+      "city": "SANTA ANA",
+      "zip": "92701",
+      "phone": "949-270-2100",
+      "county": "Orange"
+    },
+    {
+      "id": "306304484",
+      "name": "SOUTHLAND INTEGRATED SERVICES, INC.",
+      "address": "9862 CHAPMAN AVE",
+      "city": "GARDEN GROVE",
+      "zip": "92841",
+      "phone": "7146207000",
+      "county": "Orange"
+    },
+    {
+      "id": "306304388",
+      "name": "ST. JUDE NEIGHBORHOOD HEALTH CENTER",
+      "address": "731 S HIGHLAND AVE",
+      "city": "FULLERTON",
+      "zip": "92832",
+      "phone": "714-446-5100",
+      "county": "Orange"
+    },
+    {
+      "id": "306300607",
+      "name": "THE LA AMISTAD HEALTH CENTER",
+      "address": "725 W LA VETA AVE, STE 260",
+      "city": "ORANGE",
+      "zip": "92868",
+      "phone": "7147718006",
+      "county": "Orange"
+    },
+    {
+      "id": "306304603",
+      "name": "VCC: THE GARY CENTER",
+      "address": "201 S HARBOR BLVD",
+      "city": "LA HABRA",
+      "zip": "90631",
+      "phone": "7606315000",
+      "county": "Orange"
+    },
+    {
+      "id": "306312257",
+      "name": "CHAPA-DE INDIAN HEALTH PROGRAM, INC",
+      "address": "11670 ATWOOD RD",
+      "city": "AUBURN",
+      "zip": "95603",
+      "phone": "5308872800",
+      "county": "Placer"
+    },
+    {
+      "id": "306334677",
+      "name": "BANNING FAMILY COMMUNITY HEALTH CENTER",
+      "address": "1070 E RAMSEY ST",
+      "city": "BANNING",
+      "zip": "92220",
+      "phone": "951-846-2560",
+      "county": "Riverside"
+    },
+    {
+      "id": "306334643",
+      "name": "CENTRAL CITY COMMUNITY HEALTH CENTER",
+      "address": "1860 HAMNER AVE",
+      "city": "NORCO",
+      "zip": "92860",
+      "phone": "3237240019",
+      "county": "Riverside"
+    },
+    {
+      "id": "306334508",
+      "name": "CENTRO MEDICO COMMUNITY CLINIC",
+      "address": "1303 W 6TH ST, STE 113",
+      "city": "CORONA",
+      "zip": "92882",
+      "phone": "9512788910",
+      "county": "Riverside"
+    },
+    {
+      "id": "306334582",
+      "name": "CENTRO MEDICO, CATHEDRAL CITY",
+      "address": "69175 RAMON RD, STE A",
+      "city": "CATHEDRAL CITY",
+      "zip": "92234",
+      "phone": "7603232118",
+      "county": "Riverside"
+    },
+    {
+      "id": "306330021",
+      "name": "INNERCARE - BLYTHE",
+      "address": "1415 W HOBSONWAY",
+      "city": "BLYTHE",
+      "zip": "92225",
+      "phone": "7609224981",
+      "county": "Riverside"
+    },
+    {
+      "id": "306334745",
+      "name": "INNERCARE - COACHELLA",
+      "address": "50249 CESAR CHAVEZ ST., UNIT K",
+      "city": "COACHELLA",
+      "zip": "92236",
+      "phone": "7603930555",
+      "county": "Riverside"
+    },
+    {
+      "id": "306334727",
+      "name": "INNERCARE - HEMET",
+      "address": "1023 E. FLORIDA AVENUE",
+      "city": "HEMET",
+      "zip": "92543",
+      "phone": "9515998403",
+      "county": "Riverside"
+    },
+    {
+      "id": "306334568",
+      "name": "INNERCARE - MECCA",
+      "address": "91275 66TH AVE, STE 500",
+      "city": "MECCA",
+      "zip": "92254",
+      "phone": "7603961249",
+      "county": "Riverside"
+    },
+    {
+      "id": "306334647",
+      "name": "MAGNOLIA COMMUNITY HEALTH CENTER",
+      "address": "9380 MAGNOLIA AVE",
+      "city": "RIVERSIDE",
+      "zip": "92503",
+      "phone": "9515712300",
+      "county": "Riverside"
+    },
+    {
+      "id": "306330020",
+      "name": "NEIGHBORHOOD HEALTHCARE - (DEVONSHIRE AVE)",
+      "address": "1030 E FLORIDA AVE",
+      "city": "HEMET",
+      "zip": "92543",
+      "phone": "8338674642",
+      "county": "Riverside"
+    },
+    {
+      "id": "306330022",
+      "name": "NEIGHBORHOOD HEALTHCARE - RIVERSIDE",
+      "address": "4371 LATHAM ST",
+      "city": "RIVERSIDE",
+      "zip": "92501",
+      "phone": "8338674642",
+      "county": "Riverside"
+    },
+    {
+      "id": "306330023",
+      "name": "ST. JOHN'S COMMUNITY HEALTH-INDIO",
+      "address": "82025 US HIGHWAY 111, STE 101",
+      "city": "INDIO",
+      "zip": "92201",
+      "phone": "3235411411",
+      "county": "Riverside"
+    },
+    {
+      "id": "306334730",
+      "name": "TRUECARE",
+      "address": "1675 N. PERRIS BLVD., STE G1",
+      "city": "PERRIS",
+      "zip": "92571",
+      "phone": "951-956-2400",
+      "county": "Riverside"
+    },
+    {
+      "id": "306330651",
+      "name": "UNICARE COMMUNITY HEALTH CENTER, INC.",
+      "address": "5549 VAN BUREN BLVD",
+      "city": "RIVERSIDE",
+      "zip": "92503",
+      "phone": "909-988-2555",
+      "county": "Riverside"
+    },
+    {
+      "id": "306334650",
+      "name": "UNIVERSITY COMMUNITY HEALTH CENTER",
+      "address": "2933 UNIVERSITY AVE",
+      "city": "RIVERSIDE",
+      "zip": "92507",
+      "phone": "9515712300",
+      "county": "Riverside"
+    },
+    {
+      "id": "306344153",
+      "name": "ELICA HEALTH CENTERS",
+      "address": "3701 J ST, STE 201",
+      "city": "SACRAMENTO",
+      "zip": "95816",
+      "phone": "916-569-8484",
+      "county": "Sacramento"
+    },
+    {
+      "id": "306344224",
+      "name": "ELICA HEALTH CENTERS HEALTH ON WHEELS",
+      "address": "3701 J ST, STE 201",
+      "city": "SACRAMENTO",
+      "zip": "95816",
+      "phone": "916-569-8484",
+      "county": "Sacramento"
+    },
+    {
+      "id": "306340747",
+      "name": "ELICA HEALTH CENTERS- NORTH HIGHLANDS",
+      "address": "4815 WATT AVE",
+      "city": "NORTH HIGHLANDS",
+      "zip": "95660",
+      "phone": "916-569-8484",
+      "county": "Sacramento"
+    },
+    {
+      "id": "306344027",
+      "name": "ONE COMMUNITY HEALTH",
+      "address": "1500 21ST ST",
+      "city": "SACRAMENTO",
+      "zip": "95811",
+      "phone": "916-914-6274",
+      "county": "Sacramento"
+    },
+    {
+      "id": "306344231",
+      "name": "PEACH TREE NORTH SACRAMENTO",
+      "address": "3810 ROSIN CT, STE 100",
+      "city": "SACRAMENTO",
+      "zip": "95834",
+      "phone": "5307493242",
+      "county": "Sacramento"
+    },
+    {
+      "id": "306340023",
+      "name": "SACRAMENTO COMMUNITY CLINIC - B TERI BURNS",
+      "address": "3314 FONG RANCH RD",
+      "city": "SACRAMENTO",
+      "zip": "95834",
+      "phone": "916-642-1867",
+      "county": "Sacramento"
+    },
+    {
+      "id": "306340735",
+      "name": "SACRAMENTO COMMUNITY CLINIC - EL CAMINO",
+      "address": "965 EL CAMINO AVE",
+      "city": "SACRAMENTO",
+      "zip": "95815",
+      "phone": "9166421867",
+      "county": "Sacramento"
+    },
+    {
+      "id": "306344212",
+      "name": "SACRAMENTO COMMUNITY CLINIC - EXPLORER",
+      "address": "3030 EXPLORER DR",
+      "city": "SACRAMENTO",
+      "zip": "95827",
+      "phone": "9166421867",
+      "county": "Sacramento"
+    },
+    {
+      "id": "306342248",
+      "name": "SACRAMENTO NATIVE AMERICAN  HEALTH CENTER, INC.",
+      "address": "2020 J ST",
+      "city": "SACRAMENTO",
+      "zip": "95811",
+      "phone": "9163410575",
+      "county": "Sacramento"
+    },
+    {
+      "id": "306344227",
+      "name": "SUTTER SENIORCARE",
+      "address": "444 N. 3RD ST",
+      "city": "SACRAMENTO",
+      "zip": "95811",
+      "phone": "8335607223",
+      "county": "Sacramento"
+    },
+    {
+      "id": "306351812",
+      "name": "SAN BENITO HEALTH FOUNDATION",
+      "address": "351 FELICE DR",
+      "city": "HOLLISTER",
+      "zip": "95023-3361",
+      "phone": "831-637-6871",
+      "county": "San Benito"
+    },
+    {
+      "id": "306364298",
+      "name": "AHF HEALTHCARE CENTER - UPLAND",
+      "address": "8263 GROVE AVE, STE 201",
+      "city": "RANCHO CUCAMONGA",
+      "zip": "91730",
+      "phone": "9095790708",
+      "county": "San Bernardino"
+    },
+    {
+      "id": "306360625",
+      "name": "BLESSING COMMUNITY HEALTH CENTER",
+      "address": "3972 N WATERMAN AVE, STE 104",
+      "city": "SAN BERNARDINO",
+      "zip": "92404",
+      "phone": "909-433-9700",
+      "county": "San Bernardino"
+    },
+    {
+      "id": "306364382",
+      "name": "CENTRAL NEIGHBORHOOD HEALTH FOUNDATION - H STREET",
+      "address": "1329 N H ST",
+      "city": "SAN BERNARDINO",
+      "zip": "92405",
+      "phone": "2135365815",
+      "county": "San Bernardino"
+    },
+    {
+      "id": "306360456",
+      "name": "CHINO VALLEY COMMUNITY HEALTH CENTER",
+      "address": "13193 CENTRAL AVENUE, STE 100",
+      "city": "CHINO",
+      "zip": "91710",
+      "phone": "9094649675",
+      "county": "San Bernardino"
+    },
+    {
+      "id": "306364366",
+      "name": "INLAND FAMILY COMMUNITY HEALTH CENTER",
+      "address": "665 N D ST",
+      "city": "SAN BERNARDINO",
+      "zip": "92401",
+      "phone": "909-708-8158",
+      "county": "San Bernardino"
+    },
+    {
+      "id": "306364485",
+      "name": "MISSION CITY COMMUNITY NETWORK, INC. - VICTORVILLE",
+      "address": "15201 ELEVENTH ST, STE 300",
+      "city": "VICTORVILLE",
+      "zip": "92395",
+      "phone": "8188953100",
+      "county": "San Bernardino"
+    },
+    {
+      "id": "306360548",
+      "name": "PARKTREE COMMUNITY HEALTH CENTER",
+      "address": "2680 E RIVERSIDE DR",
+      "city": "ONTARIO",
+      "zip": "91761",
+      "phone": "9096307927",
+      "county": "San Bernardino"
+    },
+    {
+      "id": "306364520",
+      "name": "PARKTREE COMMUNITY HEALTH CENTER",
+      "address": "1556 S SULTANA AVE",
+      "city": "ONTARIO",
+      "zip": "91761",
+      "phone": "9096307927",
+      "county": "San Bernardino"
+    },
+    {
+      "id": "306364558",
+      "name": "SAC SAN BERNARDINO CAMPUS",
+      "address": "250 S. G ST",
+      "city": "SAN BERNARDINO",
+      "zip": "92410",
+      "phone": "9093827100",
+      "county": "San Bernardino"
+    },
+    {
+      "id": "306360020",
+      "name": "TRI - STATE COMMUNITY HEALTHCARE CENTER",
+      "address": "820 W BROADWAY ST",
+      "city": "NEEDLES",
+      "zip": "92363",
+      "phone": "7603260222",
+      "county": "San Bernardino"
+    },
+    {
+      "id": "306360801",
+      "name": "TRI-STATE COMMUNITY HEALTHCARE CENTER",
+      "address": "11499 BARTLETT AVE",
+      "city": "ADELANTO",
+      "zip": "92301",
+      "phone": "7603260222",
+      "county": "San Bernardino"
+    },
+    {
+      "id": "306360586",
+      "name": "UNICARE COMMUNITY HEALTH CENTER, INC.",
+      "address": "184 E. HIGHLAND AVE.",
+      "city": "SAN BERNARDINO",
+      "zip": "92404",
+      "phone": "909-988-2555",
+      "county": "San Bernardino"
+    },
+    {
+      "id": "306360588",
+      "name": "UNICARE COMMUNITY HEALTH CENTER, INC.",
+      "address": "17500 FOOTHILL BLVD., STE A2",
+      "city": "FONTANA",
+      "zip": "92335",
+      "phone": "909-988-2555",
+      "county": "San Bernardino"
+    },
+    {
+      "id": "306370023",
+      "name": "AHF HEALTHCARE CENTER - SAN DIEGO",
+      "address": "3580 5TH AVE, STE 250",
+      "city": "SAN DIEGO",
+      "zip": "92103",
+      "phone": "6195168931",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374401",
+      "name": "ALLIANCE HEALTH CLINIC, INC.",
+      "address": "5952 EL CAJON BLVD",
+      "city": "SAN DIEGO",
+      "zip": "92115",
+      "phone": "6192298030",
+      "county": "San Diego"
+    },
+    {
+      "id": "306370847",
+      "name": "BEACH AREA FAMILY HEALTH CENTER",
+      "address": "3705 MISSION BLVD",
+      "city": "SAN DIEGO",
+      "zip": "92109-7368",
+      "phone": "619-906-4603",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374549",
+      "name": "CENTRO MEDICO, EL CAJON",
+      "address": "133 W MAIN ST, STE 100",
+      "city": "EL CAJON",
+      "zip": "92020",
+      "phone": "(760) 323-2118",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374448",
+      "name": "CENTRO MEDICO, ESCONDIDO",
+      "address": "1121 E WASHINGTON AVE",
+      "city": "ESCONDIDO",
+      "zip": "92025",
+      "phone": "(760) 323-2118",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374280",
+      "name": "CHASE AVENUE FAMILY HEALTH CENTER",
+      "address": "1111 W CHASE AVE",
+      "city": "EL CAJON",
+      "zip": "92020",
+      "phone": "619-906-4603",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374471",
+      "name": "CITY HEIGHTS FAMILY HEALTH CENTER",
+      "address": "5454 EL CAJON BLVD",
+      "city": "SAN DIEGO",
+      "zip": "92115",
+      "phone": "619-906-4603",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374513",
+      "name": "DIAMOND NEIGHBORHOODS FAMILY HEALTH CENTER",
+      "address": "4725 MARKET ST",
+      "city": "SAN DIEGO",
+      "zip": "92102",
+      "phone": "619-906-4603",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374494",
+      "name": "DTFHC AT CONNECTIONS",
+      "address": "1250 6TH AVE, STE 100",
+      "city": "SAN DIEGO",
+      "zip": "92101",
+      "phone": "619-906-4603",
+      "county": "San Diego"
+    },
+    {
+      "id": "306370767",
+      "name": "EAST COUNTY WELLNESS CENTER",
+      "address": "8530 LA MESA BLVD, STE 306",
+      "city": "LA MESA",
+      "zip": "91942",
+      "phone": "619-906-4603",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374539",
+      "name": "FAMILY HEALTH ON COMMERCIAL",
+      "address": "2325 COMMERCIAL ST, STE 1400",
+      "city": "SAN DIEGO",
+      "zip": "92113",
+      "phone": "619-906-4603",
+      "county": "San Diego"
+    },
+    {
+      "id": "306370412",
+      "name": "FAMILY HEALTH-CENTER FOR OLDER ADULTS",
+      "address": "3420 COLLEGE AVE",
+      "city": "SAN DIEGO",
+      "zip": "92115",
+      "phone": "619-906-4603",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374518",
+      "name": "FAMILYHEALTH AT CITY COLLEGE",
+      "address": "1550 BROADWAY, SUITE P002",
+      "city": "SAN DIEGO",
+      "zip": "92101",
+      "phone": "619-906-4603",
+      "county": "San Diego"
+    },
+    {
+      "id": "306370543",
+      "name": "GARY AND MARY WEST SENIOR SERVICES, INC.",
+      "address": "1706 DESCANSO AVE",
+      "city": "SAN MARCOS",
+      "zip": "92078",
+      "phone": "7602802230",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374260",
+      "name": "GROSSMONT SPRING VALLEY FAMILY HEALTH CENTER",
+      "address": "8788 JAMACHA RD",
+      "city": "SPRING VALLEY",
+      "zip": "91977",
+      "phone": "619-906-4603",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374534",
+      "name": "HILLCREST FAMILY HEALTH CENTER",
+      "address": "4094 4TH AVE",
+      "city": "SAN DIEGO",
+      "zip": "92103",
+      "phone": "619-906-4603",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374491",
+      "name": "KING-CHAVEZ HEALTH CENTER",
+      "address": "950 S EUCLID AVE",
+      "city": "SAN DIEGO",
+      "zip": "92114",
+      "phone": "619-205-6339x3516",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374445",
+      "name": "LA MAESTRA COMMUNITY HEALTH CENTERS - CITY HEIGHTS",
+      "address": "4060 FAIRMOUNT AVE",
+      "city": "SAN DIEGO",
+      "zip": "92105",
+      "phone": "2063108381",
+      "county": "San Diego"
+    },
+    {
+      "id": "306370738",
+      "name": "LINDA VISTA HEALTH CARE CENTER",
+      "address": "6973 LINDA VISTA RD",
+      "city": "SAN DIEGO",
+      "zip": "92111",
+      "phone": "858-279-0925",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374438",
+      "name": "LOGAN HEIGHTS FAMILY COUNSELING CENTER",
+      "address": "2204 NATIONAL AVE",
+      "city": "SAN DIEGO",
+      "zip": "92113",
+      "phone": "619-906-4603",
+      "county": "San Diego"
+    },
+    {
+      "id": "306370936",
+      "name": "MID-CITY COMMUNITY CLINIC",
+      "address": "4290 POLK AVE",
+      "city": "SAN DIEGO",
+      "zip": "92105",
+      "phone": "(619) 563-0250",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374324",
+      "name": "MID-CITY COMMUNITY CLINIC (PEDIATRICS)",
+      "address": "4305 UNIVERSITY AVE, STE 150",
+      "city": "SAN DIEGO",
+      "zip": "92105",
+      "phone": "(619) 280-2058",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374164",
+      "name": "NEIGHBORHOOD HEALTHCARE - LAKESIDE MEDICAL",
+      "address": "10039A VINE ST",
+      "city": "LAKESIDE",
+      "zip": "92040",
+      "phone": "8338674642",
+      "county": "San Diego"
+    },
+    {
+      "id": "306371511",
+      "name": "NEIGHBORHOOD HEALTHCARE EL CAJON",
+      "address": "855 E MADISON AVE",
+      "city": "EL CAJON",
+      "zip": "92020",
+      "phone": "8338674642",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374093",
+      "name": "NEIGHBORHOOD HEALTHCARE ESCONDIDO",
+      "address": "460 N ELM ST",
+      "city": "ESCONDIDO",
+      "zip": "92025",
+      "phone": "8338674642",
+      "county": "San Diego"
+    },
+    {
+      "id": "306370378",
+      "name": "NEIGHBORHOOD HEALTHCARE-GOLD FAMILY HEALTH CENTER",
+      "address": "13010 POWAY RD",
+      "city": "POWAY",
+      "zip": "92064",
+      "phone": "8338674642",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374160",
+      "name": "NORTH PARK FAMILY HEALTH CENTER",
+      "address": "3544 30TH ST",
+      "city": "SAN DIEGO",
+      "zip": "92104-4120",
+      "phone": "619-906-4603",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374558",
+      "name": "OAK PARK FAMILY HEALTH CENTER",
+      "address": "5160 FEDERAL BLVD",
+      "city": "SAN DIEGO",
+      "zip": "92105",
+      "phone": "619-906-4603",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374286",
+      "name": "RAY M DICKINSON WELLNESS CENTER",
+      "address": "425 N DATE ST",
+      "city": "ESCONDIDO",
+      "zip": "92025",
+      "phone": "8338674642",
+      "county": "San Diego"
+    },
+    {
+      "id": "306371602",
+      "name": "SAMAHAN HEALTH CENTERS: 2743 HIGHLAND",
+      "address": "2743 HIGHLAND AVE",
+      "city": "NATIONAL CITY",
+      "zip": "91950",
+      "phone": "8442002426 ext. 1063",
+      "county": "San Diego"
+    },
+    {
+      "id": "306371354",
+      "name": "SAMAHAN HEALTH CENTERS: MIRA MESA MEDICAL",
+      "address": "10737 CAMINO RUIZ, STE 235",
+      "city": "SAN DIEGO",
+      "zip": "92126",
+      "phone": "8442002426 ext. 1069",
+      "county": "San Diego"
+    },
+    {
+      "id": "306371581",
+      "name": "SAN DIEGO AMERICAN INDIAN HEALTH CENTER",
+      "address": "2630 1ST AVE",
+      "city": "SAN DIEGO",
+      "zip": "92103",
+      "phone": "(619) 234-2158",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374553",
+      "name": "SAN DIEGO FAMILY CARE",
+      "address": "7011 LINDA VISTA ROAD",
+      "city": "SAN DIEGO",
+      "zip": "92111",
+      "phone": "(858)810-8700",
+      "county": "San Diego"
+    },
+    {
+      "id": "306370687",
+      "name": "SAN YSIDRO HEALTH BEHAVIORAL HEALTH CENTER",
+      "address": "1666 PRECISION PARK LN",
+      "city": "SAN YSIDRO",
+      "zip": "92173",
+      "phone": "619-205-6339x3516",
+      "county": "San Diego"
+    },
+    {
+      "id": "306371285",
+      "name": "SAN YSIDRO HEALTH CHC - OCEAN VIEW",
+      "address": "3177 OCEAN VIEW BLVD",
+      "city": "SAN DIEGO",
+      "zip": "92113",
+      "phone": "619-205-6339x3516",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374498",
+      "name": "SAN YSIDRO HEALTH CHULA VISTA",
+      "address": "678 3RD AVE",
+      "city": "CHULA VISTA",
+      "zip": "91910",
+      "phone": "619-205-6339x3516",
+      "county": "San Diego"
+    },
+    {
+      "id": "306370641",
+      "name": "SAN YSIDRO HEALTH EL CAJON/SAN DIEGO PACE",
+      "address": "875 EL CAJON BLVD",
+      "city": "EL CAJON",
+      "zip": "92020",
+      "phone": "619-205-6339x3516",
+      "county": "San Diego"
+    },
+    {
+      "id": "306370020",
+      "name": "SAN YSIDRO HEALTH ESCONDIDO FAMILY MEDICINE",
+      "address": "704 E GRAND AVE",
+      "city": "ESCONDIDO",
+      "zip": "92025",
+      "phone": "619-205-6339x3516",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374261",
+      "name": "SAN YSIDRO HEALTH EUCLID",
+      "address": "286 EUCLID AVE, STE 302",
+      "city": "SAN DIEGO",
+      "zip": "92114",
+      "phone": "619-205-6339x3516",
+      "county": "San Diego"
+    },
+    {
+      "id": "306370507",
+      "name": "SAN YSIDRO HEALTH MATERNAL & CHILD HEALTH CENTER",
+      "address": "4050 BEYER BLVD",
+      "city": "SAN YSIDRO",
+      "zip": "92173",
+      "phone": "619-205-6339x3516",
+      "county": "San Diego"
+    },
+    {
+      "id": "306370021",
+      "name": "SAN YSIDRO HEALTH MOUNTAIN HEALTH FAMILY MEDICINE",
+      "address": "1388 BUCKMAN SPRINGS RD",
+      "city": "CAMPO",
+      "zip": "91906",
+      "phone": "619-205-6339x3516",
+      "county": "San Diego"
+    },
+    {
+      "id": "306371226",
+      "name": "SAN YSIDRO HEALTH OTAY",
+      "address": "1637 3RD AVE, STE B, C, F, H, I",
+      "city": "CHULA VISTA",
+      "zip": "91911-5842",
+      "phone": "619-205-6339x3516",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374432",
+      "name": "SAN YSIDRO HEALTH PARADISE HILLS",
+      "address": "2400 E 8TH ST",
+      "city": "NATIONAL CITY",
+      "zip": "91950",
+      "phone": "619-205-6339x3516",
+      "county": "San Diego"
+    },
+    {
+      "id": "306371257",
+      "name": "SAN YSIDRO HEALTH SAN YSIDRO HEALTH CENTER",
+      "address": "4004 BEYER BLVD",
+      "city": "SAN YSIDRO",
+      "zip": "92173",
+      "phone": "619-205-6339x3516",
+      "county": "San Diego"
+    },
+    {
+      "id": "306370619",
+      "name": "SAN YSIDRO HEALTH URGENT CARE",
+      "address": "333 H ST, STE 2080",
+      "city": "CHULA VISTA",
+      "zip": "91910",
+      "phone": "619-205-6339x3516",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374398",
+      "name": "SHERMAN HEIGHTS FAMILY HEALTH CENTER",
+      "address": "2391 ISLAND AVE",
+      "city": "SAN DIEGO",
+      "zip": "92102",
+      "phone": "619-906-4603",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374018",
+      "name": "ST. VINCENT DE PAUL VILLAGE FAMILY HEALTH CENTER",
+      "address": "1501 IMPERIAL AVE",
+      "city": "SAN DIEGO",
+      "zip": "92101",
+      "phone": "6192338500",
+      "county": "San Diego"
+    },
+    {
+      "id": "306370580",
+      "name": "TRUECARE",
+      "address": "220 ROTANZI ST",
+      "city": "RAMONA",
+      "zip": "92065",
+      "phone": "760-736-6767",
+      "county": "San Diego"
+    },
+    {
+      "id": "306371576",
+      "name": "TRUECARE",
+      "address": "150 VALPREDA RD",
+      "city": "SAN MARCOS",
+      "zip": "92069",
+      "phone": "760-736-6767",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374200",
+      "name": "TRUECARE",
+      "address": "2210 MESA DR , STE 300",
+      "city": "OCEANSIDE",
+      "zip": "92054",
+      "phone": "7607366767",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374274",
+      "name": "TRUECARE",
+      "address": "2210 MESA DR, STE 5, 7, 8",
+      "city": "OCEANSIDE",
+      "zip": "92054",
+      "phone": "760-736-6767",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374359",
+      "name": "TRUECARE",
+      "address": "1130 2ND ST",
+      "city": "ENCINITAS",
+      "zip": "92024",
+      "phone": "760-736-6767",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374434",
+      "name": "TRUECARE",
+      "address": "605 CROUCH ST, BLDG C",
+      "city": "OCEANSIDE",
+      "zip": "92054",
+      "phone": "760-736-6767",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374480",
+      "name": "TRUECARE",
+      "address": "1295 CARLSBAD VILLAGE DR, STE 100",
+      "city": "CARLSBAD",
+      "zip": "92008",
+      "phone": "7607366767",
+      "county": "San Diego"
+    },
+    {
+      "id": "306370856",
+      "name": "VISTA COMMUNITY CLINIC",
+      "address": "1000 VALE TERRACE DR",
+      "city": "VISTA",
+      "zip": "92084",
+      "phone": "7606315000",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374031",
+      "name": "VISTA COMMUNITY CLINIC - GRAPEVINE",
+      "address": "134 GRAPEVINE RD",
+      "city": "VISTA",
+      "zip": "92083",
+      "phone": "7606315000",
+      "county": "San Diego"
+    },
+    {
+      "id": "306374295",
+      "name": "VISTA COMMUNITY CLINIC - HORNE STREET",
+      "address": "517 N HORNE ST",
+      "city": "OCEANSIDE",
+      "zip": "92054",
+      "phone": "7606315000",
+      "county": "San Diego"
+    },
+    {
+      "id": "306384180",
+      "name": "AHF HEALTHCARE CENTER - SAN FRANCISCO",
+      "address": "518-A CASTRO ST",
+      "city": "SAN FRANCISCO",
+      "zip": "94114",
+      "phone": "4155522814",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306384211",
+      "name": "ASIAN AND PACIFIC ISLANDER WELLNESS CENTER, INC.",
+      "address": "726 POLK ST, STE 4",
+      "city": "SAN FRANCISCO",
+      "zip": "94109",
+      "phone": "4152923400",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306384229",
+      "name": "BAYVIEW CHILD HEALTH CENTER",
+      "address": "3450 3RD ST, STE 2A/B",
+      "city": "SAN FRANCISCO",
+      "zip": "94124",
+      "phone": "4156970490",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306384240",
+      "name": "HEALTHRIGHT  360",
+      "address": "1563 MISSION ST, STE 5",
+      "city": "SAN FRANCISCO",
+      "zip": "94103",
+      "phone": "415-762-3700",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306382737",
+      "name": "INSTITUTO FAMILIAR DE LA RAZA - OUTPATIENT",
+      "address": "2919 MISSION ST",
+      "city": "SAN FRANCISCO",
+      "zip": "94110",
+      "phone": "415-229-0500",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306380367",
+      "name": "LYON-MARTIN COMMUNITY HEALTH SERVICES",
+      "address": "1735 MISSION ST",
+      "city": "SAN FRANCISCO",
+      "zip": "94103",
+      "phone": "4155657667",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306380891",
+      "name": "MISSION NEIGHBORHOOD HEALTH CENTER",
+      "address": "240 SHOTWELL ST",
+      "city": "SAN FRANCISCO",
+      "zip": "94110",
+      "phone": "415-552-3870",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306384045",
+      "name": "MISSION NEIGHBORHOOD HEALTH CENTER - EXCELSIOR CLINIC",
+      "address": "4434 MISSION ST",
+      "city": "SAN FRANCISCO",
+      "zip": "94112",
+      "phone": "415-552-3870",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306384214",
+      "name": "MISSION NEIGHBORHOOD RESOURCE CENTER",
+      "address": "165 CAPP ST",
+      "city": "SAN FRANCISCO",
+      "zip": "94110",
+      "phone": "415-552-3870",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306380896",
+      "name": "NATIVE AMERICAN HEALTH CENTER",
+      "address": "160 CAPP ST",
+      "city": "SAN FRANCISCO",
+      "zip": "94110",
+      "phone": "510-485-5948",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306382711",
+      "name": "NORTH EAST MEDICAL SERVICES",
+      "address": "1520 STOCKTON ST",
+      "city": "SAN FRANCISCO",
+      "zip": "94133",
+      "phone": "4153919686",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306384227",
+      "name": "NORTH EAST MEDICAL SERVICES - 1400 NORIEGA",
+      "address": "1400 NORIEGA ST",
+      "city": "SAN FRANCISCO",
+      "zip": "94122",
+      "phone": "4153919686",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306384207",
+      "name": "NORTH EAST MEDICAL SERVICES - SAN BRUNO AVENUE",
+      "address": "2574 SAN BRUNO AVE",
+      "city": "SAN FRANCISCO",
+      "zip": "94134",
+      "phone": "4153919686",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306384219",
+      "name": "PLANNED PARENTHOOD NORTHERN CALIFORNIA SF HEALTH CENTER",
+      "address": "1522 BUSH ST",
+      "city": "SAN FRANCISCO",
+      "zip": "94109",
+      "phone": "(415) 821-1282",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306381330",
+      "name": "RICHMOND MAXI-CENTER",
+      "address": "3626 BALBOA ST",
+      "city": "SAN FRANCISCO",
+      "zip": "94121",
+      "phone": "415-800-0699",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306384025",
+      "name": "SAN FRANCISCO FREE CLINIC",
+      "address": "4900 CALIFORNIA ST",
+      "city": "SAN FRANCISCO",
+      "zip": "94118",
+      "phone": "415-750-9894",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306384221",
+      "name": "SOUTH OF MARKET HEALTH CENTER",
+      "address": "229 7TH ST",
+      "city": "SAN FRANCISCO",
+      "zip": "94103",
+      "phone": "4155036000",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306384201",
+      "name": "ST. ANTHONY MEDICAL CLINIC",
+      "address": "150 GOLDEN GATE AVE, FL 2",
+      "city": "SAN FRANCISCO",
+      "zip": "94102",
+      "phone": "415-592-2850",
+      "county": "San Francisco"
+    },
+    {
+      "id": "306394111",
+      "name": "COMMUNITY MEDICAL CENTERS - MARIPOSA ROAD",
+      "address": "2015 E MARIPOSA RD",
+      "city": "STOCKTON",
+      "zip": "95205",
+      "phone": "2099444700",
+      "county": "San Joaquin"
+    },
+    {
+      "id": "306394118",
+      "name": "COMMUNITY MEDICAL CENTERS, GLEASON HOUSE",
+      "address": "423 S SAN JOAQUIN ST",
+      "city": "STOCKTON",
+      "zip": "95203",
+      "phone": "2099444700",
+      "county": "San Joaquin"
+    },
+    {
+      "id": "306390380",
+      "name": "COMMUNITY MEDICAL CENTERS, TRACY GRANT LINE",
+      "address": "2151 W GRANT LINE RD",
+      "city": "TRACY",
+      "zip": "95377",
+      "phone": "2099444700",
+      "county": "San Joaquin"
+    },
+    {
+      "id": "306390398",
+      "name": "COMMUNITY MEDICAL CENTERS, WEST LANE",
+      "address": "7912 WEST LN, STE 221",
+      "city": "STOCKTON",
+      "zip": "95210",
+      "phone": "2099444700",
+      "county": "San Joaquin"
+    },
+    {
+      "id": "306394057",
+      "name": "EDISON HEALTH CENTER",
+      "address": "1425 S CENTER ST",
+      "city": "STOCKTON",
+      "zip": "95206",
+      "phone": "209-444-8300",
+      "county": "San Joaquin"
+    },
+    {
+      "id": "306391314",
+      "name": "GOLDEN VALLEY HEALTH CENTERS - MANTECA",
+      "address": "250 NORTHGATE DR.",
+      "city": "MANTECA",
+      "zip": "95336",
+      "phone": "2092395299",
+      "county": "San Joaquin"
+    },
+    {
+      "id": "306394058",
+      "name": "STAGG HEALTHY START CENTER",
+      "address": "1621 BROOKSIDE RD",
+      "city": "STOCKTON",
+      "zip": "95207",
+      "phone": "209-933-7445 X8509",
+      "county": "San Joaquin"
+    },
+    {
+      "id": "306400020",
+      "name": "COMMUNITY HEALTH CENTERS ATASCADERO",
+      "address": "7512 MORRO RD, STE. 7516, 7512, 7520, 7524",
+      "city": "ATASCADERO",
+      "zip": "93422",
+      "phone": "8053463900",
+      "county": "San Luis Obispo"
+    },
+    {
+      "id": "306400021",
+      "name": "COMMUNITY HEALTH CENTERS CAMBRIA",
+      "address": "1276 TAMSEN ST",
+      "city": "CAMBRIA",
+      "zip": "93428",
+      "phone": "8053463900",
+      "county": "San Luis Obispo"
+    },
+    {
+      "id": "306404078",
+      "name": "COMMUNITY HEALTH CENTERS CASA",
+      "address": "77 CASA ST, STE 201, 202, 203, & 204",
+      "city": "SAN LUIS OBISPO",
+      "zip": "93405",
+      "phone": "8053463900",
+      "county": "San Luis Obispo"
+    },
+    {
+      "id": "306404103",
+      "name": "COMMUNITY HEALTH CENTERS DEL MAR",
+      "address": "2120 CIENAGA ST",
+      "city": "OCEANO",
+      "zip": "93445",
+      "phone": "8053463900",
+      "county": "San Luis Obispo"
+    },
+    {
+      "id": "306400587",
+      "name": "COMMUNITY HEALTH CENTERS LOS ROBLES",
+      "address": "2800 RIVERSIDE AVE, STE 101",
+      "city": "PASO ROBLES",
+      "zip": "93446",
+      "phone": "8053463900",
+      "county": "San Luis Obispo"
+    },
+    {
+      "id": "306400680",
+      "name": "COMMUNITY HEALTH CENTERS SAN MIGUEL",
+      "address": "1385 MISSION ST",
+      "city": "SAN MIGUEL",
+      "zip": "93451",
+      "phone": "8053463900",
+      "county": "San Luis Obispo"
+    },
+    {
+      "id": "306400506",
+      "name": "COMMUNITY HEALTH CENTERS TEMPLETON",
+      "address": "1330 LAS TABLAS RD",
+      "city": "TEMPLETON",
+      "zip": "93465",
+      "phone": "8053463900",
+      "county": "San Luis Obispo"
+    },
+    {
+      "id": "306404076",
+      "name": "COMMUNITY HEALTH CENTERS, ARROYO GRANDE",
+      "address": "260 STATION WAY",
+      "city": "ARROYO GRANDE",
+      "zip": "93420",
+      "phone": "8053463900",
+      "county": "San Luis Obispo"
+    },
+    {
+      "id": "306404034",
+      "name": "DOCTORS OFFICE/FAIR OAKS COMMUNITY HEALTH CENTERS",
+      "address": "1057 E GRAND AVE",
+      "city": "ARROYO GRANDE",
+      "zip": "93420",
+      "phone": "8053463900",
+      "county": "San Luis Obispo"
+    },
+    {
+      "id": "306401170",
+      "name": "NIPOMO COMMUNITY MEDICAL CENTER",
+      "address": "150 TEJAS PL",
+      "city": "NIPOMO",
+      "zip": "93444",
+      "phone": "8053463900",
+      "county": "San Luis Obispo"
+    },
+    {
+      "id": "306404079",
+      "name": "SLO NOOR CLINIC",
+      "address": "1428 PHILLIPS LN",
+      "city": "SAN LUIS OBISPO",
+      "zip": "93401",
+      "phone": "8054391797",
+      "county": "San Luis Obispo"
+    },
+    {
+      "id": "306414128",
+      "name": "NORTH EAST MEDICAL SERVICES - EASTMOOR",
+      "address": "211 EASTMOOR AVE",
+      "city": "DALY CITY",
+      "zip": "94015",
+      "phone": "4153919686",
+      "county": "San Mateo"
+    },
+    {
+      "id": "306414146",
+      "name": "RAVENSWOOD FAMILY HEALTH CENTER",
+      "address": "1885 BAY RD",
+      "city": "EAST PALO ALTO",
+      "zip": "94303",
+      "phone": "6503307400",
+      "county": "San Mateo"
+    },
+    {
+      "id": "306414089",
+      "name": "SAMARITAN HOUSE FREE CLINIC",
+      "address": "19 W 39TH AVE",
+      "city": "SAN MATEO",
+      "zip": "94403",
+      "phone": "6505470400",
+      "county": "San Mateo"
+    },
+    {
+      "id": "306414104",
+      "name": "SAMARITAN HOUSE FREE CLINIC OF REDWOOD CITY",
+      "address": "114 5TH AVE",
+      "city": "REDWOOD CITY",
+      "zip": "94063",
+      "phone": "6508391447",
+      "county": "San Mateo"
+    },
+    {
+      "id": "306424040",
+      "name": "AMERICAN INDIAN HEALTH & SERVICES",
+      "address": "4141 STATE ST , STE A1",
+      "city": "SANTA BARBARA",
+      "zip": "93110",
+      "phone": "8056817356",
+      "county": "Santa Barbara"
+    },
+    {
+      "id": "306414114",
+      "name": "COMMUNITY HEALTH CENTERS ARBOR",
+      "address": "1418 E MAIN ST, STE 210",
+      "city": "SANTA MARIA",
+      "zip": "93454",
+      "phone": "8053463900",
+      "county": "Santa Barbara"
+    },
+    {
+      "id": "306424105",
+      "name": "COMMUNITY HEALTH CENTERS DEL VALLE",
+      "address": "430 S BLOSSER RD",
+      "city": "SANTA MARIA",
+      "zip": "93458",
+      "phone": "8053463900",
+      "county": "Santa Barbara"
+    },
+    {
+      "id": "306424115",
+      "name": "COMMUNITY HEALTH CENTERS GUADALUPE",
+      "address": "4723 W MAIN ST, STE H",
+      "city": "GUADALUPE",
+      "zip": "93434",
+      "phone": "8053463900",
+      "county": "Santa Barbara"
+    },
+    {
+      "id": "306424107",
+      "name": "GOLETA NEIGHBORHOOD CLINIC",
+      "address": "5580 CALLE REAL",
+      "city": "GOLETA",
+      "zip": "93111",
+      "phone": "844-894-0343",
+      "county": "Santa Barbara"
+    },
+    {
+      "id": "306420845",
+      "name": "ISLA VISTA NEIGHBORHOOD CLINIC",
+      "address": "970 EMBARCADERO DEL MAR",
+      "city": "GOLETA",
+      "zip": "93117",
+      "phone": "844-894-0343",
+      "county": "Santa Barbara"
+    },
+    {
+      "id": "306421062",
+      "name": "PLANNED PARENTHOOD OF SANTA BARBARA COUNTY",
+      "address": "518 GARDEN ST",
+      "city": "SANTA BARBARA",
+      "zip": "93101",
+      "phone": "805-899-9818",
+      "county": "Santa Barbara"
+    },
+    {
+      "id": "306420850",
+      "name": "WESTSIDE NEIGHBORHOOD CLINIC",
+      "address": "628 W MICHELTORENA ST",
+      "city": "SANTA BARBARA",
+      "zip": "93101",
+      "phone": "844-894-0343",
+      "county": "Santa Barbara"
+    },
+    {
+      "id": "306431867",
+      "name": "ASIAN AMERICANS FOR COMMUNITY INVOLVEMENT SANTA CLARA",
+      "address": "2400 MOORPARK AVE, STE  300",
+      "city": "SAN JOSE",
+      "zip": "95128-2680",
+      "phone": "4089752730",
+      "county": "Santa Clara"
+    },
+    {
+      "id": "306431525",
+      "name": "INDIAN HEALTH CENTER OF SANTA CLARA VALLEY",
+      "address": "1333 MERIDIAN AVE",
+      "city": "SAN JOSE",
+      "zip": "95125-5250",
+      "phone": "4084453400",
+      "county": "Santa Clara"
+    },
+    {
+      "id": "306434227",
+      "name": "INDIAN HEALTH CENTER OF SANTA CLARA VALLEY",
+      "address": "1642 E CAPITOL EXPY",
+      "city": "SAN JOSE",
+      "zip": "95121-1800",
+      "phone": "4084453400",
+      "county": "Santa Clara"
+    },
+    {
+      "id": "306434262",
+      "name": "NORTH EAST MEDICAL SERVICES - 1870 LUNDY",
+      "address": "1870 LUNDY AVE",
+      "city": "SAN JOSE",
+      "zip": "95131",
+      "phone": "4153919686",
+      "county": "Santa Clara"
+    },
+    {
+      "id": "306434105",
+      "name": "OVERFELT HIGH SCHOOL HEALTH CLINIC",
+      "address": "1835 CUNNINGHAM AVE",
+      "city": "SAN JOSE",
+      "zip": "95122",
+      "phone": "4083475988",
+      "county": "Santa Clara"
+    },
+    {
+      "id": "306434228",
+      "name": "PENINSULA HEALTHCARE CONNECTION, INC",
+      "address": "33 ENCINA AVE, STE 103",
+      "city": "PALO ALTO",
+      "zip": "94301",
+      "phone": "6508530321",
+      "county": "Santa Clara"
+    },
+    {
+      "id": "306430529",
+      "name": "ROOTS COMMUNITY HEALTH CENTER",
+      "address": "1898 THE ALAMEDA",
+      "city": "SAN JOSE",
+      "zip": "95126",
+      "phone": "5107771177",
+      "county": "Santa Clara"
+    },
+    {
+      "id": "306434132",
+      "name": "WASHINGTON NEIGHBORHOOD HEALTH CLINIC",
+      "address": "100 OAK ST",
+      "city": "SAN JOSE",
+      "zip": "95110",
+      "phone": "4092950980",
+      "county": "Santa Clara"
+    },
+    {
+      "id": "306444023",
+      "name": "CLINICA DEL VALLE DEL PAJARO",
+      "address": "45 NIELSON ST",
+      "city": "WATSONVILLE",
+      "zip": "95076",
+      "phone": "(831) 728-8250",
+      "county": "Santa Cruz"
+    },
+    {
+      "id": "306441852",
+      "name": "SALUD PARA LA GENTE CLINIC",
+      "address": "204 E BEACH ST",
+      "city": "WATSONVILLE",
+      "zip": "95076",
+      "phone": "(831) 728-8250",
+      "county": "Santa Cruz"
+    },
+    {
+      "id": "306450413",
+      "name": "ANDERSON FAMILY HEALTH CENTER",
+      "address": "2965 EAST ST",
+      "city": "ANDERSON",
+      "zip": "96007",
+      "phone": "530-378-0487",
+      "county": "Shasta"
+    },
+    {
+      "id": "306454063",
+      "name": "BURNEY HEALTH CENTER",
+      "address": "37491 ENTERPRISE DR",
+      "city": "BURNEY",
+      "zip": "96013",
+      "phone": "530-999-9030",
+      "county": "Shasta"
+    },
+    {
+      "id": "306454051",
+      "name": "FALL RIVER VALLEY HEALTH CENTER",
+      "address": "43658 STATE HIGHWAY 299 E",
+      "city": "FALL RIVER MILLS",
+      "zip": "96028",
+      "phone": "530-999-9020",
+      "county": "Shasta"
+    },
+    {
+      "id": "306452320",
+      "name": "HILL COUNTRY COMMUNITY CLINIC",
+      "address": "29632 HWY 299 E",
+      "city": "ROUND MOUNTAIN",
+      "zip": "96084",
+      "phone": "5303375750",
+      "county": "Shasta"
+    },
+    {
+      "id": "306454008",
+      "name": "SHASTA COMMUNITY HEALTH CENTER",
+      "address": "1035 PLACER ST",
+      "city": "REDDING",
+      "zip": "96001",
+      "phone": "530-246-5710",
+      "county": "Shasta"
+    },
+    {
+      "id": "306454064",
+      "name": "SHASTA COMMUNITY HEALTH CENTER - MOBILE UNIT 1",
+      "address": "1035 PLACER ST",
+      "city": "REDDING",
+      "zip": "96001",
+      "phone": "530-246-5710",
+      "county": "Shasta"
+    },
+    {
+      "id": "306454041",
+      "name": "SHASTA LAKE CITY FAMILY HEALTH CENTER",
+      "address": "4215 FRONT ST",
+      "city": "SHASTA LAKE",
+      "zip": "96019",
+      "phone": "530-276-9168",
+      "county": "Shasta"
+    },
+    {
+      "id": "306452335",
+      "name": "SHINGLETOWN MEDICAL CENTER",
+      "address": "31292 ALPINE MEADOWS RD",
+      "city": "SHINGLETOWN",
+      "zip": "96088",
+      "phone": "530-474-3390",
+      "county": "Shasta"
+    },
+    {
+      "id": "306461280",
+      "name": "WESTERN SIERRA MEDICAL CLINIC",
+      "address": "209 NEVADA ST",
+      "city": "DOWNIEVILLE",
+      "zip": "95936",
+      "phone": "5302749762",
+      "county": "Sierra"
+    },
+    {
+      "id": "306472258",
+      "name": "BUTTE VALLEY HEALTH CENTER",
+      "address": "610 W 3RD ST",
+      "city": "DORRIS",
+      "zip": "96023",
+      "phone": "530-999-9070",
+      "county": "Siskiyou"
+    },
+    {
+      "id": "306474016",
+      "name": "DUNSMUIR COMMUNITY HEALTH CENTER",
+      "address": "4309 STAGECOACH RD",
+      "city": "DUNSMUIR",
+      "zip": "96025",
+      "phone": "5302354138",
+      "county": "Siskiyou"
+    },
+    {
+      "id": "306474014",
+      "name": "MCCLOUD HEALTHCARE CLINIC, INC.",
+      "address": "116 W MINNESOTA AVE",
+      "city": "MCCLOUD",
+      "zip": "96057",
+      "phone": "5309642389",
+      "county": "Siskiyou"
+    },
+    {
+      "id": "306470534",
+      "name": "SHASTA VALLEY COMMUNITY HEALTH CENTER",
+      "address": "824 PINE ST",
+      "city": "MT SHASTA",
+      "zip": "96067",
+      "phone": "5309642389",
+      "county": "Siskiyou"
+    },
+    {
+      "id": "306484040",
+      "name": "COMMUNITY MEDICAL CENTERS - VACAVILLE",
+      "address": "600 NUT TREE RD, STE 310",
+      "city": "VACAVILLE",
+      "zip": "95687",
+      "phone": "2099444700",
+      "county": "Solano"
+    },
+    {
+      "id": "306484058",
+      "name": "LA CLINICA NORTH VALLEJO",
+      "address": "220 HOSPITAL DR",
+      "city": "VALLEJO",
+      "zip": "94589",
+      "phone": "707-641-1900",
+      "county": "Solano"
+    },
+    {
+      "id": "306480610",
+      "name": "LA CLINICA VALLEJO",
+      "address": "415 GEORGIA ST.",
+      "city": "VALLEJO",
+      "zip": "94590",
+      "phone": "707-556-8100",
+      "county": "Solano"
+    },
+    {
+      "id": "306484069",
+      "name": "OLE HEALTH",
+      "address": "470 CHADBOURNE RD, STE A",
+      "city": "FAIRFIELD",
+      "zip": "94534",
+      "phone": "866-268-4489",
+      "county": "Solano"
+    },
+    {
+      "id": "306482331",
+      "name": "PLANNED PARENTHOOD - FAIRFIELD CENTER",
+      "address": "1325 TRAVIS BLVD",
+      "city": "FAIRFIELD",
+      "zip": "94533",
+      "phone": "(707) 398-8916",
+      "county": "Solano"
+    },
+    {
+      "id": "306480361",
+      "name": "PLANNED PARENTHOOD - VALLEJO CENTER",
+      "address": "303 SACRAMENTO ST",
+      "city": "VALLEJO",
+      "zip": "94590",
+      "phone": "(707) 643-4545",
+      "county": "Solano"
+    },
+    {
+      "id": "306491404",
+      "name": "ALLIANCE MEDICAL CENTER",
+      "address": "1381 UNIVERSITY ST",
+      "city": "HEALDSBURG",
+      "zip": "95448",
+      "phone": "7074335494",
+      "county": "Sonoma"
+    },
+    {
+      "id": "306494115",
+      "name": "ALLIANCE MEDICAL CENTER - WINDSOR",
+      "address": "8465 OLD REDWOOD HWY, STE 320",
+      "city": "WINDSOR",
+      "zip": "95492",
+      "phone": "7074335494",
+      "county": "Sonoma"
+    },
+    {
+      "id": "306494080",
+      "name": "ELSIE ALLEN HEALTH CENTER",
+      "address": "599 BELLEVUE AVE",
+      "city": "SANTA ROSA",
+      "zip": "95407",
+      "phone": "7073033600",
+      "county": "Sonoma"
+    },
+    {
+      "id": "306494129",
+      "name": "JEWISH COMMUNITY FREE CLINIC",
+      "address": "50 MONTGOMERY DR",
+      "city": "SANTA ROSA",
+      "zip": "95404",
+      "phone": "7075857780",
+      "county": "Sonoma"
+    },
+    {
+      "id": "306494066",
+      "name": "PETALUMA HEALTH CENTER",
+      "address": "1179 N MCDOWELL BLVD",
+      "city": "PETALUMA",
+      "zip": "94954",
+      "phone": "7075597500",
+      "county": "Sonoma"
+    },
+    {
+      "id": "306494133",
+      "name": "ROHNERT PARK HEALTH CENTER",
+      "address": "5900 STATE FARM DR, STE 200",
+      "city": "ROHNERT PARK",
+      "zip": "94928",
+      "phone": "7075597500",
+      "county": "Sonoma"
+    },
+    {
+      "id": "306490757",
+      "name": "RUSSIAN RIVER HEALTH CENTER",
+      "address": "16387 FIRST ST",
+      "city": "GUERNEVILLE",
+      "zip": "95446",
+      "phone": "(707) 271-3307",
+      "county": "Sonoma"
+    },
+    {
+      "id": "306490654",
+      "name": "SANTA ROSA COMMUNITY HEALTH CENTERS DUTTON CAMPUS",
+      "address": "1300 N. DUTTON AVE",
+      "city": "SANTA ROSA",
+      "zip": "95401",
+      "phone": "7073033600",
+      "county": "Sonoma"
+    },
+    {
+      "id": "306490499",
+      "name": "SANTA ROSA COMMUNITY HEALTH VISTA CAMPUS",
+      "address": "3569 ROUND BARN CIR.",
+      "city": "SANTA ROSA",
+      "zip": "95403",
+      "phone": "7073033600",
+      "county": "Sonoma"
+    },
+    {
+      "id": "306491021",
+      "name": "SONOMA COUNTY INDIAN HEALTH PROJECT, INC",
+      "address": "144 STONY POINT RD",
+      "city": "SANTA ROSA",
+      "zip": "95401",
+      "phone": "(707) 521-4545",
+      "county": "Sonoma"
+    },
+    {
+      "id": "306494131",
+      "name": "SONOMA VALLEY COMMUNITY HEALTH CENTER",
+      "address": "19270 SONOMA HWY",
+      "city": "SONOMA",
+      "zip": "95476",
+      "phone": "7079396070",
+      "county": "Sonoma"
+    },
+    {
+      "id": "306504091",
+      "name": "BENTLEY HEALTH CENTER",
+      "address": "12619 BENTLEY ST",
+      "city": "WATERFORD",
+      "zip": "95386",
+      "phone": "209-850-3500",
+      "county": "Stanislaus"
+    },
+    {
+      "id": "306502212",
+      "name": "GOLDEN VALLEY HEALTH CENTER",
+      "address": "200 C ST",
+      "city": "PATTERSON",
+      "zip": "95363",
+      "phone": "2098928441",
+      "county": "Stanislaus"
+    },
+    {
+      "id": "306504070",
+      "name": "GOLDEN VALLEY HEALTH CENTER",
+      "address": "1200 W MAIN ST",
+      "city": "TURLOCK",
+      "zip": "95380",
+      "phone": "2096685388",
+      "county": "Stanislaus"
+    },
+    {
+      "id": "306504083",
+      "name": "GOLDEN VALLEY HEALTH CENTER",
+      "address": "1920 MEMORIAL DRIVE",
+      "city": "CERES",
+      "zip": "95307",
+      "phone": "2095565012",
+      "county": "Stanislaus"
+    },
+    {
+      "id": "306504093",
+      "name": "GOLDEN VALLEY HEALTH CENTER",
+      "address": "198 G ST NORTH",
+      "city": "EMPIRE",
+      "zip": "95319",
+      "phone": "2093820253",
+      "county": "Stanislaus"
+    },
+    {
+      "id": "306502214",
+      "name": "GOLDEN VALLEY HEALTH CENTER - 6TH ST MODESTO",
+      "address": "1114 6TH ST",
+      "city": "MODESTO",
+      "zip": "95354",
+      "phone": "2095764200",
+      "county": "Stanislaus"
+    },
+    {
+      "id": "306244045",
+      "name": "GOLDEN VALLEY HEALTH CENTER - GUSTINE-NEWMAN",
+      "address": "637 MERCED ST",
+      "city": "NEWMAN",
+      "zip": "95360",
+      "phone": "2095665011",
+      "county": "Stanislaus"
+    },
+    {
+      "id": "306504073",
+      "name": "GOLDEN VALLEY HEALTH CENTER - RIVERBANK",
+      "address": "4150 PATTERSON RD",
+      "city": "RIVERBANK",
+      "zip": "95367",
+      "phone": "2098633990",
+      "county": "Stanislaus"
+    },
+    {
+      "id": "306504067",
+      "name": "GOLDEN VALLEY HEALTH CENTERS",
+      "address": "2101 TENAYA DR",
+      "city": "MODESTO",
+      "zip": "95354",
+      "phone": "2095766766",
+      "county": "Stanislaus"
+    },
+    {
+      "id": "306500366",
+      "name": "GOLDEN VALLEY HEALTH CENTERS - TURLOCK MONTE VISTA",
+      "address": "2240 W. MONTE VISTA AVE",
+      "city": "TURLOCK",
+      "zip": "95382",
+      "phone": "2096645140",
+      "county": "Stanislaus"
+    },
+    {
+      "id": "306514007",
+      "name": "AMPLA HEALTH RICHLAND MEDICAL",
+      "address": "355 SAMUEL DR",
+      "city": "YUBA CITY",
+      "zip": "95991",
+      "phone": "530-674-9200",
+      "county": "Sutter"
+    },
+    {
+      "id": "306514041",
+      "name": "AMPLA HEALTH YUBA CITY MEDICAL",
+      "address": "1000 SUTTER ST",
+      "city": "YUBA CITY",
+      "zip": "95991",
+      "phone": "530-673-9420",
+      "county": "Sutter"
+    },
+    {
+      "id": "306514029",
+      "name": "AMPLA HEALTH YUBA CITY PEDIATRICS",
+      "address": "931 MARKET ST",
+      "city": "YUBA CITY",
+      "zip": "95991",
+      "phone": "530-671-8820",
+      "county": "Sutter"
+    },
+    {
+      "id": "306514045",
+      "name": "FEATHER RIVER TRIBAL HEALTH, INC. - YUBA CITY OFFICE",
+      "address": "555 W ONSTOTT RD",
+      "city": "YUBA CITY",
+      "zip": "95993",
+      "phone": "530-534-5394",
+      "county": "Sutter"
+    },
+    {
+      "id": "306514050",
+      "name": "PEACH TREE - YUBA CITY/COLUSA",
+      "address": "1275 THARP RD",
+      "city": "YUBA CITY",
+      "zip": "95993",
+      "phone": "530-749-3242",
+      "county": "Sutter"
+    },
+    {
+      "id": "306532242",
+      "name": "SOUTHERN TRINITY HEALTH SERVICES",
+      "address": "321 VAN DUZEN RD",
+      "city": "BRIDGEVILLE",
+      "zip": "95526",
+      "phone": "7077645617",
+      "county": "Trinity"
+    },
+    {
+      "id": "306544050",
+      "name": "ALTURA CENTERS FOR HEALTH",
+      "address": "1101 N CHERRY ST",
+      "city": "TULARE",
+      "zip": "93274",
+      "phone": "559-686-9097",
+      "county": "Tulare"
+    },
+    {
+      "id": "306544103",
+      "name": "ALTURA CENTERS FOR HEALTH",
+      "address": "1500 W TULARE DR",
+      "city": "TULARE",
+      "zip": "93274",
+      "phone": "559-686-9097",
+      "county": "Tulare"
+    },
+    {
+      "id": "306544053",
+      "name": "DINUBA COMMUNITY HEALTH CENTER",
+      "address": "888 N ALTA AVE",
+      "city": "DINUBA",
+      "zip": "93618",
+      "phone": "5595951000",
+      "county": "Tulare"
+    },
+    {
+      "id": "306540370",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "22817 AVE 196",
+      "city": "STRATHMORE",
+      "zip": "93267",
+      "phone": "5597374700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306540439",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "2333 S MOONEY BLVD",
+      "city": "VISALIA",
+      "zip": "93277",
+      "phone": "559-737-4700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306540462",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "65 N HOCKETT ST",
+      "city": "PORTERVILLE",
+      "zip": "93257",
+      "phone": "5597374700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306540898",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "501 N BRIDGE ST",
+      "city": "VISALIA",
+      "zip": "93291",
+      "phone": "559-737-4700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306542019",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "1107 W POPLAR AVE",
+      "city": "PORTERVILLE",
+      "zip": "93257",
+      "phone": "5597374700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306544005",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "33025 ROAD 159",
+      "city": "IVANHOE",
+      "zip": "93235",
+      "phone": "5597374700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306544059",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "41651 SIERRA DR, STE A",
+      "city": "THREE RIVERS",
+      "zip": "93271",
+      "phone": "5597374700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306544061",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "12586 AVENUE 408",
+      "city": "OROSI",
+      "zip": "93647",
+      "phone": "559-737-4700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306544063",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "400 E OAK AVE",
+      "city": "VISALIA",
+      "zip": "93291",
+      "phone": "5597374700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306544087",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "730 N FARMERSVILLE BLVD",
+      "city": "FARMERSVILLE",
+      "zip": "93223",
+      "phone": "5597374700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306544089",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "201 E LAKEVIEW AVE",
+      "city": "WOODLAKE",
+      "zip": "93286",
+      "phone": "5597374700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306544091",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "31180 ROAD 72",
+      "city": "GOSHEN",
+      "zip": "93227",
+      "phone": "5597374700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306544095",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "9416 ROAD 238",
+      "city": "TERRA BELLA",
+      "zip": "93270",
+      "phone": "5597374700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306544096",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "401 E SCHOOL AVE",
+      "city": "VISALIA",
+      "zip": "93291",
+      "phone": "5597374700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306544102",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "4177 AVENUE 368",
+      "city": "TRAVER",
+      "zip": "93673",
+      "phone": "559-737-4700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306544104",
+      "name": "FAMILY HEALTHCARE NETWORK",
+      "address": "1008 N CHERRY ST",
+      "city": "TULARE",
+      "zip": "93274",
+      "phone": "5597374700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306544058",
+      "name": "FAMILY HEALTHCARE NETWORK - SPRINGVILLE",
+      "address": "35800 HWY 190",
+      "city": "SPRINGVILLE",
+      "zip": "93265",
+      "phone": "5597374700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306544101",
+      "name": "FAMILY HEALTHCARE NETWORK - TULARE",
+      "address": "263 S. WEST STREET",
+      "city": "TULARE",
+      "zip": "93274",
+      "phone": "5597374700",
+      "county": "Tulare"
+    },
+    {
+      "id": "306540764",
+      "name": "UNITED HEALTH CENTERS OF THE SAN JOAQUIN VALLEY",
+      "address": "4038 S MOONEY BLVD",
+      "city": "VISALIA",
+      "zip": "93277",
+      "phone": "5596466618",
+      "county": "Tulare"
+    },
+    {
+      "id": "306554009",
+      "name": "MACT MEDICAL CLINIC, SONORA",
+      "address": "905 MORNING STAR DR",
+      "city": "SONORA",
+      "zip": "95370",
+      "phone": "2095339600",
+      "county": "Tuolumne"
+    },
+    {
+      "id": "306554016",
+      "name": "TUOLUMNE ME-WUK INDIAN HEALTH CENTER",
+      "address": "18880 CHERRY VALLEY BLVD",
+      "city": "TUOLUMNE",
+      "zip": "95379",
+      "phone": "2099285400",
+      "county": "Tuolumne"
+    },
+    {
+      "id": "306564078",
+      "name": "CASA PACIFICA HEALTH CLINIC",
+      "address": "1722 S LEWIS RD",
+      "city": "CAMARILLO",
+      "zip": "93012",
+      "phone": "8053664170",
+      "county": "Ventura"
+    },
+    {
+      "id": "306561895",
+      "name": "CLINICAS DEL CAMINO REAL INC FILLMORE",
+      "address": "355 CENTRAL AVE",
+      "city": "FILLMORE",
+      "zip": "93015",
+      "phone": "8055244926",
+      "county": "Ventura"
+    },
+    {
+      "id": "306564083",
+      "name": "CLINICAS DEL CAMINO REAL INC MARAVILLA",
+      "address": "450 W CLARA ST",
+      "city": "OXNARD",
+      "zip": "93033-8363",
+      "phone": "8054880210",
+      "county": "Ventura"
+    },
+    {
+      "id": "306564122",
+      "name": "CLINICAS DEL CAMINO REAL INC OCEANVIEW",
+      "address": "4400 OLDS RD",
+      "city": "OXNARD",
+      "zip": "93033",
+      "phone": "8059865551",
+      "county": "Ventura"
+    },
+    {
+      "id": "306561202",
+      "name": "CLINICAS DEL CAMINO REAL INC VENTURA",
+      "address": "200 S WELLS RD, STE 100",
+      "city": "VENTURA",
+      "zip": "93004",
+      "phone": "8056476322",
+      "county": "Ventura"
+    },
+    {
+      "id": "306560700",
+      "name": "CLINICAS DEL CAMINO REAL, INC - KAREN R. BURNHAM HLTH CTR",
+      "address": "1100 W GONZALES RD",
+      "city": "OXNARD",
+      "zip": "93036",
+      "phone": "8056476353",
+      "county": "Ventura"
+    },
+    {
+      "id": "306564269",
+      "name": "CLINICAS DEL CAMINO REAL, INC. - EAST SIMI VALLEY",
+      "address": "4370 EVE ROAD",
+      "city": "SIMI VALLEY",
+      "zip": "93063",
+      "phone": "8059154400",
+      "county": "Ventura"
+    },
+    {
+      "id": "306560681",
+      "name": "CLINICAS DEL CAMINO REAL, INC. - EL RIO",
+      "address": "2600 E VINEYARD AVE",
+      "city": "OXNARD",
+      "zip": "93036",
+      "phone": "8054363444",
+      "county": "Ventura"
+    },
+    {
+      "id": "306564230",
+      "name": "CLINICAS DEL CAMINO REAL, INC. - MOORPARK",
+      "address": "4279 TIERRA REJADA RD",
+      "city": "MOORPARK",
+      "zip": "93021",
+      "phone": "8052222323",
+      "county": "Ventura"
+    },
+    {
+      "id": "306564234",
+      "name": "CLINICAS DEL CAMINO REAL, INC. - SIMI VALLEY",
+      "address": "1424 MADERA RD",
+      "city": "SIMI VALLEY",
+      "zip": "93065",
+      "phone": "8055225722",
+      "county": "Ventura"
+    },
+    {
+      "id": "306560020",
+      "name": "CLINICAS DEL CAMINO REAL, INC., - ROBERTO S. JUAREZ HEAL CTR",
+      "address": "2100 STATHAM BLVD",
+      "city": "OXNARD",
+      "zip": "93033",
+      "phone": "8053308680",
+      "county": "Ventura"
+    },
+    {
+      "id": "306561169",
+      "name": "CLINICAS DEL CAMINO REAL, INC., OXNARD",
+      "address": "650 META ST",
+      "city": "OXNARD",
+      "zip": "93030",
+      "phone": "8054875351",
+      "county": "Ventura"
+    },
+    {
+      "id": "306560658",
+      "name": "FREE CLINIC OF SIMII VALLEY",
+      "address": "2003 ROYAL AVE",
+      "city": "SIMI VALLEY",
+      "zip": "93065",
+      "phone": "805-522-3733",
+      "county": "Ventura"
+    },
+    {
+      "id": "306564045",
+      "name": "OJAI VALLEY COMMUNITY HEALTH CENTER",
+      "address": "1200 MARICOPA HWY",
+      "city": "OJAI",
+      "zip": "93023",
+      "phone": "8056408293",
+      "county": "Ventura"
+    },
+    {
+      "id": "306574020",
+      "name": "DAVIS COMMUNITY CLINIC",
+      "address": "2051 JOHN JONES RD",
+      "city": "DAVIS",
+      "zip": "95616",
+      "phone": "866-268-4489",
+      "county": "Yolo"
+    },
+    {
+      "id": "306570445",
+      "name": "ELICA HEALTH CENTERS - HALYARD MEDICAL CENTER",
+      "address": "1276 HALYARD DR",
+      "city": "WEST SACRAMENTO",
+      "zip": "95691",
+      "phone": "916-569-8484",
+      "county": "Yolo"
+    },
+    {
+      "id": "306574021",
+      "name": "HANSEN FAMILY HEALTH CENTER",
+      "address": "215 W BEAMER ST",
+      "city": "WOODLAND",
+      "zip": "95695",
+      "phone": "866-268-4489",
+      "county": "Yolo"
+    },
+    {
+      "id": "306574006",
+      "name": "NORTHERN VALLEY INDIAN HEALTH, INC.",
+      "address": "175 W COURT ST",
+      "city": "WOODLAND",
+      "zip": "95695",
+      "phone": "5306614400",
+      "county": "Yolo"
+    },
+    {
+      "id": "306574014",
+      "name": "SALUD CLINIC",
+      "address": "500B JEFFERSON BLVD, STE 180 AND 195",
+      "city": "WEST SACRAMENTO",
+      "zip": "95605",
+      "phone": "866-268-4489",
+      "county": "Yolo"
+    },
+    {
+      "id": "306570561",
+      "name": "WINTERS HEALTHCARE CLINIC",
+      "address": "172 E GRANT AVE",
+      "city": "WINTERS",
+      "zip": "95694",
+      "phone": "5307954377",
+      "county": "Yolo"
+    },
+    {
+      "id": "306582254",
+      "name": "AMPLA HEALTH LINDHURST MEDICAL & DENTAL",
+      "address": "4941 OLIVEHURST AVE",
+      "city": "OLIVEHURST",
+      "zip": "95961",
+      "phone": "530-743-4611",
+      "county": "Yuba"
+    },
+    {
+      "id": "306584012",
+      "name": "HARMONY HEALTH MEDICAL CLINIC AND FAMILY RESOURCES CENTER",
+      "address": "1908 N BEALE RD, STE E",
+      "city": "MARYSVILLE",
+      "zip": "95901",
+      "phone": "5307436888",
+      "county": "Yuba"
+    },
+    {
+      "id": "306580711",
+      "name": "PEACH TREE CLINIC",
+      "address": "5730 PACKARD AVE, STE 500",
+      "city": "MARYSVILLE",
+      "zip": "95901",
+      "phone": "5307493242",
+      "county": "Yuba"
+    }
+  ]
+}

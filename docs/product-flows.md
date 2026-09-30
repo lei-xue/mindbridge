@@ -14,6 +14,10 @@ Simplification must preserve a completed task and discoverable navigation, not j
 
 Local result tables show at most five rows per page, including the county referral. All loaded matches remain available through Previous/Next and bounded page-number buttons below the horizontal-scroll region. Display the current range and loaded-record total. New submissions, changed candidate counties, changed city filters and changed row sets reset to page one, including returning to All cities. Do not paginate the 23 support-resource cards. Local paging does not fetch or imply completeness of upstream LA results; preserve the continuation warning and official-directory link.
 
+## Historical primary-care mental-health reports
+
+County/City/exact ZIP results additionally include HCAI responding primary-care clinics that checked mental-health service provision and reported open/operating status in the preliminary 2025 report. Treat all flags as historical, not current availability. Preserve the printed ZIP+4 in maps/display and match its five-digit base for a five-digit query. Source-reported counties may add ZIP candidates but never override ambiguous-county selection or infer proximity. County city options deduplicate capitalization while filters remain case-insensitive. Public clinic contacts may include a country code or extension; preserve the printed phone and dial its actual base/extension. HCAI source labels and About explicitly show report year, extraction date and limitations. Do not import staff/preparer identities or patient-utilization statistics. Preserve all existing source rows, including duplicates across distinct source rosters, without advertising an aggregate unique-provider count.
+
 ## State transitions
 
 Location denial, timeout, unsupported browser, out-of-state position, poor accuracy, and boundary-load failure leave manual search available. Changing mode or editing input invalidates a pending location response. A subsequent manual submission replaces the location-only result rather than inheriting it. Starting location cancels a pending LA request.

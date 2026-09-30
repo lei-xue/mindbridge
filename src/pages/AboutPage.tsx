@@ -5,6 +5,7 @@ import { focusRing } from "../lib/ui"
 import orange from "../data/orange-provider-sites.json"
 import sanDiego from "../data/san-diego-adult-clinics.json"
 import butte from "../data/butte-adult-clinics.json"
+import primaryCare from "../data/california-primary-care.json"
 import { SproutSpeech } from "../components/SproutSpeech"
 
 export function AboutPage() {
@@ -58,6 +59,7 @@ export function AboutPage() {
 
         <h2 className="pt-2 text-lg font-bold text-stone-900">{s.about.coverageHeading}</h2>
         <ul className="list-disc space-y-2 pl-5 text-sm">
+          <li>{s.about.coveragePrimaryCare(primaryCare.clinicCount, primaryCare.countyCount, primaryCare.retrievedAt)} <a href={primaryCare.source} target="_blank" rel="noopener noreferrer" className={`rounded text-teal-800 underline ${focusRing}`}>HCAI</a></li>
           <li>{s.about.coverageLicensing}</li>
           <li>{s.about.coverageOrange(orange.retrievedAt)}</li>
           <li>{s.about.coverageSanDiego(sanDiego.retrievedAt)}</li>

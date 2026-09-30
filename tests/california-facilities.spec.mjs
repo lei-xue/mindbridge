@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { readFileSync } from 'node:fs'
 import { visitProviderPages } from './provider-pages.mjs'
+import primaryCare from '../src/data/california-primary-care.json' with { type: 'json' }
 const data = name => JSON.parse(readFileSync(new URL(`../src/data/${name}.json`, import.meta.url)))
 const facilities = data('california-facilities'), orange = data('orange-provider-sites'), access = data('california-county-access')
 const sd = data('san-diego-adult-clinics'), butte = data('butte-adult-clinics')
@@ -25,6 +26,7 @@ for (const county of ['Fresno', 'Orange', 'San Diego', 'Butte']) {
     if (county === 'Orange') expected.push(...orange.sites.filter(site => access.zipCounties[site.zip]?.includes('Orange')).map(site => `oc-${site.id}`))
     if (county === 'San Diego') expected.push(...sd.clinics.map(clinic => `sd-${clinic.id}`))
     if (county === 'Butte') expected.push(...butte.clinics.map(clinic => `butte-${clinic.id}`))
+    expected.push(...primaryCare.clinics.filter(clinic => clinic.county === county).map(clinic => `hcai-${clinic.id}`))
     expect(entries.map(entry => entry.id)).toEqual(expected)
     await expect(region.locator('tr[data-provider^="county-"]')).toHaveCount(1)
     await expect(region.getByRole('link', { name: 'Call county plan' })).toBeVisible()
@@ -39,7 +41,7 @@ test('optional city filter applies to all sources and resets on county change', 
     await search(page, 'County', county)
     await expect(page.getByLabel('City (optional filter)')).toHaveValue('*')
     await page.getByLabel('City (optional filter)').selectOption(city)
-    for (const row of await local(page).locator('tr[data-provider]:not([data-provider^="county-"])').all()) await expect(row).toContainText(city)
+    for (const row of await local(page).locator('tr[data-provider]:not([data-provider^="county-"])').all()) expect((await row.innerText()).toLowerCase()).toContain(city.toLowerCase())
     await expect(local(page).locator(`tr[data-provider^="${prefix}"]`)).toHaveCount(expected)
     await page.getByLabel('City (optional filter)').selectOption('*')
   }
