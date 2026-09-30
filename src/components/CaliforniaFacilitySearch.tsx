@@ -84,17 +84,13 @@ function CountyPlanCard({ county, compact = false }: { county: string; compact?:
   if (!plan) return null
   const website = countySites.websites.find((entry) => entry.name === county)?.url
   const dial = plan.phone.match(/\(?\d{3}\)?[ .-]*\d{3}[ .-]*\d{4}/)?.[0].replace(/\D/g, "")
-  const info = <>
-    <p className="mt-2 text-sm text-stone-700">{s.ca.planBody}</p>
-    {website && <p className="mt-2 text-sm text-stone-700"><a href={website} target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>{s.ca.planVisit(county)}</a> <span className="text-xs">{s.ca.planVisitNote}</span></p>}
-    {county === "Los Angeles" && <p className="mt-2 text-sm text-stone-700">{s.ca.planLaLead}<a href="https://dmh.lacounty.gov/pd/" target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>{s.ca.planLaLink}</a>{s.ca.planLaTail}</p>}
-    <a href={countyAccess.source} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded text-sm font-semibold underline ${focusRing}`}>{s.ca.planSource}</a>
-  </>
+  const officialUrl = county === "Los Angeles" ? "https://dmh.lacounty.gov/pd/" : website || countyAccess.source
+  const officialLabel = county === "Los Angeles" ? s.ca.planLaLink : website ? s.ca.planVisit(county) : s.ca.planSource
   const content = <section aria-label={s.ca.planAria} className="mt-4 space-y-2 bg-white py-4">
     <h5 className="font-semibold text-stone-900">{compact ? s.ca.planAccessLine(county) : s.ca.planName(county)}</h5>
     <p className="text-xs text-stone-600">{s.ca.planBrief}</p>
     <p>{dial ? <a href={`tel:${dial}`} aria-label={s.ca.planCallAria} className={btnCall}>{plan.phone}</a> : plan.phone}</p>
-    {compact ? info : <details className="text-sm text-stone-600"><summary className={`min-h-11 cursor-pointer content-center rounded ${focusRing}`}>{s.ca.sourceDetails}</summary>{info}</details>}
+    <a href={officialUrl} target="_blank" rel="noopener noreferrer" className={`inline-flex min-h-11 items-center rounded text-sm text-teal-800 underline ${focusRing}`}>{officialLabel}</a>
   </section>
   return compact ? <details key={county} className="mt-3 text-sm text-stone-700">
     <summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>{s.ca.referral(county)}</summary>
@@ -206,9 +202,9 @@ export function CaliforniaFacilitySearch() {
     if (isLaZip) runLaSearch("zip", term)
   }
 
-  const rawMatches = searched && !locationOnly ? facilitiesJson.filter((facility) => {
+  const rawMatches = searched && !locationOnly && searched.field !== "county" ? facilitiesJson.filter((facility) => {
     const selected = searched.field === "zip" ? facility.zip : facility[searched.field]
-    const query = searched.field === "county" ? searched.value.replace(/\s+county$/i, "") : searched.value
+    const query = searched.value
     return selected.toLocaleLowerCase("en-US") === query.toLocaleLowerCase("en-US")
   }) : []
 
@@ -359,16 +355,12 @@ export function CaliforniaFacilitySearch() {
             <a href={butteSnapshot.directoryUrl} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded font-semibold underline ${focusRing}`}>{s.ca.butteDirectory}</a>
           </details>
         </section>}
-        {matches.length > 0 && (searched.field === "county" ? <details aria-label={s.ca.licensedAria} className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
-          <summary className="cursor-pointer font-semibold text-stone-900">{s.ca.licensedFoldHeading(matches.length, searched.value)}</summary>
-          <p className="mt-2 text-xs text-stone-600">{s.ca.licensedFoldBody}</p>
-          <div className="mt-3 grid gap-3 lg:grid-cols-2">{matches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div>
-        </details> : <section aria-label={s.ca.licensedAria} className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
+        {matches.length > 0 && searched.field !== "county" && <section aria-label={s.ca.licensedAria} className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
           <h5 className="font-semibold text-stone-900">{s.ca.licensedHeading(matches.length, searched.field, searched.value)}</h5>
           <p className="mt-1 text-xs text-stone-600">{s.ca.licensedSubheading}</p>
           <details className="mt-2 text-xs text-stone-600"><summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>{s.ca.licensedAbout}</summary><p className="mt-2">{s.ca.licensedAboutBody}</p></details>
           <div className="mt-3 grid gap-3 lg:grid-cols-2">{matches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div>
-        </section>)}
+        </section>}
         {selectedCounty && hasExactResults && searched.field !== "county" && <CountyPlanCard county={selectedCounty} compact />}
         {noExactResults && searched.field !== "county" && countyCandidates.length <= 1 && <div className="mt-4">
           <p role="status" className="text-sm text-stone-700">{s.ca.noResultsAreaLead(searched.field)}</p>

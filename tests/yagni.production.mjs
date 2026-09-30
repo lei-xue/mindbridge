@@ -2,6 +2,24 @@ import { test, expect } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
 
 for (const locale of ['en', 'es']) {
+  test(`${locale} Fresno county result has no licensing list or nested source disclosures`, async ({ page }) => {
+    await page.goto(locale === 'es' ? '/es' : '/')
+    await page.locator('#california-search-value').selectOption('Fresno')
+    await page.locator('form').getByRole('button', { name: /Find support options|Buscar opciones/ }).click()
+    const search = page.locator('section[aria-labelledby="local-support-heading"]')
+    const county = search.locator('section').filter({ has: page.locator('a[href^="tel:"]') })
+    await expect(county).toHaveCount(1)
+    await expect(county.locator('details, summary')).toHaveCount(0)
+    await expect(county.locator('a')).toHaveCount(2)
+    await expect(search.locator('article')).toHaveCount(0)
+    await expect(search).not.toContainText(/COALINGA|statewide licensed-facility|Dated licensing snapshot|Official Medi-Cal specialty/i)
+    // Only the single pre-search coverage/privacy disclosure remains.
+    await expect(search.locator('details')).toHaveCount(1)
+    await search.screenshot({ path: `test-results/fresno-simple-${locale}.png` })
+  })
+}
+
+for (const locale of ['en', 'es']) {
   test(`${locale} homepage shared actions are not repeated, including filtered and empty states`, async ({ page }) => {
     await page.goto(locale === 'es' ? '/es' : '/')
     const assertSingleCrisis = async () => {
@@ -83,15 +101,14 @@ for (const locale of ['en', 'es']) {
   }
 }
 
-test('county contact exposes one phone and folds secondary information', async ({ page }) => {
+test('county contact exposes one phone and one official link without a nested disclosure', async ({ page }) => {
   await page.goto('/')
   await page.locator('#california-search-value').selectOption('Butte')
   await page.locator('form').getByRole('button', { name: 'Find support options' }).click()
   const county = page.getByRole('region', { name: 'County mental health plan' })
   await expect(county.getByRole('link', { name: 'Call county plan', exact: true })).toBeVisible()
-  await expect(county.getByText(/Official Medi-Cal specialty mental-health contact/)).toBeHidden()
-  await expect(county.getByRole('link', { name: 'Visit Butte County plan website' })).toBeHidden()
-  await county.locator('summary').click()
+  await expect(county.locator('details')).toHaveCount(0)
+  await expect(county.getByText(/Official Medi-Cal specialty mental-health contact/)).toHaveCount(0)
   await expect(county.getByRole('link', { name: 'Visit Butte County plan website' })).toBeVisible()
 })
 

@@ -74,10 +74,10 @@ for (const county of ['Orange', 'San Diego', 'Butte']) {
 test('licensed facilities and LA live directory street addresses also link to maps', async ({ page }) => {
   await page.route('**/api/la-county/locations', route => route.fulfill({ json: { results: [{ id: 'map-fixture', name: 'Map regression fixture', address: { lines: ['123 Public St'], city: 'Los Angeles', state: 'CA', postalCode: '90012' }, phones: [], websites: [], hours: [], languages: [], populations: [], accessibility: [], lastUpdated: null }], hasMore: false } }))
   await page.goto('/')
-  await page.getByLabel('California county').selectOption('Sacramento')
+  await page.getByRole('button', { name: 'City', exact: true }).click()
+  await page.getByLabel('California city').fill('Carmichael')
   await page.getByRole('button', { name: 'Find support options' }).click()
-  const snapshot = page.locator('details[aria-label="Statewide licensed-facility snapshot"]')
-  await snapshot.locator(':scope > summary').click()
+  const snapshot = page.locator('section[aria-label="Statewide licensed-facility snapshot"]')
   expect(await snapshot.getByRole('link', { name: /^Open in maps:/ }).count()).toBeGreaterThan(0)
   await page.getByRole('button', { name: 'ZIP code', exact: true }).click()
   await page.getByLabel('California ZIP code').fill('90012')
