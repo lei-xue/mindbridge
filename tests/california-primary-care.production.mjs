@@ -41,7 +41,7 @@ for (const locale of ['en', 'es']) {
   test(`${locale} rural city and ZIP+4 records match exactly without sending a visitor query upstream`, async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 900 })
     const requests = []
-    page.on('request', request => { if (request.method() === 'POST') requests.push(request.url()) })
+    page.on('request', request => { if (request.method() === 'POST') requests.push({ url: request.url(), body: request.postData() || '' }) })
     await page.goto(locale === 'es' ? '/es' : '/')
     const cityClinic = source.clinics.find(c => c.county === 'Sierra')
     await local(page).getByRole('button', { name: locale === 'es' ? 'Ciudad' : 'City', exact: true }).click()
@@ -62,7 +62,20 @@ for (const locale of ['en', 'es']) {
     const expected = source.clinics.filter(c => c.zip.slice(0, 5) === zipClinic.zip.slice(0, 5) && c.county === zipClinic.county)
     expect(entries.filter(e => e.id.startsWith('hcai-')).map(e => e.id)).toEqual(expected.map(c => `hcai-${c.id}`))
     expect(entries.some(e => e.text.includes(zipClinic.zip))).toBe(true)
-    expect(requests).toEqual([])
+    // Production hosting injects the already-disclosed Cloudflare beacon.
+    // Permit that exact endpoint only, and inspect its data rather than
+    // treating page-load performance telemetry as a directory query.
+    for (const request of requests) {
+      const url = new URL(request.url)
+      expect(url.origin).toBe(new URL(page.url()).origin)
+      expect(url.pathname).toBe('/cdn-cgi/rum')
+      const payload = JSON.parse(request.body)
+      expect(payload.location).toBe(page.url())
+      expect(request.body.toLowerCase()).not.toContain(cityClinic.city.toLowerCase())
+      const strings = JSON.stringify(payload)
+      expect(strings).not.toContain(JSON.stringify(zipClinic.zip.slice(0, 5)))
+      expect(Object.keys(payload).filter(key => ['zip', 'city', 'query', 'county'].includes(key))).toEqual([])
+    }
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false)
     await page.goto(locale === 'es' ? '/es/about' : '/about')
     await expect(page.locator('main')).toContainText(`${source.clinicCount}`)
