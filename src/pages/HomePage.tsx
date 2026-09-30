@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom"
 import { CaliforniaFacilitySearch } from "../components/CaliforniaFacilitySearch"
 
 import { FilterBar } from "../components/FilterBar"
-import { ResourceCard } from "../components/ResourceCard"
+import { ResourceTable } from "../components/ResourceTable"
 import { GentleSprout } from "../components/GentleSprout"
 import { SproutSpeech } from "../components/SproutSpeech"
 import { useLocale } from "../i18n/LocaleProvider"
@@ -114,11 +114,7 @@ export function HomePage() {
           </p>
 
           {results.length > 0 ? (
-            <div className="mt-6 space-y-6">
-              {results.map((resource) => (
-                <ResourceCard key={resource.id} resource={resource} omitSharedContacts />
-              ))}
-            </div>
+            <ResourceTable resources={results} />
           ) : (
             <div className="mt-4 rounded-xl border border-dashed border-sage-300 bg-white p-8 text-center">
               <div className="mb-2 flex justify-center"><GentleSprout small pose="hug" /></div>

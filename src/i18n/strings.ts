@@ -12,6 +12,19 @@ import type { Locale } from "../lib/localePath"
 export type SearchFieldName = "county" | "city" | "zip"
 
 export const en = {
+  table: {
+    local: "Local listings",
+    name: "Name",
+    type: "Type / service",
+    location: "City / address",
+    contact: "Phone / text",
+    source: "Source",
+    city: "City (optional filter)",
+    allCities: "All cities",
+    countyScope: "County-wide listings, not nearest matches. Licensing records may include hospitals and rehabilitation facilities, not outpatient clinics.",
+    referral: "County referral contact",
+    adults: "Adult outpatient clinic · 18+",
+  },
   common: {
     brand: "MindBridge",
     skipToMain: "Skip to main content",
@@ -336,6 +349,19 @@ export const en = {
 export type Strings = typeof en
 
 export const es: Strings = {
+  table: {
+    local: "Servicios locales",
+    name: "Nombre",
+    type: "Tipo / servicio",
+    location: "Ciudad / dirección",
+    contact: "Teléfono / mensajes",
+    source: "Fuente",
+    city: "Ciudad (filtro opcional)",
+    allCities: "Todas las ciudades",
+    countyScope: "Centros de todo el condado, no los más cercanos. Los registros de licencias pueden incluir hospitales y centros de rehabilitación, no clínicas ambulatorias.",
+    referral: "Contacto de derivación del condado",
+    adults: "Clínica ambulatoria para adultos · 18+",
+  },
   common: {
     brand: "MindBridge",
     skipToMain: "Saltar al contenido principal",

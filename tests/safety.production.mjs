@@ -34,7 +34,7 @@ for (const scenario of ['no-js', 'script-failed', 'script-and-css-failed']) {
       expect(box.height).toBeGreaterThanOrEqual(44)
     }
     await expect(page.getByRole('heading', { name: 'Browse resources' })).toBeVisible()
-    await expect(page.locator('#directory article')).toHaveCount(23)
+    await expect(page.locator('#directory tr[data-resource]')).toHaveCount(23)
     await expect(page.getByRole('button', { name: 'Use current location' })).toBeHidden()
     await expect(page.getByRole('searchbox', { name: 'Search' })).toBeHidden()
     await page.getByRole('link', { name: 'About', exact: true }).click()

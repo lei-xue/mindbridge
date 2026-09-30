@@ -11,8 +11,9 @@ for (const mode of ['County', 'City', 'ZIP code']) {
     await page.getByRole('button', { name: 'Use current location', exact: true }).click()
     await expect(page.getByRole('button', { name: 'County', exact: true })).toHaveAttribute('aria-pressed', 'true')
     await expect(page.getByLabel('California county')).toHaveValue('Orange')
-    await expect(page.locator('section[aria-label="County mental health plan"]')).toContainText('Orange County')
-    await expect(page.locator('section[aria-label="Orange County Behavioral Health Plan sites"]')).toHaveCount(0)
+    await expect(page.locator('tr[data-provider="county-Orange"]')).toContainText('Orange County')
+    expect(await page.locator('tr[data-provider^="oc-"]').count()).toBeGreaterThan(3)
+    await expect(page.locator('#local-city-filter')).toHaveCount(0)
     expect(requests).toEqual([])
   })
 }
@@ -36,8 +37,8 @@ for (const width of [320, 390, 1440]) {
     await expect(search.getByText(/Search sends this ZIP via Cloudflare/)).toBeVisible()
     await search.getByRole('textbox', { name: 'California ZIP code' }).fill('92708')
     await expect(search.getByText(/Search sends this ZIP/)).toHaveCount(0)
-    const privacy = search.locator('details').filter({ has: page.locator('summary', { hasText: 'Search coverage and privacy' }) })
-    await expect(privacy).not.toHaveAttribute('open')
+    await expect(search.getByRole('link', { name: 'Search coverage and privacy' })).toHaveAttribute('href', '/about')
+    await expect(search.locator('details, summary')).toHaveCount(0)
     await page.screenshot({ path: `test-results/search-${width}.png`, fullPage: true })
   })
 }
@@ -47,8 +48,7 @@ for (const county of ['Orange', 'San Diego', 'Butte']) {
     await page.goto('/')
     await page.getByLabel('California county').selectOption(county)
     await page.getByRole('button', { name: 'Find support options' }).click()
-    if (county === 'Orange') await page.locator('#orange-county-city').selectOption('*')
-    if (county === 'San Diego') await page.getByLabel('Filter San Diego adult clinics by city').selectOption('*')
+
     const links = page.getByRole('link', { name: /^Open in maps:/ })
     expect(await links.count()).toBeGreaterThan(0)
     for (const link of await links.all()) {
@@ -77,7 +77,7 @@ test('licensed facilities and LA live directory street addresses also link to ma
   await page.getByRole('button', { name: 'City', exact: true }).click()
   await page.getByLabel('California city').fill('Carmichael')
   await page.getByRole('button', { name: 'Find support options' }).click()
-  const snapshot = page.locator('section[aria-label="Statewide licensed-facility snapshot"]')
+  const snapshot = page.locator('tr[data-provider^="license-"]')
   expect(await snapshot.getByRole('link', { name: /^Open in maps:/ }).count()).toBeGreaterThan(0)
   await page.getByRole('button', { name: 'ZIP code', exact: true }).click()
   await page.getByLabel('California ZIP code').fill('90012')

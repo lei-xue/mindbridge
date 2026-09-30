@@ -1,124 +1,92 @@
 import { test, expect } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
-
+import { readFileSync } from 'node:fs'
+const load = name => JSON.parse(readFileSync(new URL(`../src/data/${name}.json`, import.meta.url)))
+const licenses = load('california-facilities'), orange = load('orange-provider-sites'), access = load('california-county-access')
+const local = page => page.locator('section[aria-labelledby="local-support-heading"]')
 for (const locale of ['en', 'es']) {
-  test(`${locale} Fresno county result has no licensing list or nested source disclosures`, async ({ page }) => {
+  test(`${locale} Fresno restores all licensing records in a single table with visible classifications and source links`, async ({ page }) => {
     await page.goto(locale === 'es' ? '/es' : '/')
     await page.locator('#california-search-value').selectOption('Fresno')
     await page.locator('form').getByRole('button', { name: /Find support options|Buscar opciones/ }).click()
-    const search = page.locator('section[aria-labelledby="local-support-heading"]')
-    const county = search.locator('section').filter({ has: page.locator('a[href^="tel:"]') })
-    await expect(county).toHaveCount(1)
-    await expect(county.locator('details, summary')).toHaveCount(0)
-    await expect(county.locator('a')).toHaveCount(2)
-    await expect(search.locator('article')).toHaveCount(0)
-    await expect(search).not.toContainText(/COALINGA|statewide licensed-facility|Dated licensing snapshot|Official Medi-Cal specialty/i)
-    // Only the single pre-search coverage/privacy disclosure remains.
-    await expect(search.locator('details')).toHaveCount(1)
-    await search.screenshot({ path: `test-results/fresno-simple-${locale}.png` })
+    const search = local(page)
+    await expect(search.getByRole('table')).toHaveCount(1)
+    await expect(search.locator('tr[data-provider^="license-"]')).toHaveCount(licenses.filter(f => f.county === 'Fresno').length)
+    await expect(search).toContainText('DEPARTMENT OF STATE HOSPITALS - COALINGA')
+    await expect(search.locator('details, summary')).toHaveCount(0)
+    await expect(page.locator('#directory table')).toHaveCount(1)
+    await expect(page.locator('#directory tr[data-resource]')).toHaveCount(23)
+    for (const row of await search.locator('tr[data-provider^="license-"]').all()) await expect(row.locator('td').last().getByRole('link')).toBeVisible()
+    await search.screenshot({ path: `test-results/fresno-table-${locale}.png` })
   })
-}
-
-for (const locale of ['en', 'es']) {
-  test(`${locale} homepage shared actions are not repeated, including filtered and empty states`, async ({ page }) => {
+  test(`${locale} shared crisis actions remain unique, including filtering and empty local results`, async ({ page }) => {
     await page.goto(locale === 'es' ? '/es' : '/')
-    const assertSingleCrisis = async () => {
+    const check = async () => {
       await expect(page.locator('a[href="tel:988"]')).toHaveCount(1)
       await expect(page.locator('a[href="sms:988"]')).toHaveCount(1)
     }
-    await assertSingleCrisis()
+    await check()
     await expect(page.locator('a[href="tel:211"]')).toHaveCount(0)
-    await expect(page.locator('a[href="https://988lifeline.org/es/"]')).toHaveCount(0)
-    await expect(page.locator('a[href="#directory"], a[href="#local-support-heading"]')).toHaveCount(0)
-    await expect(page.locator('section[aria-labelledby="crisis-heading"]')).toHaveCount(0)
     await page.getByRole('searchbox').fill('988')
-    await assertSingleCrisis()
+    await check()
     await page.getByRole('searchbox').fill('')
     await page.getByRole('button', { name: locale === 'es' ? 'Código postal' : 'ZIP code', exact: true }).click()
     await page.locator('#california-search-value').fill('99999')
     await page.locator('form').getByRole('button', { name: /Find support options|Buscar opciones/ }).click()
     await expect(page.locator('a[href="tel:211"]')).toHaveCount(1)
-    await assertSingleCrisis()
-    await page.screenshot({ path: `test-results/deduplicated-home-${locale}.png`, fullPage: true })
+    await check()
   })
-}
-
-for (const locale of ['en', 'es']) {
   for (const width of [320, 390, 1440]) {
-    test(`${locale} OC has a three-row preview and quiet directory link at ${width}px`, async ({ page }) => {
+    test(`${locale} Orange table retains every record, optional filter and accessible horizontal scrolling at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 844 })
       await page.goto(locale === 'es' ? '/es' : '/')
       await page.locator('#california-search-value').selectOption('Orange')
       await page.locator('form').getByRole('button', { name: /Find support options|Buscar opciones/ }).click()
-      const oc = page.locator('section[aria-label]').filter({ has: page.locator('#orange-county-city') })
-      await expect(oc.locator('article')).toHaveCount(0)
-      await oc.locator('select').selectOption('*')
-      await expect(oc.locator('article')).toHaveCount(3)
-      await expect(oc).not.toContainText(/first 20|primeros 20|98|99/)
-      await expect(oc.getByRole('link', { name: /Full OC|Directorio completo/ })).toBeVisible()
-      for (const article of await oc.locator('article').all()) {
-        await expect(article.locator('h5')).toBeVisible()
-        await expect(article.locator('a[href^="tel:"]')).toBeVisible()
-        expect(await article.locator('a[href^="tel:"]').evaluate(el => el.getBoundingClientRect().height)).toBeGreaterThanOrEqual(44)
-        expect(await article.evaluate(el => getComputedStyle(el).borderRadius)).toBe('0px')
-      }
+      const search = local(page)
+      const rows = search.locator('tr[data-provider^="oc-"]')
+      await expect(rows).toHaveCount(orange.sites.filter(site => access.zipCounties[site.zip]?.includes('Orange')).length)
+      await expect(search.locator('details, summary')).toHaveCount(0)
+      await expect(search.getByRole('table')).toHaveCount(1)
+      await expect(page.locator('#directory tr[data-resource]')).toHaveCount(23)
       expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false)
-      console.log(JSON.stringify({ locale, width, cards: await oc.locator('article').count(), visibleTextLength: (await oc.innerText()).length }))
-      await oc.screenshot({ path: `test-results/oc-simplified-${locale}-${width}.png` })
       const scan = await new AxeBuilder({ page }).include('section[aria-labelledby="local-support-heading"]').withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze()
       expect(scan.violations).toEqual([])
-      await oc.locator('select').selectOption('Santa Ana')
-      await expect(oc.locator('article')).toHaveCount(3)
-      for (const article of await oc.locator('article').all()) await expect(article).toContainText('Santa Ana')
-      await oc.locator('select').selectOption('Irvine')
-      await expect(oc.locator('article')).toHaveCount(1)
-      await expect(oc).not.toContainText(/not ranked|sin clasificación/)
+      await search.locator('#local-city-filter').selectOption('Santa Ana')
+      await expect(rows).toHaveCount(orange.sites.filter(site => site.city === 'Santa Ana').length)
+      for (const row of await rows.all()) await expect(row).toContainText('Santa Ana')
+      await search.locator('#local-city-filter').selectOption('Irvine')
+      await expect(rows).toHaveCount(1)
+      expect(await rows.first().locator('a[href^="tel:"]').evaluate(el => el.getBoundingClientRect().height)).toBeGreaterThanOrEqual(44)
+      if (width < 700) {
+        const region = search.getByRole('region', { name: locale === 'es' ? 'Servicios locales' : 'Local listings' })
+        await region.focus()
+        await page.keyboard.press('ArrowRight')
+        await expect.poll(() => region.evaluate(el => el.scrollLeft)).toBeGreaterThan(0)
+      }
+      await search.screenshot({ path: `test-results/oc-table-${locale}-${width}.png` })
     })
-  }
-}
-
-for (const locale of ['en', 'es']) {
-  for (const width of [320, 390, 1440]) {
-    test(`${locale} unmatched ZIP has one next step, no county detour at ${width}px`, async ({ page }) => {
+    test(`${locale} unmatched ZIP has one next step and no table of unrelated facilities at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 844 })
       await page.goto(locale === 'es' ? '/es' : '/')
       await page.getByRole('button', { name: locale === 'es' ? 'Código postal' : 'ZIP code', exact: true }).click()
       await page.locator('#california-search-value').fill('99999')
       await page.locator('form').getByRole('button', { name: /Find support options|Buscar opciones/ }).click()
-      const region = page.locator('section[aria-labelledby="local-support-heading"]')
-      await expect(region.locator('#choose-county')).toHaveCount(0)
-      await expect(region.locator('article')).toHaveCount(0)
-      await expect(region.locator('section[aria-label="County mental health plan"]')).toHaveCount(0)
-      await expect(region).not.toContainText(/not local matches|crosswalk|coincidencias locales|tabla aproximada/i)
-      await expect(region.locator('a[href="tel:211"]')).toBeVisible()
-      await expect(region.locator('[role="status"]')).toHaveCount(1)
+      const search = local(page)
+      await expect(search.locator('#choose-county, table')).toHaveCount(0)
+      await expect(search.locator('a[href="tel:211"]')).toBeVisible()
+      await expect(search.locator('[role="status"]')).toHaveCount(1)
       expect(page.url()).not.toContain('99999')
       expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false)
-      await region.screenshot({ path: `test-results/yagni-no-results-${locale}-${width}.png` })
       const scan = await new AxeBuilder({ page }).include('section[aria-labelledby="local-support-heading"]').withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze()
       expect(scan.violations).toEqual([])
     })
   }
 }
-
-test('county contact exposes one phone and one official link without a nested disclosure', async ({ page }) => {
-  await page.goto('/')
-  await page.locator('#california-search-value').selectOption('Butte')
-  await page.locator('form').getByRole('button', { name: 'Find support options' }).click()
-  const county = page.getByRole('region', { name: 'County mental health plan' })
-  await expect(county.getByRole('link', { name: 'Call county plan', exact: true })).toBeVisible()
-  await expect(county.locator('details')).toHaveCount(0)
-  await expect(county.getByText(/Official Medi-Cal specialty mental-health contact/)).toHaveCount(0)
-  await expect(county.getByRole('link', { name: 'Visit Butte County plan website' })).toBeVisible()
-})
-
-test('mapped ZIP without results never offers unrelated county-wide facility cards', async ({ page }) => {
+test('mapped ZIP without exact records retains only its referral row, not county-wide facility rows', async ({ page }) => {
   await page.goto('/')
   await page.getByRole('button', { name: 'ZIP code', exact: true }).click()
   await page.locator('#california-search-value').fill('90620')
   await page.locator('form').getByRole('button', { name: 'Find support options' }).click()
-  const region = page.locator('section[aria-labelledby="local-support-heading"]')
-  await expect(region.locator('article')).toHaveCount(0)
-  await expect(region).not.toContainText(/elsewhere|not local matches/)
-  await expect(region.getByRole('link', { name: 'Call county plan', exact: true })).toBeVisible()
+  await expect(local(page).locator('tr[data-provider]')).toHaveCount(1)
+  await expect(local(page).getByRole('link', { name: 'Call county plan' })).toBeVisible()
 })

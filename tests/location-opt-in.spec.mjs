@@ -20,7 +20,8 @@ test('location is opt-in, locally suggests county and never starts live search o
   expect(calls.slice(before).every(r => !r.body && !/39\.7285|121\.8375|api\/la-county/.test(r.url))).toBe(true)
   expect(await page.evaluate(() => JSON.stringify({local:{...localStorage},session:{...sessionStorage}}))).not.toMatch(/39\.7285|121\.8375/)
   await expect(page).not.toHaveURL(/39\.7285|121\.8375|Butte/)
-  await expect(page.locator('section[aria-label="Butte adult outpatient centers"] article')).toHaveCount(0)
+  await expect(page.locator('tr[data-provider^="butte-"]')).toHaveCount(4)
+  await expect(page.locator('#local-city-filter')).toHaveCount(0)
 })
 
 for (const scenario of ['denied', 'timeout', 'unsupported', 'outside', 'poor-accuracy', 'stale']) {
@@ -46,7 +47,7 @@ for (const scenario of ['denied', 'timeout', 'unsupported', 'outside', 'poor-acc
       await expect(page.getByLabel('California county')).toHaveValue('Colusa')
     }
     await page.getByRole('button',{name:'Find support options'}).click()
-    await expect(page.locator('section[aria-label="County mental health plan"]')).toBeVisible()
+    await expect(page.locator('tr[data-provider^="county-"]')).toBeVisible()
   })
 }
 
