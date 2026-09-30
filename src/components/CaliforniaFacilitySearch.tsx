@@ -15,7 +15,7 @@ import { DirectoryTable, type TableRow } from "./DirectoryTable"
 import { GentleSprout } from "./GentleSprout"
 import { useLocale } from "../i18n/LocaleProvider"
 
-type SearchField = "county" | "city" | "zip"
+type SearchField = "county" | "zip"
 type Listing = { id: string; name: string; city: string; address: string; zip: string; phone: string; category: string; source: string; sourceLabel: string; date: string; extra?: ReactNode }
 const licenseSources = {
   CDPH: "https://data.chhs.ca.gov/dataset/licensed-healthcare-facility-listing",
@@ -40,7 +40,6 @@ export function CaliforniaFacilitySearch() {
   const [browseCity, setBrowseCity] = useState("*")
   const [locating, setLocating] = useState(false)
   const [locationMessage, setLocationMessage] = useState("")
-  const [preciseRetry, setPreciseRetry] = useState(false)
   const countySelect = useRef<HTMLSelectElement>(null)
   const focusCountyAfterSwitch = useRef(false)
   useEffect(() => {
@@ -54,12 +53,13 @@ export function CaliforniaFacilitySearch() {
   const [laSearch, setLaSearch] = useState<LaSearchState | null>(null)
   const laAbort = useRef<AbortController | null>(null)
   useEffect(() => () => { locationRequest.current++; clearTimeout(locationTimer.current); laAbort.current?.abort() }, [])
-  const cancelLocation = () => { locationRequest.current++; clearTimeout(locationTimer.current); setLocating(false); setLocationMessage(""); setPreciseRetry(false) }
+  const cancelLocation = () => { locationRequest.current++; clearTimeout(locationTimer.current); setLocating(false); setLocationMessage("") }
   const useCurrentLocation = () => {
     if (!navigator.geolocation) { setLocationMessage(s.ca.locationUnavailable); return }
     laAbort.current?.abort()
     if (laSearch?.isLoading) setLaSearch(null)
     const request = ++locationRequest.current
+    const deadline = Date.now() + 8000
     setLocating(true)
     setLocationMessage("")
     clearTimeout(locationTimer.current)
@@ -67,17 +67,19 @@ export function CaliforniaFacilitySearch() {
       if (request !== locationRequest.current) return
       locationRequest.current++
       clearTimeout(locationTimer.current)
-      setLocating(false); setPreciseRetry(code === 2 || code === 3)
+      setLocating(false)
       setLocationMessage(code === 1 ? s.ca.locationDenied : code === 3 ? s.ca.locationTimeout : s.ca.locationFailed)
     }
     // Browser timeout does not reliably cover permission prompts or the lazy boundary download.
-    locationTimer.current = setTimeout(() => fail(3), 12000)
+    locationTimer.current = setTimeout(() => fail(3), 8000)
     try { navigator.geolocation.getCurrentPosition(async position => {
       if (request !== locationRequest.current) return
+      if (Date.now() >= deadline) { fail(3); return }
       let county: string | null
       try {
         const { suggestCounty } = await import("../lib/countyLocation")
         if (request !== locationRequest.current) return
+        if (Date.now() >= deadline) { fail(3); return }
         county = suggestCounty(position.coords.latitude, position.coords.longitude, position.coords.accuracy)
       } catch {
         if (request !== locationRequest.current) return
@@ -85,13 +87,13 @@ export function CaliforniaFacilitySearch() {
         setLocating(false); setLocationMessage(s.ca.boundaryLoadFailed); return
       }
       locationRequest.current++; clearTimeout(locationTimer.current)
-      setLocating(false); setPreciseRetry(false)
+      setLocating(false)
       if (!county) { setLocationMessage(s.ca.noCountySuggested); return }
       laAbort.current?.abort(); setLaSearch(null); setManualCounty(""); setBrowseCity("*")
       setSearched({ field: "county", value: county, source: "location" })
       setError(""); setValue(county); setField("county")
-      setLocationMessage(s.ca.showingCounty())
-    }, failure => fail(failure.code), { enableHighAccuracy: preciseRetry, timeout: 10000, maximumAge: 60000 }) }
+      setLocationMessage("")
+    }, failure => fail(failure.code), { enableHighAccuracy: false, timeout: 6000, maximumAge: 60000 }) }
     catch { fail(2) }
   }
   const runLaSearch = (searchType: SearchType, term: string) => {
@@ -107,8 +109,8 @@ export function CaliforniaFacilitySearch() {
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault(); cancelLocation(); laAbort.current?.abort(); setLaSearch(null); setManualCounty(""); setBrowseCity("*")
     const term = value.trim().replace(/\s+/g, " ")
-    if (field === "county" ? !countyAccess.countyPlans.some(plan => plan.name === term) : field === "zip" ? !/^\d{5}$/.test(term) : !/^[\p{L}\p{M}][\p{L}\p{M} .'-]{1,59}$/u.test(term)) {
-      setError(field === "county" ? s.ca.errorCounty : field === "zip" ? s.ca.errorZip : s.ca.errorCity); setSearched(null); return
+    if (field === "county" ? !countyAccess.countyPlans.some(plan => plan.name === term) : !/^\d{5}$/.test(term)) {
+      setError(field === "county" ? s.ca.errorCounty : s.ca.errorZip); setSearched(null); return
     }
     setError(""); setSearched({ field, value: term })
     const counties = countyAccess.zipCounties[term as keyof typeof countyAccess.zipCounties]
@@ -119,13 +121,7 @@ export function CaliforniaFacilitySearch() {
     ...(countyAccess.zipCounties[searched.value as keyof typeof countyAccess.zipCounties] ?? []),
     ...primaryCare.clinics.filter(clinic => clinic.zip.slice(0, 5) === searched.value).map(clinic => clinic.county),
   ])] : []
-  const countyCandidates = searched?.field === "zip" ? zipCandidates : searched?.field === "county" ? [searched.value] : searched ? [...new Set([
-    ...facilities.filter(f => same(f.city, searched.value)).map(f => f.county),
-    ...primaryCare.clinics.filter(clinic => same(clinic.city, searched.value)).map(clinic => clinic.county),
-    ...(orange.sites.some(site => same(site.city, searched.value) && countyAccess.zipCounties[site.zip as keyof typeof countyAccess.zipCounties]?.includes("Orange")) ? ["Orange"] : []),
-    ...(sanDiego.clinics.some(clinic => same(clinic.city, searched.value)) ? ["San Diego"] : []),
-    ...(butte.clinics.some(clinic => same(clinic.city, searched.value)) ? ["Butte"] : []),
-  ])] : []
+  const countyCandidates = searched?.field === "zip" ? zipCandidates : searched ? [searched.value] : []
   const selectedCounty = manualCounty || (countyCandidates.length === 1 ? countyCandidates[0] : "")
   const matchesQuery = (city: string, zip: string, county: string) => Boolean(searched && (searched.field === "county" ? same(county, searched.value) : same(searched.field === "zip" ? zip.slice(0, 5) : city, searched.value)) && (!manualCounty || same(county, manualCounty)))
   const listings: Listing[] = searched ? [
@@ -171,16 +167,15 @@ export function CaliforniaFacilitySearch() {
   const changeCounty = (county: string) => { cancelLocation(); laAbort.current?.abort(); setLaSearch(null); setManualCounty(county); setBrowseCity("*") }
   const translatedError = laSearch ? t(laSearch.error) : ""
   return <div data-js-only className="mt-5 space-y-3">
-    <div role="group" aria-label={s.ca.modesAria} className="grid grid-cols-3 gap-1 rounded-xl bg-sage-100 p-1">{(["county", "city", "zip"] as const).map(mode => <button key={mode} type="button" aria-pressed={field === mode} onClick={() => setMode(mode)} className={`min-h-11 rounded-lg px-3 text-sm font-semibold ${focusRing} ${field === mode ? "bg-white text-teal-800 shadow-sm" : "text-stone-700 hover:bg-sage-50"}`}>{mode === "zip" ? s.ca.modeZip : mode === "county" ? s.ca.modeCounty : s.ca.modeCity}</button>)}</div>
+    <div role="group" aria-label={s.ca.modesAria} className="grid grid-cols-2 gap-1 rounded-xl bg-sage-100 p-1">{(["county", "zip"] as const).map(mode => <button key={mode} type="button" aria-pressed={field === mode} onClick={() => setMode(mode)} className={`min-h-11 rounded-lg px-3 text-sm font-semibold ${focusRing} ${field === mode ? "bg-white text-teal-800 shadow-sm" : "text-stone-700 hover:bg-sage-50"}`}>{mode === "zip" ? s.ca.modeZip : s.ca.modeCounty}</button>)}</div>
     <form onSubmit={onSubmit} className="grid gap-3">
-      <div><label htmlFor="california-search-value" className="mb-1 block text-sm font-semibold text-stone-700">{field === "county" ? s.ca.countyLabel : field === "zip" ? s.ca.zipLabel : s.ca.cityLabel}</label>
+      <div><label htmlFor="california-search-value" className="mb-1 block text-sm font-semibold text-stone-700">{field === "county" ? s.ca.countyLabel : s.ca.zipLabel}</label>
         {field === "county" ? <select ref={countySelect} id="california-search-value" value={value} onChange={event => { cancelLocation(); setValue(event.target.value) }} className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}><option value="">{s.ca.chooseCountyOption}</option>{countyAccess.countyPlans.map(p => <option key={p.name} value={p.name}>{s.ca.countyOption(p.name)}</option>)}</select> : <input id="california-search-value" type="text" inputMode={field === "zip" ? "numeric" : "text"} autoComplete="off" maxLength={field === "zip" ? 5 : 60} placeholder={field === "zip" ? s.ca.zipPlaceholder : s.ca.cityPlaceholder} value={value} onChange={event => { cancelLocation(); setValue(event.target.value) }} className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} />}
       </div>
-      <div className="grid gap-2 sm:flex sm:flex-wrap"><button type="submit" className={btnCall}>{s.ca.submit}</button><button type="button" disabled={locating} className={`min-h-11 rounded px-3 text-sm text-teal-800 underline ${focusRing}`} onClick={useCurrentLocation}>{locating ? s.ca.locating : preciseRetry ? s.ca.precise : s.ca.useLocation}</button></div>
+      <div className="grid gap-2"><button type="submit" className={btnCall}>{s.ca.submit}</button><button type="button" disabled={locating} aria-busy={locating} className={`min-h-11 rounded px-3 text-sm text-teal-800 underline ${focusRing}`} onClick={useCurrentLocation}>{locating ? s.ca.locating : s.ca.useLocation}</button></div>
     </form>
     {locating && (
       <div role="status" className="flex flex-wrap items-center gap-2">
-        <span className="text-sm text-stone-700">{s.ca.locationPendingHint}</span>
         <button type="button" onClick={enterCounty} className={`min-h-11 rounded px-3 text-sm font-semibold text-teal-800 underline ${focusRing}`}>{s.ca.locationCancel}</button>
       </div>
     )}

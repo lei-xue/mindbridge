@@ -49,9 +49,9 @@ test('Spanish keyword and issue filters work without persisting search text', as
 
 test('Spanish Irvine results are concise and sparse counties keep an actionable referral', async ({ page }) => {
   await page.goto('/es')
-  await page.getByRole('button', { name: 'Ciudad', exact: true }).click()
-  await page.locator('#california-search-value').fill('Irvine')
+  await page.locator('#california-search-value').selectOption('Orange')
   await page.locator('form').getByRole('button', { name: /Buscar/ }).click()
+  await page.locator('#local-city-filter').selectOption('Irvine')
   const result = page.locator('tr[data-provider^="oc-"]')
   await expect(result).toContainText('Progeny Psychiatric Group - Irvine')
   await expect(result.locator('a[href="tel:+19497227118"]')).toBeVisible()
@@ -79,9 +79,10 @@ test('Spanish LA live search discloses transfer and localizes network failure', 
   // Deliberately abort the real request: this checks failure handling, not County data.
   await page.route('**/api/la-county/locations', route => route.abort())
   await page.goto('/es')
-  await page.getByRole('button', { name: 'Ciudad', exact: true }).click()
-  await page.locator('#california-search-value').fill('Pasadena')
+  await page.getByRole('button', { name: 'Código postal', exact: true }).click()
+  await page.locator('#california-search-value').fill('90630')
   await page.locator('form').getByRole('button', { name: /Buscar/ }).click()
+  await page.locator('#choose-county').selectOption('Los Angeles')
   const live = page.getByRole('button', { name: /Buscar.*vivo/i })
   await expect(live).toBeVisible()
   await expect(live.locator('..')).toContainText('Cloudflare')

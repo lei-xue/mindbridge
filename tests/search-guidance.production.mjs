@@ -44,7 +44,7 @@ for (const locale of ['en', 'es']) {
       expect(page.url()).not.toContain(zip)
     })
   }
-  for (const previousMode of ['county', 'city', 'zip']) {
+  for (const previousMode of ['county', 'zip']) {
     test(`${locale} cancelling location from ${previousMode} immediately restores manual County entry and ignores late callbacks`, async ({ page }) => {
       await page.clock.install()
       await page.addInitScript(() => {

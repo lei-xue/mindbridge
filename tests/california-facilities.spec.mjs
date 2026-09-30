@@ -7,6 +7,14 @@ const facilities = data('california-facilities'), orange = data('orange-provider
 const sd = data('san-diego-adult-clinics'), butte = data('butte-adult-clinics')
 const local = page => page.locator('section[aria-labelledby="local-support-heading"]')
 async function search(page, mode, value) {
+  if (mode === 'City') {
+    const county = { Carmichael: 'Sacramento', 'Woodland Hills': 'Los Angeles', Escondido: 'San Diego' }[value]
+    await search(page, 'County', county)
+    const options = await page.locator('#local-city-filter option').evaluateAll(nodes => nodes.map(n => n.value))
+    const city = options.find(option => option.toLowerCase() === value.toLowerCase())
+    if (city) await page.locator('#local-city-filter').selectOption(city)
+    return
+  }
   await page.getByRole('button', { name: mode, exact: true }).click()
   if (mode === 'County') await page.locator('#california-search-value').selectOption(value)
   else await page.locator('#california-search-value').fill(value)

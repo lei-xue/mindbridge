@@ -3,7 +3,7 @@ import { visitProviderPages } from './provider-pages.mjs'
 test.use({ reducedMotion: 'reduce' })
 
 for (const locale of ['en', 'es']) {
-  for (const mode of ['county', 'city', 'zip']) {
+  for (const mode of ['county', 'zip']) {
     test(`${locale} location from ${mode} displays county records without guessing a city or requiring another form`, async ({ page }) => {
       await page.addInitScript(() => {
         navigator.geolocation.getCurrentPosition = ok => ok({ coords: { latitude: 33.8366, longitude: -117.9143, accuracy: 30 } })
@@ -22,9 +22,9 @@ for (const locale of ['en', 'es']) {
       await expect(search.locator('details, summary')).toHaveCount(0)
       await search.screenshot({ path: `test-results/location-contact-${locale}-${mode}.png` })
       // A later explicit manual search must not stay stuck in the location result.
-      await search.getByRole('button', { name: labels.city, exact: true }).click()
-      await search.locator('#california-search-value').fill('Irvine')
+      await search.locator('#california-search-value').selectOption('Orange')
       await search.locator('form').getByRole('button', { name: /Find support options|Buscar opciones/ }).click()
+      await search.locator('#local-city-filter').selectOption('Irvine')
       await expect(search.locator('tr[data-provider^="oc-"]')).toHaveCount(1)
     })
   }

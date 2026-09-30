@@ -71,24 +71,26 @@ test("LA County city/ZIP search uses POST, keeps the query out of the URL, and d
   await expect(page).not.toHaveURL(/90012/)
 })
 
-test("city search only sends location to LA after a separate click", async ({ page }) => {
+test("ambiguous ZIP only sends location to LA after a separate click", async ({ page }) => {
   const requests = []
   await page.route("**/api/la-county/locations", async (route) => {
     requests.push(JSON.parse(route.request().postData() || "{}"))
     await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ results: [], hasMore: false }) })
   })
   await page.goto("/")
-  await page.getByRole("button", { name: "City", exact: true }).click()
-  await page.getByRole("textbox", { name: /^California (city|ZIP code)$/ }).fill("Pasadena")
+  await page.getByRole("button", { name: "ZIP code", exact: true }).click()
+  await page.getByRole("textbox", { name: "California ZIP code" }).fill("90630")
   await page.getByRole("button", { name: "Find support options" }).click()
+  await page.locator('#choose-county').selectOption('Los Angeles')
   await expect(page.getByRole("button", { name: "Search live LA County directory" })).toBeVisible()
   expect(requests).toEqual([])
   await page.getByRole("button", { name: "Search live LA County directory" }).click()
-  await expect(page.getByRole("heading", { name: "0 directory listings for city Pasadena" })).toBeVisible()
-  expect(requests).toEqual([{ searchType: "city", value: "Pasadena" }])
-  await page.getByRole("textbox", { name: /^California (city|ZIP code)$/ }).fill("Santa Ana")
+  await expect(page.getByRole("heading", { name: "0 directory listings for ZIP 90630" })).toBeVisible()
+  expect(requests).toEqual([{ searchType: "zip", value: "90630" }])
+  await page.getByRole("button", { name: "County", exact: true }).click()
+  await page.locator('#california-search-value').selectOption('Orange')
   await page.getByRole("button", { name: "Find support options" }).click()
-  await expect(page.getByRole('heading', { name: 'Santa Ana', exact: true })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Orange County', exact: true })).toBeVisible()
   expect(await page.locator('tr[data-provider^="oc-"]').count()).toBeGreaterThan(0)
   await expect(page.getByRole("heading", { name: "Live LA County DMH directory" })).toHaveCount(0)
   expect(requests).toHaveLength(1)

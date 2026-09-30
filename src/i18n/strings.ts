@@ -211,9 +211,9 @@ export const en = {
     noCountySuggested: "We could not safely suggest a California county. Choose it manually.",
     showingCounty: () => "Location identifies your county, not nearby clinics.",
     locationDenied: "Location permission was not granted. You can choose your county manually.",
-    locationTimeout: "Location timed out. Try precise location, or choose your county manually.",
+    locationTimeout: "Location timed out. Choose a county or enter a ZIP instead.",
     locationFailed:
-      "Your device could not determine a location. Check device Location Services, try precise location, or choose your county manually.",
+      "Your device could not determine a location. Choose a county or enter a ZIP instead.",
     coverage: "Search coverage and privacy",
     coverageBody:
       "Local snapshots are incomplete; ZIP-to-county matches are approximate. Device coordinates stay in your browser and are not saved; its location provider has its own policies. Submitting a ZIP mapped only to LA sends the ZIP through Cloudflare to LA County DMH. Other live LA searches require a separate click. LA County may log IP/browser details. Map links open Google Maps with the public address only. Search terms are not added to the page URL. More details are in About.",
@@ -562,9 +562,9 @@ export const es: Strings = {
     noCountySuggested: "No pudimos sugerir un condado de California de forma segura. Elígelo manualmente.",
     showingCounty: () => "La ubicación identifica tu condado, no clínicas cercanas.",
     locationDenied: "No se concedió permiso de ubicación. Puedes elegir tu condado manualmente.",
-    locationTimeout: "La ubicación tardó demasiado. Prueba con la ubicación precisa o elige tu condado manualmente.",
+    locationTimeout: "La ubicación tardó demasiado. Elige un condado o ingresa un código postal.",
     locationFailed:
-      "Tu dispositivo no pudo determinar una ubicación. Revisa los servicios de ubicación del dispositivo, prueba con la ubicación precisa o elige tu condado manualmente.",
+      "Tu dispositivo no pudo determinar una ubicación. Elige un condado o ingresa un código postal.",
     coverage: "Cobertura de la búsqueda y privacidad",
     coverageBody:
       "Las instantáneas locales están incompletas; las coincidencias entre código postal y condado son aproximadas. Las coordenadas del dispositivo permanecen en tu navegador y no se guardan; el proveedor de ubicación del dispositivo tiene sus propias políticas. Si envías un código postal asignado solo a Los Ángeles, el código viaja a través de Cloudflare al DMH del condado de Los Ángeles. Otras búsquedas en vivo de Los Ángeles requieren un clic aparte. El condado de Los Ángeles puede registrar la IP y datos del navegador. Los enlaces a mapas abren Google Maps solo con la dirección pública. Los términos de búsqueda no se añaden a la URL. Hay más detalles en “Acerca de”.",

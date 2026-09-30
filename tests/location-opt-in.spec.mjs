@@ -16,7 +16,8 @@ test('location is opt-in, locally suggests county and never starts live search o
   const before = calls.length
   await page.getByRole('button', {name:'Use current location'}).click()
   await expect(page.getByLabel('California county')).toHaveValue('Butte')
-  await expect(page.getByRole('status')).toContainText('Location identifies your county, not nearby clinics.')
+  await expect(page.getByRole('status')).toHaveCount(0)
+  await expect(page.locator('section[aria-labelledby="local-support-heading"]')).toContainText('County-wide listings, not nearest matches.')
   expect(await page.evaluate(() => window.locationCalls)).toBe(1)
   expect(calls.slice(before).every(r => !r.body && !/39\.7285|121\.8375|api\/la-county/.test(r.url))).toBe(true)
   expect(await page.evaluate(() => JSON.stringify({local:{...localStorage},session:{...sessionStorage}}))).not.toMatch(/39\.7285|121\.8375/)
@@ -45,7 +46,7 @@ for (const scenario of ['denied', 'timeout', 'unsupported', 'outside', 'poor-acc
       await page.evaluate(()=>window.deliverLocation())
       await expect(page.getByLabel('California county')).toHaveValue('Alameda')
     } else {
-      await expect(page.getByRole('status')).toContainText(/manually/)
+      await expect(page.getByRole('status')).toContainText(/manually|Choose a county/)
       await expect(page.getByLabel('California county')).toHaveValue('Colusa')
     }
     await page.getByRole('button',{name:'Find support options'}).click()

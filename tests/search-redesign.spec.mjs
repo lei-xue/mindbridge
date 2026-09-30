@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { visitProviderPages } from './provider-pages.mjs'
 
-for (const mode of ['County', 'City', 'ZIP code']) {
+for (const mode of ['County', 'ZIP code']) {
   test(`location remains available from ${mode} and immediately displays county results`, async ({ page, context }) => {
     await context.grantPermissions(['geolocation'])
     await context.setGeolocation({ latitude: 33.7455, longitude: -117.8677, accuracy: 50 })
@@ -27,7 +27,8 @@ for (const width of [320, 390, 1440]) {
     const search = page.locator('section[aria-labelledby="local-support-heading"]')
     await expect(search.getByText('Search by city or ZIP instead')).toHaveCount(0)
     await expect(search.getByRole('heading', { name: 'Find in-person mental-health support in California' })).toHaveCount(0)
-    for (const mode of ['County', 'City', 'ZIP code']) {
+    await expect(search.getByRole('button', { name: 'City', exact: true })).toHaveCount(0)
+    for (const mode of ['County', 'ZIP code']) {
       await search.getByRole('button', { name: mode, exact: true }).click()
       await expect(search.getByRole('button', { name: 'Use current location' })).toBeVisible()
       await expect(search.getByRole('button', { name: 'Find support options' })).toBeVisible()
@@ -78,9 +79,9 @@ for (const county of ['Orange', 'San Diego', 'Butte']) {
 test('licensed facilities and LA live directory street addresses also link to maps', async ({ page }) => {
   await page.route('**/api/la-county/locations', route => route.fulfill({ json: { results: [{ id: 'map-fixture', name: 'Map regression fixture', address: { lines: ['123 Public St'], city: 'Los Angeles', state: 'CA', postalCode: '90012' }, phones: [], websites: [], hours: [], languages: [], populations: [], accessibility: [], lastUpdated: null }], hasMore: false } }))
   await page.goto('/')
-  await page.getByRole('button', { name: 'City', exact: true }).click()
-  await page.getByLabel('California city').fill('Carmichael')
+  await page.getByLabel('California county').selectOption('Sacramento')
   await page.getByRole('button', { name: 'Find support options' }).click()
+  await page.locator('#local-city-filter').selectOption('Carmichael')
   const snapshot = page.locator('tr[data-provider^="license-"]')
   expect(await snapshot.getByRole('link', { name: /^Open in maps:/ }).count()).toBeGreaterThan(0)
   await page.getByRole('button', { name: 'ZIP code', exact: true }).click()

@@ -4,9 +4,9 @@ for (const width of [320, 390, 1440]) {
   test(`Irvine result puts name, type, address, phone and source in one row at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 844 })
     await page.goto('/')
-    await page.getByRole('button', { name: 'City', exact: true }).click()
-    await page.getByLabel('California city').fill('Irvine')
+    await page.getByLabel('California county').selectOption('Orange')
     await page.getByRole('button', { name: 'Find support options' }).click()
+    await page.locator('#local-city-filter').selectOption('Irvine')
     const search = page.locator('section[aria-labelledby="local-support-heading"]')
     const row = search.locator('tr[data-provider^="oc-"]')
     await expect(row).toHaveCount(1)
