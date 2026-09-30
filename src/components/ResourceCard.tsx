@@ -1,3 +1,4 @@
+import { ResourceReview } from "./ResourceReview"
 import { Link } from "react-router-dom"
 import { phoneToTel, smsHref, textToSms } from "../lib/directory"
 import { badgeFree, btnCall, btnSecondary, btnText, chip, focusRing } from "../lib/ui"
@@ -48,6 +49,7 @@ export function ResourceCard({ resource }: { resource: Resource }) {
           Details
         </Link>
       </div>
+      <ResourceReview id={resource.id} name={resource.name} />
     </article>
   )
 }

@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test"
 
 test("county support link skips to the non-crisis search without displacing 988", async ({ page }) => {
   await page.goto("/")
-  await expect(page.getByRole("link", { name: "Call or text 988 now" })).toBeVisible()
+  await expect(page.getByRole("link", { name: "Call 988 now" })).toBeVisible()
   await page.getByRole("link", { name: "Find in-person support by county" }).click()
   await expect(page.locator("#local-support-heading")).toBeFocused()
   await expect(page.getByLabel("California county")).toBeVisible()
@@ -136,7 +136,11 @@ test("keyboard users can skip navigation and filter/clear results", async ({ pag
 test("keyboard navigation exposes a visible brand focus and opens About", async ({ page }) => {
   await page.goto("/")
   await page.keyboard.press("Tab")
+  await expect(page.getByRole('link', { name: 'Skip to main content' })).toBeFocused()
   await page.keyboard.press("Tab")
+  await expect(page.getByRole('region', { name: 'Crisis support' }).getByRole('link', { name: 'Call 988', exact: true })).toBeFocused()
+  await page.keyboard.press("Tab")
+  await expect(page.getByRole('region', { name: 'Crisis support' }).getByRole('link', { name: 'Text 988', exact: true })).toBeFocused()
   await page.keyboard.press("Tab")
 
   const brandLink = page.getByRole("link", { name: "MindBridge", exact: true })

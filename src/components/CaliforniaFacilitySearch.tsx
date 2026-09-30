@@ -243,7 +243,7 @@ export function CaliforniaFacilitySearch() {
   }
 
   return (
-    <div className="mt-5 rounded-xl border border-sage-200 bg-sage-50 p-4 sm:p-5">
+    <div data-js-only className="mt-5 rounded-xl border border-sage-200 bg-sage-50 p-4 sm:p-5">
       <div role="group" aria-label="Search by" className="grid grid-cols-3 gap-1 rounded-xl bg-sage-100 p-1">
         {(["county", "city", "zip"] as const).map((mode) => <button key={mode} type="button" aria-pressed={field === mode} onClick={() => { cancelLocation(); laAbort.current?.abort(); setLaSearch(null); setManualCounty(""); setBrowseCity(""); setField(mode); setValue(""); setSearched(null); setError("") }} className={`min-h-11 rounded-lg px-3 text-sm font-semibold ${focusRing} ${field === mode ? "bg-white text-teal-800 shadow-sm" : "text-stone-700 hover:bg-sage-50"}`}>{mode === "zip" ? "ZIP code" : mode === "county" ? "County" : "City"}</button>)}
       </div>

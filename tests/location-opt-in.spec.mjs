@@ -54,7 +54,7 @@ test('default directory avoids repeated crisis cards but filters retain them; Ab
   await page.goto('/')
   await expect(page.getByText('Showing 20 of 23 resources')).toBeVisible()
   await expect(page.locator('#directory').getByRole('link',{name:'988 Suicide & Crisis Lifeline',exact:true})).toHaveCount(0)
-  await expect(page.getByRole('link',{name:'Call or text 988 now'})).toBeVisible()
+  await expect(page.getByRole('link',{name:'Call 988 now'})).toBeVisible()
   await page.getByRole('searchbox',{name:'Search'}).fill('988')
   await expect(page.locator('#directory').getByRole('link',{name:'988 Suicide & Crisis Lifeline',exact:true})).toBeVisible()
   await page.getByRole('link',{name:'About',exact:true}).click()

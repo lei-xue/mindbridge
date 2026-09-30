@@ -1,3 +1,4 @@
+import { ResourceReview } from "./ResourceReview"
 import { phoneToTel, smsHref, textToSms } from "../lib/directory"
 import { btnCall, btnText, chip } from "../lib/ui"
 import type { Resource } from "../types"
@@ -24,6 +25,7 @@ export function CrisisResourceCard({ resource }: { resource: Resource }) {
           </a>
         )}
       </div>
+      <ResourceReview id={resource.id} name={resource.name} />
     </article>
   )
 }

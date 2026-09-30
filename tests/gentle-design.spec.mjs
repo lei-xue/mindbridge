@@ -29,7 +29,7 @@ for (const width of [320, 390, 1440]) {
     await expect(sprout).toHaveAttribute('focusable', 'false')
     expect(await sprout.evaluate(el => getComputedStyle(el).animationName)).toBe('none')
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false)
-    const crisis = page.getByRole('link', { name: 'Call or text 988 now' })
+    const crisis = page.getByRole('link', { name: 'Call 988 now' })
     await expect(crisis).toHaveAttribute('href', 'tel:988')
     expect(await crisis.evaluate(el => el.getBoundingClientRect().bottom < innerHeight)).toBe(true)
     await page.getByRole('searchbox', { name: 'Search' }).fill('no matching resource')

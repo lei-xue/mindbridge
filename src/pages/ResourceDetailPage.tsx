@@ -1,3 +1,4 @@
+import { ResourceReview } from "../components/ResourceReview"
 import { Link, useParams } from "react-router-dom"
 import { DATA_LAST_REVIEWED } from "../data/meta"
 import { getResourceById, phoneToTel, smsHref, textToSms } from "../lib/directory"
@@ -110,6 +111,7 @@ export function ResourceDetailPage() {
           Information last reviewed {DATA_LAST_REVIEWED}. Information may change — always confirm on
           the provider's official site. If you or someone else is in immediate danger, call 911.
         </p>
+        <ResourceReview id={resource.id} name={resource.name} />
       </article>
     </div>
   )

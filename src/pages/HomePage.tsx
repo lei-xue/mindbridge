@@ -13,7 +13,7 @@ import {
   RESOURCES,
   type Filters,
 } from "../lib/directory"
-import { btnCall, btnSecondary, focusRing } from "../lib/ui"
+import { btnCall, btnText, btnSecondary, focusRing } from "../lib/ui"
 
 export function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -76,10 +76,12 @@ export function HomePage() {
           </p>
           </SproutSpeech>
           <p className="mt-2 text-sm text-sage-700">Take your time. One small step is enough to begin.</p>
+          <a lang="es" href="https://988lifeline.org/es/" target="_blank" rel="noopener noreferrer" className={`inline-flex min-h-11 items-center rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>Ayuda en español · 988</a>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <a href="tel:988" className={btnCall}>
-              Call or text 988 now
+              Call 988 now
             </a>
+            <a href="sms:988" className={btnText}>Text 988 now</a>
             <a
               href="#directory"
               className={btnSecondary}
@@ -171,13 +173,13 @@ export function HomePage() {
           </h2>
           </SproutSpeech>
 
-          <div className="mt-5">
+          <div data-js-only className="mt-5">
             <FilterBar filters={filters} onChange={onChange} onClear={onClear} />
           </div>
           <p className="mt-4 text-sm font-semibold text-stone-700" aria-live="polite">
             Showing {results.length} of {RESOURCES.length} resources
           </p>
-          {!hasFilters && !includeCrisis && <p className="mt-1 text-sm text-stone-600">Crisis lines are above. <button type="button" onClick={() => setIncludeCrisis(true)} className={`rounded text-teal-800 underline ${focusRing}`}>Include crisis lines here</button></p>}
+          {!hasFilters && !includeCrisis && <p data-js-only className="mt-1 text-sm text-stone-600">Crisis lines are above. <button type="button" onClick={() => setIncludeCrisis(true)} className={`rounded text-teal-800 underline ${focusRing}`}>Include crisis lines here</button></p>}
           {results.length > 0 ? (
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {results.map((resource) => (

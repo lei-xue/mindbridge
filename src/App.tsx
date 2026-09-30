@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { Route, Routes, Link } from "react-router-dom"
 import { CrisisBanner } from "./components/CrisisBanner"
 import { Footer } from "./components/Footer"
@@ -20,6 +21,7 @@ function NotFoundPage() {
 }
 
 export default function App() {
+  useEffect(() => { document.documentElement.setAttribute("data-enhanced", "true") }, [])
   return (
     <div className="flex min-h-svh flex-col">
       <a

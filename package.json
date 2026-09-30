@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/prerender.mjs",
     "lint": "oxlint",
     "test": "node --test \"tests/**/*.test.mjs\"",
     "test:ui": "playwright test --config=playwright.config.mjs",
+    "test:safety": "playwright test --config=playwright.production.config.mjs",
     "worker:dev": "wrangler dev --config workers/la-county-directory/wrangler.jsonc --var ALLOWED_ORIGINS:http://localhost:5173,http://127.0.0.1:5173",
     "worker:deploy": "wrangler deploy --config workers/la-county-directory/wrangler.jsonc",
     "preview": "vite preview"
@@ -19,6 +20,7 @@
     "react-router-dom": "^7.18.4"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.63.0",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^24.13.3",

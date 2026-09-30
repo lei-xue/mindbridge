@@ -26,6 +26,12 @@ export function AboutPage() {
           to narrow the directory by audience, issue, or category.
         </p>
 
+        <h2 className="pt-2 text-lg font-bold text-stone-900">Who made this</h2>
+        <p>MindBridge is an independent project by <a href="https://leixue.dev/" className={`rounded text-teal-800 underline ${focusRing}`}>Lei Xue</a>, built to make public support resources easier to find. It is not operated by 988, a government agency, or a healthcare provider.</p>
+        <h2 className="pt-2 text-lg font-bold text-stone-900">Privacy</h2>
+        <p>MindBridge does not include advertising trackers, analytics scripts, or app-set cookies. Hosting providers still process normal web requests. Search text is not saved by the app or put into its URL. Live LA searches pass the submitted city or ZIP through Cloudflare to LA County DMH, which may log IP/browser details. Public map links open Google Maps only when clicked. External services have their own privacy policies.</p>
+        <h2 className="pt-2 text-lg font-bold text-stone-900">Corrections and source checks</h2>
+        <p>Use “Report an issue” on any resource to email a listing correction. Please do not include personal health information. This inbox is not monitored for crisis support. A “Source checked” date means the contact information was checked against an official web page, not that a test call was made or availability is guaranteed. When no date is shown, an individual source-check date has not been recorded; the directory-wide review date is not a substitute.</p>
         <h2 className="pt-2 text-lg font-bold text-stone-900">Where the data comes from</h2>
         <p>
           Listings are compiled from public information published by{" "}
@@ -66,7 +72,7 @@ export function AboutPage() {
 
         <h2 className="pt-2 text-lg font-bold text-stone-900">Important</h2>
         <p className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-stone-800">
-          MindBridge is an information directory. It is <strong>not a substitute for professional
+          MindBridge is an information directory, not medical advice. It is <strong>not a substitute for professional
           care</strong> and it is <strong>not for emergencies</strong>. If you or someone else is in
           immediate danger, call <a href="tel:911" className={`rounded font-bold underline ${focusRing}`}>911</a>.
           For crisis support, call or text{" "}
