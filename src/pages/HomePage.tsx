@@ -139,9 +139,7 @@ export function HomePage() {
             Looking for in-person support?
           </h2>
           </SproutSpeech>
-          <p className="mt-2 max-w-3xl text-stone-700">
-            Choose a county for its Medi-Cal mental-health contact and available listings. Coverage is incomplete.
-          </p>
+
           <CaliforniaFacilitySearch />
           <div className="mt-4 flex flex-wrap gap-3">
             <a href="tel:211" className={btnCall}>
@@ -157,7 +155,7 @@ export function HomePage() {
             </a>
 
           </div>
-          <details className="mt-3 text-xs text-stone-600"><summary className="cursor-pointer">External directory privacy</summary><p className="mt-2">External directories have their own privacy policies for information you enter there.</p></details>
+
         </div>
       </section>
 
@@ -172,9 +170,7 @@ export function HomePage() {
             Browse resources
           </h2>
           </SproutSpeech>
-          <p className="mt-1 text-stone-700">
-            Filter by who you are, what you're going through, or the kind of support you need.
-          </p>
+
           <div className="mt-5">
             <FilterBar filters={filters} onChange={onChange} onClear={onClear} />
           </div>

@@ -260,7 +260,6 @@ export function CaliforniaFacilitySearch() {
       </form>
       {field === "county" && <div className="mt-3">
         <button type="button" disabled={locating} className={btnSecondary} onClick={useCurrentLocation}>{locating ? "Finding your county…" : preciseRetry ? "Try precise location" : "Use current location"}</button>
-        <p className="mt-1 text-xs text-stone-600">Optional · asks permission first. Coordinates stay in your browser and are not saved. Suggests a county, not nearby clinics.</p>
       </div>}
       {locationMessage && <p role="status" className="mt-2 text-sm text-stone-700">{locationMessage}</p>}
       <details className="mt-3 text-sm text-stone-700">
