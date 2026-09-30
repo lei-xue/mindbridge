@@ -77,7 +77,7 @@ test('licensed facilities and LA live directory street addresses also link to ma
   await page.getByLabel('California county').selectOption('Sacramento')
   await page.getByRole('button', { name: 'Find support options' }).click()
   const snapshot = page.locator('details[aria-label="Statewide licensed-facility snapshot"]')
-  await snapshot.locator('summary').click()
+  await snapshot.locator(':scope > summary').click()
   expect(await snapshot.getByRole('link', { name: /^Open in maps:/ }).count()).toBeGreaterThan(0)
   await page.getByRole('button', { name: 'ZIP code', exact: true }).click()
   await page.getByLabel('California ZIP code').fill('90012')
