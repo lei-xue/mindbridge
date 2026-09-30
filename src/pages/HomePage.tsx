@@ -95,7 +95,7 @@ export function HomePage() {
       </section>
 
       <section id="directory" aria-labelledby="directory-heading" className="scroll-mt-16">
-        <div className="mx-auto max-w-5xl px-4 py-10">
+        <div className="mx-auto max-w-6xl px-4 py-10">
           <SproutSpeech pose="read" small>
           <h2
             id="directory-heading"
@@ -114,7 +114,7 @@ export function HomePage() {
           </p>
 
           {results.length > 0 ? (
-            <div className="mt-6 space-y-6">
+            <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {results.map(resource => <ResourceCard key={resource.id} resource={resource} omitSharedContacts />)}
             </div>
           ) : (

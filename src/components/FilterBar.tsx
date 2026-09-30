@@ -27,8 +27,8 @@ export function FilterBar({ filters, onChange, onClear }: Props) {
 
   return (
     <div className="rounded-xl border border-sage-200 bg-white p-4 shadow-sm">
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-        <div className="sm:col-span-2 lg:col-span-1">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+        <div className="sm:col-span-2 lg:col-span-2">
           <label htmlFor="filter-q" className="mb-1 block text-sm font-semibold text-stone-700">
             {s.filters.search}
           </label>
