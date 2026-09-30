@@ -7,7 +7,8 @@ import countySites from "../data/california-county-sites.json"
 import orangeSnapshot from "../data/orange-provider-sites.json"
 import sanDiegoSnapshot from "../data/san-diego-adult-clinics.json"
 import butteSnapshot from "../data/butte-adult-clinics.json"
-import { btnSecondary, focusRing } from "../lib/ui"
+import { btnCall, btnSecondary, focusRing } from "../lib/ui"
+import { AddressLink } from "./AddressLink"
 
 const sanDiegoDirectoryUrl = "https://www.optumsandiego.com/content/SanDiego/sandiego/en/community-resources/providerdirectory1.html"
 
@@ -40,7 +41,7 @@ function FacilityCard({ facility }: { facility: Facility }) {
       <h4 className="font-bold text-stone-900">{facility.name}</h4>
       <p className="mt-1 text-sm font-semibold text-stone-700">{facility.category}</p>
       <p className="mt-2 text-sm text-stone-700">
-        {[facility.address, `${facility.city}, CA ${facility.zip}`, `${facility.county} County`].filter(Boolean).join(" · ")}
+        {facility.address ? <AddressLink address={[facility.address, `${facility.city}, CA ${facility.zip}`, `${facility.county} County`].join(" · ")} /> : `${facility.city}, CA ${facility.zip} · ${facility.county} County`}
       </p>
       {facility.phone && <p className="mt-2 text-sm text-stone-700">Listed phone: <ListedPhone phone={facility.phone} /></p>}
       <p className="mt-3 text-xs text-stone-600">
@@ -55,7 +56,7 @@ function OrangeSiteCard({ site }: { site: (typeof orangeSnapshot.sites)[number] 
     <article className="rounded-xl border border-sage-200 bg-white p-5 shadow-sm">
       <h5 className="font-bold text-stone-900">{site.name}</h5>
       <p className="mt-1 text-sm text-stone-700">{site.category}</p>
-      <p className="mt-2 text-sm text-stone-700">{site.address} · {site.city}, CA {site.zip}</p>
+      <p className="mt-2 text-sm text-stone-700"><AddressLink address={`${site.address} · ${site.city}, CA ${site.zip}`} /></p>
       {site.phone && <p className="mt-2 text-sm text-stone-700">Listed phone: <ListedPhone phone={site.phone} /></p>}
     </article>
   )
@@ -64,7 +65,7 @@ function OrangeSiteCard({ site }: { site: (typeof orangeSnapshot.sites)[number] 
 function SanDiegoClinicCard({ clinic }: { clinic: (typeof sanDiegoSnapshot.clinics)[number] }) {
   return <article className="rounded-xl border border-sage-200 bg-white p-5 shadow-sm">
     <h5 className="font-bold text-stone-900">{clinic.name}</h5>
-    <p className="mt-2 text-sm text-stone-700">{clinic.address} · {clinic.city}, CA {clinic.zip}</p>
+    <p className="mt-2 text-sm text-stone-700"><AddressLink address={`${clinic.address} · ${clinic.city}, CA ${clinic.zip}`} /></p>
     <p className="mt-2 text-sm text-stone-700">Listed phone: <ListedPhone phone={clinic.phone} /></p>
   </article>
 }
@@ -138,6 +139,7 @@ export function CaliforniaFacilitySearch() {
       setSearched({ field: "county", value: county })
       setError("")
       setValue(county)
+      setField("county")
       // Show local county records immediately, without calling an external API.
       setLocationMessage(`Showing ${county} County options. You can choose a different county above.`)
     }, (failure) => {
@@ -242,8 +244,10 @@ export function CaliforniaFacilitySearch() {
 
   return (
     <div className="mt-5 rounded-xl border border-sage-200 bg-sage-50 p-4 sm:p-5">
-      <h3 className="text-lg font-bold text-stone-900">Find in-person mental-health support in California</h3>
-      <form onSubmit={onSubmit} className="mt-4 grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+      <div role="group" aria-label="Search by" className="grid grid-cols-3 gap-1 rounded-xl bg-sage-100 p-1">
+        {(["county", "city", "zip"] as const).map((mode) => <button key={mode} type="button" aria-pressed={field === mode} onClick={() => { cancelLocation(); laAbort.current?.abort(); setLaSearch(null); setManualCounty(""); setBrowseCity(""); setField(mode); setValue(""); setSearched(null); setError("") }} className={`min-h-11 rounded-lg px-3 text-sm font-semibold ${focusRing} ${field === mode ? "bg-white text-teal-800 shadow-sm" : "text-stone-700 hover:bg-sage-50"}`}>{mode === "zip" ? "ZIP code" : mode === "county" ? "County" : "City"}</button>)}
+      </div>
+      <form onSubmit={onSubmit} className="mt-4 grid gap-3">
         <div>
           {field === "county" ? <>
             <label htmlFor="california-search-value" className="mb-1 block text-sm font-semibold text-stone-700">California county</label>
@@ -252,25 +256,19 @@ export function CaliforniaFacilitySearch() {
               {countyAccess.countyPlans.map((plan) => <option key={plan.name} value={plan.name}>{plan.name} County</option>)}
             </select>
           </> : <>
-            <label htmlFor="california-search-value" className="mb-1 block text-sm font-semibold text-stone-700">California city, county, or ZIP</label>
+            <label htmlFor="california-search-value" className="mb-1 block text-sm font-semibold text-stone-700">{field === "zip" ? "California ZIP code" : "California city"}</label>
             <input id="california-search-value" type="text" inputMode={field === "zip" ? "numeric" : "text"} autoComplete="off" maxLength={field === "zip" ? 5 : 60} placeholder={field === "zip" ? "e.g. 92868" : "e.g. Santa Ana"} className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} value={value} onChange={(event) => { cancelLocation(); setValue(event.target.value) }} />
           </>}
         </div>
-        <button type="submit" className={btnSecondary}>Find support options</button>
+        <div className="grid gap-2 sm:flex sm:flex-wrap">
+          <button type="submit" className={btnCall}>Find support options</button>
+          <button type="button" disabled={locating} className={btnSecondary} onClick={useCurrentLocation}>{locating ? "Finding your county…" : preciseRetry ? "Try precise location" : "Use current location"}</button>
+        </div>
       </form>
-      {field === "county" && <div className="mt-3">
-        <button type="button" disabled={locating} className={btnSecondary} onClick={useCurrentLocation}>{locating ? "Finding your county…" : preciseRetry ? "Try precise location" : "Use current location"}</button>
-      </div>}
       {locationMessage && <p role="status" className="mt-2 text-sm text-stone-700">{locationMessage}</p>}
-      <details className="mt-3 text-sm text-stone-700">
-        <summary className="cursor-pointer font-semibold text-teal-800">Search by city or ZIP instead</summary>
-        <label htmlFor="california-search-field" className="mt-2 mb-1 block font-semibold">Search by</label>
-        <select id="california-search-field" className={`min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} value={field} onChange={(event) => { cancelLocation(); laAbort.current?.abort(); setLaSearch(null); setManualCounty(""); setBrowseCity(""); setField(event.target.value as SearchField); setValue(""); setSearched(null); setError("") }}>
-          <option value="county">County</option><option value="city">City</option><option value="zip">ZIP code</option>
-        </select>
-      </details>
-      <details className="mt-3 text-xs text-stone-600"><summary className="cursor-pointer font-semibold">Search coverage and privacy</summary><p className="mt-2">California, Orange County, and San Diego County snapshots and approximate ZIP-to-county hints are filtered in your browser. Submitting an unambiguous LA County ZIP also sends it in a request body through Cloudflare to the LA County DMH directory. For cities or uncertain ZIPs, a separate LA search button asks first. Cloudflare processes that request and LA County may log IP/browser details. Optional device location suggests a county using simplified Census boundaries in your browser; coordinates are not sent to MindBridge or saved. Your browser's location service may use its own provider. MindBridge does not put your location in the URL or intentionally store it. The 2020 Census ZIP approximation may cross county boundaries or miss newer/PO Box ZIPs; confirm your county before relying on a referral.</p></details>
-      {field === "zip" && <p className="mt-2 text-xs text-stone-700">A ZIP mapped only to LA County also starts a live directory search through Cloudflare; LA County may log IP/browser details. Other live searches require a separate click.</p>}
+
+      <details className="mt-3 text-xs text-stone-600"><summary className="cursor-pointer font-semibold">Search coverage and privacy</summary><p className="mt-2">Local snapshots are incomplete; ZIP-to-county matches are approximate. Device coordinates stay in your browser and are not saved; its location provider has its own policies. Submitting a ZIP mapped only to LA sends the ZIP through Cloudflare to LA County DMH. Other live LA searches require a separate click. LA County may log IP/browser details. Map links open Google Maps with the public address only. Search terms are not added to the page URL. More details are in About.</p></details>
+      {field === "zip" && countyAccess.zipCounties[value.trim() as keyof typeof countyAccess.zipCounties]?.length === 1 && countyAccess.zipCounties[value.trim() as keyof typeof countyAccess.zipCounties][0] === "Los Angeles" && <p className="mt-2 text-xs text-stone-700">Search sends this ZIP via Cloudflare to LA County DMH, which may log IP/browser details.</p>}
       {error && <p role="alert" className="mt-3 text-sm font-semibold text-red-800">{error}</p>}
       {searched && <div className="mt-5" aria-live="polite">
         <h4 className="font-semibold text-stone-900">Results for {searched.field === "zip" ? "ZIP" : searched.field} {searched.value}</h4>
@@ -329,7 +327,7 @@ export function CaliforniaFacilitySearch() {
           </select>
           <div className="mt-3 grid gap-3 lg:grid-cols-2">{butteSnapshot.clinics.filter((clinic) => !browseCity || browseCity === "*" || clinic.city === browseCity).map((clinic) => <article key={clinic.id} className="rounded-xl border border-sage-200 bg-white p-5 shadow-sm">
             <h5 className="font-bold text-stone-900">{clinic.name}</h5>
-            <p className="mt-2 text-sm text-stone-700">{clinic.address} · {clinic.city}, CA {clinic.zip}</p>
+            <p className="mt-2 text-sm text-stone-700"><AddressLink address={`${clinic.address} · ${clinic.city}, CA ${clinic.zip}`} /></p>
             <p className="mt-2 text-sm text-stone-700">Listed phone: <ListedPhone phone={clinic.phone} /></p>
             <a href={clinic.source} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded text-sm text-teal-800 underline ${focusRing}`}>Official center information</a>
           </article>)}</div>

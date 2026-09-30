@@ -1,4 +1,5 @@
 import { focusRing } from "../lib/ui"
+import { AddressLink } from "./AddressLink"
 
 export type SearchType = "zip" | "city"
 export type DirectoryResult = {
@@ -39,7 +40,7 @@ function ResultCard({ result }: { result: DirectoryResult }) {
   return (
     <article className="rounded-xl border border-sage-200 bg-white p-5 shadow-sm">
       <h4 className="text-lg font-bold text-stone-900">{result.name}</h4>
-      {address && <p className="mt-2 text-sm leading-relaxed text-stone-700">{address}</p>}
+      {address && <p className="mt-2 text-sm leading-relaxed text-stone-700">{result.address.lines.some(line => line.trim()) ? <AddressLink address={address} /> : address}</p>}
       {result.phones.length > 0 && <p className="mt-2 text-sm text-stone-700"><span className="font-semibold">Phones as listed:</span> {result.phones.join(" · ")}</p>}
       {result.websites.length > 0 && (
         <ul className="mt-3 flex flex-wrap gap-2" aria-label={`Websites for ${result.name}`}>
