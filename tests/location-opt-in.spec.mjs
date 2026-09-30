@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test'
+import { visitProviderPages } from './provider-pages.mjs'
 
 test('location is opt-in, locally suggests county and never starts live search or stores coordinates', async ({ page, context }) => {
   await context.grantPermissions(['geolocation'])
@@ -20,7 +21,8 @@ test('location is opt-in, locally suggests county and never starts live search o
   expect(calls.slice(before).every(r => !r.body && !/39\.7285|121\.8375|api\/la-county/.test(r.url))).toBe(true)
   expect(await page.evaluate(() => JSON.stringify({local:{...localStorage},session:{...sessionStorage}}))).not.toMatch(/39\.7285|121\.8375/)
   await expect(page).not.toHaveURL(/39\.7285|121\.8375|Butte/)
-  await expect(page.locator('tr[data-provider^="butte-"]')).toHaveCount(4)
+  const entries = await visitProviderPages(page.locator('section[aria-labelledby="local-support-heading"]'))
+  expect(entries.filter(entry => entry.id.startsWith('butte-'))).toHaveLength(4)
   await expect(page.locator('#local-city-filter')).toHaveCount(0)
 })
 

@@ -24,6 +24,11 @@ export const en = {
     countyScope: "County-wide listings, not nearest matches. Licensing records may include hospitals and rehabilitation facilities, not outpatient clinics.",
     referral: "County referral contact",
     adults: "Adult outpatient clinic · 18+",
+    pagination: "Local results pages",
+    previousPage: "Previous",
+    nextPage: "Next",
+    pageLabel: (page: number) => `Page ${page}`,
+    pageSummary: (first: number, last: number, total: number, page: number, pages: number) => `Showing ${first}–${last} of ${total} · Page ${page} of ${pages}`,
   },
   common: {
     brand: "MindBridge",
@@ -365,6 +370,11 @@ export const es: Strings = {
     countyScope: "Centros de todo el condado, no los más cercanos. Los registros de licencias pueden incluir hospitales y centros de rehabilitación, no clínicas ambulatorias.",
     referral: "Contacto de derivación del condado",
     adults: "Clínica ambulatoria para adultos · 18+",
+    pagination: "Páginas de resultados locales",
+    previousPage: "Anterior",
+    nextPage: "Siguiente",
+    pageLabel: (page: number) => `Página ${page}`,
+    pageSummary: (first: number, last: number, total: number, page: number, pages: number) => `Mostrando ${first}–${last} de ${total} · Página ${page} de ${pages}`,
   },
   common: {
     brand: "MindBridge",

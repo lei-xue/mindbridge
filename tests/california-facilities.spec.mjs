@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { readFileSync } from 'node:fs'
+import { visitProviderPages } from './provider-pages.mjs'
 const data = name => JSON.parse(readFileSync(new URL(`../src/data/${name}.json`, import.meta.url)))
 const facilities = data('california-facilities'), orange = data('orange-provider-sites'), access = data('california-county-access')
 const sd = data('san-diego-adult-clinics'), butte = data('butte-adult-clinics')
@@ -19,10 +20,12 @@ for (const county of ['Fresno', 'Orange', 'San Diego', 'Butte']) {
     const region = local(page)
     await expect(region.getByRole('table')).toHaveCount(1)
     await expect(region.locator('details, summary')).toHaveCount(0)
-    await expect(region.locator('tr[data-provider^="license-"]')).toHaveCount(facilities.filter(f => f.county === county).length)
-    if (county === 'Orange') await expect(region.locator('tr[data-provider^="oc-"]')).toHaveCount(orange.sites.filter(site => access.zipCounties[site.zip]?.includes('Orange')).length)
-    if (county === 'San Diego') await expect(region.locator('tr[data-provider^="sd-"]')).toHaveCount(sd.clinics.length)
-    if (county === 'Butte') await expect(region.locator('tr[data-provider^="butte-"]')).toHaveCount(butte.clinics.length)
+    const entries = await visitProviderPages(region)
+    const expected = [`county-${county}`, ...facilities.filter(f => f.county === county).map(f => `license-${f.id}`)]
+    if (county === 'Orange') expected.push(...orange.sites.filter(site => access.zipCounties[site.zip]?.includes('Orange')).map(site => `oc-${site.id}`))
+    if (county === 'San Diego') expected.push(...sd.clinics.map(clinic => `sd-${clinic.id}`))
+    if (county === 'Butte') expected.push(...butte.clinics.map(clinic => `butte-${clinic.id}`))
+    expect(entries.map(entry => entry.id)).toEqual(expected)
     await expect(region.locator('tr[data-provider^="county-"]')).toHaveCount(1)
     await expect(region.getByRole('link', { name: 'Call county plan' })).toBeVisible()
     await expect(page.locator('#directory article')).toHaveCount(23)
@@ -41,7 +44,15 @@ test('optional city filter applies to all sources and resets on county change', 
     await page.getByLabel('City (optional filter)').selectOption('*')
   }
   const phone = '530-877-5845'
-  await expect(local(page).getByRole('link', { name: phone })).toHaveAttribute('href', `tel:+1${phone.replace(/\D/g, '')}`)
+  let found = false
+  await visitProviderPages(local(page), async rows => {
+    const link = rows.getByRole('link', { name: phone, exact: true })
+    if (await link.count()) {
+      found = true
+      await expect(link).toHaveAttribute('href', `tel:+1${phone.replace(/\D/g, '')}`)
+    }
+  })
+  expect(found).toBe(true)
   await search(page, 'County', 'Colusa')
   await expect(local(page).locator('tr[data-provider^="butte-"]')).toHaveCount(0)
   await expect(local(page)).toContainText('Colusa County Mental Health Plan')

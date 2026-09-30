@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test'
+import { visitProviderPages } from './provider-pages.mjs'
 
 for (const mode of ['County', 'City', 'ZIP code']) {
   test(`location remains available from ${mode} and immediately displays county results`, async ({ page, context }) => {
@@ -12,7 +13,8 @@ for (const mode of ['County', 'City', 'ZIP code']) {
     await expect(page.getByRole('button', { name: 'County', exact: true })).toHaveAttribute('aria-pressed', 'true')
     await expect(page.getByLabel('California county')).toHaveValue('Orange')
     await expect(page.locator('tr[data-provider="county-Orange"]')).toContainText('Orange County')
-    expect(await page.locator('tr[data-provider^="oc-"]').count()).toBeGreaterThan(3)
+    const entries = await visitProviderPages(page.locator('section[aria-labelledby="local-support-heading"]'))
+    expect(entries.filter(entry => entry.id.startsWith('oc-')).length).toBeGreaterThan(3)
     await expect(page.locator('#local-city-filter')).toHaveCount(0)
     expect(requests).toEqual([])
   })
@@ -51,6 +53,7 @@ for (const county of ['Orange', 'San Diego', 'Butte']) {
 
     const links = page.getByRole('link', { name: /^Open in maps:/ })
     expect(await links.count()).toBeGreaterThan(0)
+    await visitProviderPages(page.locator('section[aria-labelledby="local-support-heading"]'), async () => {
     for (const link of await links.all()) {
       const url = new URL(await link.getAttribute('href'))
       expect(url.origin).toBe('https://www.google.com')
@@ -60,6 +63,7 @@ for (const county of ['Orange', 'San Diego', 'Butte']) {
       await expect(link).toHaveAttribute('target', '_blank')
       await expect(link).toHaveAttribute('rel', 'noopener noreferrer')
     }
+    })
     // Exercise navigation without contacting a third party or leaking device coordinates.
     const firstHref = await links.first().getAttribute('href')
     await page.context().route('https://www.google.com/maps/**', route => route.fulfill({ body: 'Map navigation intercepted by regression test', contentType: 'text/plain' }))

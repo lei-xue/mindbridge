@@ -194,7 +194,7 @@ export function CaliforniaFacilitySearch() {
       {laSearch?.isLoading && <p role="status" className="mt-2 text-sm">{s.la.searching}</p>}
       {laSearch?.error && <p role="alert" className="mt-2 text-sm font-semibold text-red-800">{locale === "es" && translatedError === laSearch.error ? s.la.errorUnavailable : translatedError}</p>}
       {laSearch && !laSearch.isLoading && !laSearch.error && <h4 className="mt-2 text-sm font-semibold">{s.la.resultsHeading(laSearch.results.length, laSearch.searchType, laSearch.query)}</h4>}
-      {rows.length > 0 && <DirectoryTable label={s.table.local} kind="provider" columns={[{ key: "name", label: s.table.name }, { key: "type", label: s.table.type }, { key: "location", label: s.table.location }, { key: "phone", label: s.table.contact }, { key: "source", label: s.table.source }]} rows={rows} />}
+      {rows.length > 0 && <DirectoryTable resetKey={searched} label={s.table.local} kind="provider" columns={[{ key: "name", label: s.table.name }, { key: "type", label: s.table.type }, { key: "location", label: s.table.location }, { key: "phone", label: s.table.contact }, { key: "source", label: s.table.source }]} rows={rows} />}
       {laSearch?.hasMore && <p className="mt-2 text-xs text-stone-600">{s.la.hasMore}</p>}
       {noMatches && searched.field !== "county" && countyCandidates.length <= 1 && <div className="mt-3 flex items-start gap-3">
         <GentleSprout small pose="hug" />

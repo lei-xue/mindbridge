@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
 import { readFileSync } from 'node:fs'
+import { visitProviderPages } from './provider-pages.mjs'
 const load = name => JSON.parse(readFileSync(new URL(`../src/data/${name}.json`, import.meta.url)))
 const licenses = load('california-facilities'), orange = load('orange-provider-sites'), access = load('california-county-access')
 const local = page => page.locator('section[aria-labelledby="local-support-heading"]')
@@ -11,8 +12,11 @@ for (const locale of ['en', 'es']) {
     await page.locator('form').getByRole('button', { name: /Find support options|Buscar opciones/ }).click()
     const search = local(page)
     await expect(search.getByRole('table')).toHaveCount(1)
-    await expect(search.locator('tr[data-provider^="license-"]')).toHaveCount(licenses.filter(f => f.county === 'Fresno').length)
-    await expect(search).toContainText('DEPARTMENT OF STATE HOSPITALS - COALINGA')
+    const entries = await visitProviderPages(search, async rows => {
+      for (const row of await rows.all()) await expect(row.locator('td').last().getByRole('link')).toBeVisible()
+    })
+    expect(entries.filter(entry => entry.id.startsWith('license-')).map(entry => entry.id)).toEqual(licenses.filter(f => f.county === 'Fresno').map(f => `license-${f.id}`))
+    expect(entries.some(entry => entry.text.includes('DEPARTMENT OF STATE HOSPITALS - COALINGA'))).toBe(true)
     await expect(search.locator('details, summary')).toHaveCount(0)
     await expect(page.locator('#directory table')).toHaveCount(0)
     await expect(page.locator('#directory article')).toHaveCount(23)
@@ -44,7 +48,8 @@ for (const locale of ['en', 'es']) {
       await page.locator('form').getByRole('button', { name: /Find support options|Buscar opciones/ }).click()
       const search = local(page)
       const rows = search.locator('tr[data-provider^="oc-"]')
-      await expect(rows).toHaveCount(orange.sites.filter(site => access.zipCounties[site.zip]?.includes('Orange')).length)
+      const all = await visitProviderPages(search)
+      expect(all.filter(entry => entry.id.startsWith('oc-')).map(entry => entry.id)).toEqual(orange.sites.filter(site => access.zipCounties[site.zip]?.includes('Orange')).map(site => `oc-${site.id}`))
       await expect(search.locator('details, summary')).toHaveCount(0)
       await expect(search.getByRole('table')).toHaveCount(1)
       await expect(page.locator('#directory article')).toHaveCount(23)
@@ -52,8 +57,9 @@ for (const locale of ['en', 'es']) {
       const scan = await new AxeBuilder({ page }).include('section[aria-labelledby="local-support-heading"]').withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze()
       expect(scan.violations).toEqual([])
       await search.locator('#local-city-filter').selectOption('Santa Ana')
-      await expect(rows).toHaveCount(orange.sites.filter(site => site.city === 'Santa Ana').length)
-      for (const row of await rows.all()) await expect(row).toContainText('Santa Ana')
+      const filtered = await visitProviderPages(search)
+      expect(filtered.filter(entry => entry.id.startsWith('oc-')).map(entry => entry.id)).toEqual(orange.sites.filter(site => site.city === 'Santa Ana').map(site => `oc-${site.id}`))
+      for (const row of filtered.filter(entry => entry.id.startsWith('oc-'))) expect(row.text).toContain('Santa Ana')
       await search.locator('#local-city-filter').selectOption('Irvine')
       await expect(rows).toHaveCount(1)
       expect(await rows.first().locator('a[href^="tel:"]').evaluate(el => el.getBoundingClientRect().height)).toBeGreaterThanOrEqual(44)

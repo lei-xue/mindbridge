@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test'
+import { visitProviderPages } from './provider-pages.mjs'
 test.use({ reducedMotion: 'reduce' })
 
 for (const locale of ['en', 'es']) {
@@ -14,7 +15,8 @@ for (const locale of ['en', 'es']) {
       const search = page.locator('section[aria-labelledby="local-support-heading"]')
       await expect(search.locator('#california-search-value')).toHaveValue('Orange')
       await expect(search.locator('a[href="tel:8007238641"]')).toBeVisible()
-      expect(await search.locator('tr[data-provider^="oc-"]').count()).toBeGreaterThan(3)
+      const entries = await visitProviderPages(search)
+      expect(entries.filter(entry => entry.id.startsWith('oc-')).length).toBeGreaterThan(3)
       await expect(search.locator('#local-city-filter')).toHaveCount(0)
       await expect(search).not.toContainText(/Choose a city|not ranked/)
       await expect(search.locator('details, summary')).toHaveCount(0)
