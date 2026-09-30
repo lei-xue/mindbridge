@@ -8,7 +8,7 @@ test('Orange location immediately shows county contact and a bounded site previe
  await page.getByRole('button',{name:'Use current location'}).click()
  await expect(page.getByLabel('California county')).toHaveValue('Orange')
  await expect(page.locator('section[aria-label="County mental health plan"]')).toBeVisible()
- await expect(page.locator('section[aria-label="Orange County Behavioral Health Plan sites"] article')).toHaveCount(20)
+ await expect(page.locator('section[aria-label="Orange County Behavioral Health Plan sites"] article')).toHaveCount(3)
  await expect(page.getByText(/Confirm it, then/)).toHaveCount(0)
  expect(requests).toEqual([])
 })

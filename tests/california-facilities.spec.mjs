@@ -19,7 +19,7 @@ test('county-first search can browse official local sites by chosen city without
   await page.getByRole('button', { name: 'Find support options' }).click()
   const sites = page.locator('section[aria-label="Orange County Behavioral Health Plan sites"]')
   await expect(sites.locator('article')).toHaveCount(0)
-  await sites.getByLabel('Filter Orange County sites by city').selectOption('Irvine')
+  await sites.getByLabel('City', { exact: true }).selectOption('Irvine')
   await expect(sites.locator('article')).toHaveCount(1)
   await expect(sites.locator('article').first()).toContainText('Irvine')
   await expect(sites.locator('article').first().getByRole('link', { name: '949-722-7118' })).toHaveAttribute('href', 'tel:+19497227118')
@@ -222,7 +222,7 @@ test('zero state-licensed ZIP matches do not hide separate Orange County sites',
   await page.getByText('County referral · Orange', { exact: true }).click()
   await expect(page.getByText(/Orange County access line/)).toBeVisible()
   await page.locator('section[aria-label="Orange County Behavioral Health Plan sites"]').getByText('Source & details', { exact: true }).click()
-  await expect(page.getByRole('link', { name: 'Orange County Behavioral Health Plan provider directory' })).toHaveAttribute('href', 'https://bhpproviderdirectory.ochca.com/')
+  await expect(page.getByRole('link', { name: 'Full OC provider directory' })).toHaveAttribute('href', 'https://bhpproviderdirectory.ochca.com/')
   await expect(page.getByText(/other licensed facility listings elsewhere in Orange County/)).toBeHidden()
 })
 

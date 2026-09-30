@@ -3,6 +3,40 @@ import AxeBuilder from '@axe-core/playwright'
 
 for (const locale of ['en', 'es']) {
   for (const width of [320, 390, 1440]) {
+    test(`${locale} OC has a three-row preview and quiet directory link at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 })
+      await page.goto(locale === 'es' ? '/es' : '/')
+      await page.locator('#california-search-value').selectOption('Orange')
+      await page.locator('form').getByRole('button', { name: /Find support options|Buscar opciones/ }).click()
+      const oc = page.locator('section[aria-label]').filter({ has: page.locator('#orange-county-city') })
+      await expect(oc.locator('article')).toHaveCount(0)
+      await oc.locator('select').selectOption('*')
+      await expect(oc.locator('article')).toHaveCount(3)
+      await expect(oc).not.toContainText(/first 20|primeros 20|98|99/)
+      await expect(oc.getByRole('link', { name: /Full OC|Directorio completo/ })).toBeVisible()
+      for (const article of await oc.locator('article').all()) {
+        await expect(article.locator('h5')).toBeVisible()
+        await expect(article.locator('a[href^="tel:"]')).toBeVisible()
+        expect(await article.locator('a[href^="tel:"]').evaluate(el => el.getBoundingClientRect().height)).toBeGreaterThanOrEqual(44)
+        expect(await article.evaluate(el => getComputedStyle(el).borderRadius)).toBe('0px')
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false)
+      console.log(JSON.stringify({ locale, width, cards: await oc.locator('article').count(), visibleTextLength: (await oc.innerText()).length }))
+      await oc.screenshot({ path: `test-results/oc-simplified-${locale}-${width}.png` })
+      const scan = await new AxeBuilder({ page }).include('section[aria-labelledby="local-support-heading"]').withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze()
+      expect(scan.violations).toEqual([])
+      await oc.locator('select').selectOption('Santa Ana')
+      await expect(oc.locator('article')).toHaveCount(3)
+      for (const article of await oc.locator('article').all()) await expect(article).toContainText('Santa Ana')
+      await oc.locator('select').selectOption('Irvine')
+      await expect(oc.locator('article')).toHaveCount(1)
+      await expect(oc).not.toContainText(/not ranked|sin clasificación/)
+    })
+  }
+}
+
+for (const locale of ['en', 'es']) {
+  for (const width of [320, 390, 1440]) {
     test(`${locale} unmatched ZIP has one next step, no county detour at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 844 })
       await page.goto(locale === 'es' ? '/es' : '/')

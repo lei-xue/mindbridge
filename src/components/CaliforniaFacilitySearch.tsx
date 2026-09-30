@@ -58,13 +58,12 @@ function FacilityCard({ facility }: { facility: Facility }) {
 function OrangeSiteCard({ site }: { site: (typeof orangeSnapshot.sites)[number] }) {
   const { s } = useLocale()
   return (
-    <article className="rounded-xl border border-sage-200 bg-white p-5 shadow-sm">
-      <h5 className="font-bold text-stone-900">{site.name}</h5>
-
-      <p className="mt-2 text-sm text-stone-700"><AddressLink address={`${site.address} · ${site.city}, CA ${site.zip}`} /></p>
-      {site.phone && <p className="mt-2 text-sm text-stone-700"><ListedPhone phone={site.phone} /></p>}
-      <details className="mt-2 text-xs text-stone-600">
-        <summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>{s.ca.providerDetails}</summary>
+    <article className="py-5">
+      <h5 className="text-base font-bold text-stone-900">{site.name}</h5>
+      {site.phone && <p className="mt-1 text-base [&_a]:inline-flex [&_a]:min-h-11 [&_a]:items-center"><ListedPhone phone={site.phone} /></p>}
+      <p className="mt-1 text-sm text-stone-600"><AddressLink address={`${site.address} · ${site.city}, CA ${site.zip}`} /></p>
+      <details className="text-xs text-stone-600">
+        <summary className={`min-h-11 cursor-pointer content-center rounded ${focusRing}`}>{s.ca.providerDetails}</summary>
         <p lang="en" className="mt-1 text-sm text-stone-700">{site.category}</p>
       </details>
     </article>
@@ -305,21 +304,22 @@ export function CaliforniaFacilitySearch() {
         {selectedCounty === "Los Angeles" && searched.field !== "county" && !laSearch && <div className="mt-4 rounded-lg border border-teal-300 bg-white p-4"><p className="text-sm text-stone-700">{s.ca.livePrompt(searched.field)}</p><button type="button" className={`${btnSecondary} mt-2`} onClick={() => runLaSearch(searched.field as SearchType, searched.value)}>{s.ca.liveSearch}</button></div>}
         {laSearch && <LaCountyDirectoryResults state={laSearch} />}
         {orangeMatches.length > 0 && (
-          <section aria-label={s.ca.orangeAria} className="mt-4 rounded-lg border border-teal-300 bg-white p-4">
-            <h5 className="font-semibold text-stone-900">{s.ca.orangeCount(orangeMatches.length, orangeCity)}</h5>
+          <section aria-label={s.ca.orangeAria} className="mt-6 bg-white">
+            <h5 className="font-semibold text-stone-900">{searched.field === "county" ? s.ca.orangeBrowse : s.ca.orangeCount(orangeMatches.length, orangeCity)}</h5>
             {searched.field === "county" && <><label htmlFor="orange-county-city" className="mt-3 block text-sm font-semibold text-stone-700">{s.ca.orangeFilter}</label>
               <select id="orange-county-city" value={browseCity} onChange={(event) => setBrowseCity(event.target.value)} className={`mt-1 min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
                 <option value="">{s.ca.orangeChooseCity}</option>
                 <option value="*">{s.ca.orangeAll}</option>
                 {[...new Set(orangeMatches.map((site) => site.city))].sort().map((city) => <option key={city} value={city}>{city}</option>)}
-              </select>{browseCity && browseCity !== "*" && <p className="mt-2 text-sm text-stone-700">{s.ca.sitesInCity(orangeMatches.filter((site) => site.city === browseCity).length, browseCity)}</p>}</>}
-            <div className="mt-3 grid gap-3 lg:grid-cols-2">{orangeMatches.filter((site) => searched.field !== "county" || (browseCity !== "" && (browseCity === "*" || site.city === browseCity))).slice(0, 20).map((site) => <OrangeSiteCard key={site.id} site={site} />)}</div>
-            {orangeMatches.filter((site) => searched.field !== "county" || (browseCity !== "" && (browseCity === "*" || site.city === browseCity))).length > 20 && <p className="mt-2 text-sm text-stone-700">{s.ca.orangeFirst20}</p>}
+              </select></>}
+            <div className="mt-2 divide-y divide-sage-100">{orangeMatches.filter((site) => searched.field !== "county" || (browseCity !== "" && (browseCity === "*" || site.city === browseCity))).slice(0, 3).map((site) => <OrangeSiteCard key={site.id} site={site} />)}</div>
+            {orangeMatches.filter((site) => searched.field !== "county" || (browseCity !== "" && (browseCity === "*" || site.city === browseCity))).length > 3 && <p className="text-xs text-stone-600">{s.ca.orangePreview}</p>}
+            <a href="https://bhpproviderdirectory.ochca.com/" target="_blank" rel="noopener noreferrer" className={`inline-flex min-h-11 items-center rounded text-sm text-teal-800 underline ${focusRing}`}>{s.ca.orangeDirectory}</a>
             <details className="mt-2 text-xs text-stone-600">
               <summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>{s.ca.sourceDetails}</summary>
               <p className="mt-2">{s.ca.orangeSourceNow(orangeSnapshot.retrievedAt)}</p>
               <p className="mt-2">{s.ca.callBefore}</p>
-              <a href="https://bhpproviderdirectory.ochca.com/" target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded font-semibold underline ${focusRing}`}>{s.ca.orangeDirectory}</a>
+
             </details>
           </section>
         )}

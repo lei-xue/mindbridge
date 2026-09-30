@@ -12,7 +12,7 @@ for (const mode of ['County', 'City', 'ZIP code']) {
     await expect(page.getByRole('button', { name: 'County', exact: true })).toHaveAttribute('aria-pressed', 'true')
     await expect(page.getByLabel('California county')).toHaveValue('Orange')
     await expect(page.locator('section[aria-label="County mental health plan"]')).toContainText('Orange County')
-    await expect(page.locator('section[aria-label="Orange County Behavioral Health Plan sites"] article')).toHaveCount(20)
+    await expect(page.locator('section[aria-label="Orange County Behavioral Health Plan sites"] article')).toHaveCount(3)
     expect(requests).toEqual([])
   })
 }
@@ -47,7 +47,7 @@ for (const county of ['Orange', 'San Diego', 'Butte']) {
     await page.goto('/')
     await page.getByLabel('California county').selectOption(county)
     await page.getByRole('button', { name: 'Find support options' }).click()
-    if (county === 'Orange') await page.getByLabel('Filter Orange County sites by city').selectOption('*')
+    if (county === 'Orange') await page.locator('#orange-county-city').selectOption('*')
     if (county === 'San Diego') await page.getByLabel('Filter San Diego adult clinics by city').selectOption('*')
     const links = page.getByRole('link', { name: /^Open in maps:/ })
     expect(await links.count()).toBeGreaterThan(0)

@@ -241,16 +241,17 @@ export const en = {
     orangeAria: "Orange County Behavioral Health Plan sites",
     orangeCount: (count: number, city: string | null) =>
       `${count} listed provider ${count === 1 ? "site" : "sites"} · ${city ? `${city} · ` : ""}Orange County`,
-    orangeFilter: "Filter Orange County sites by city",
+    orangeBrowse: "Find a clinic",
+    orangeFilter: "City",
     orangeChooseCity: "Choose a city to see sites",
-    orangeAll: "Show all sites (first 20)",
+    orangeAll: "Any city",
     sitesInCity: (count: number, city: string) => `${count} sites listed in ${city}.`,
     clinicsInCity: (count: number, city: string) => `${count} clinics listed in ${city}.`,
-    orangeFirst20: "Showing the first 20 sites. Choose a city or use the full official directory for the rest.",
+    orangePreview: "3 listings shown · not ranked",
     orangeSourceNow: (date: string) => `Orange County Medi-Cal BHP provider-site subset · Retrieved ${date}. Not a complete directory.`,
     callBefore:
       "Call before visiting to confirm services, eligibility, cost, hours, and appointments. Listings do not guarantee free care or openings.",
-    orangeDirectory: "Orange County Behavioral Health Plan provider directory",
+    orangeDirectory: "Full OC provider directory",
     sdAria: "San Diego adult behavioral health clinics",
     sdCountyHeading: (count: number) => `${count} adult clinic locations in San Diego County`,
     sdAreaHeading: (count: number, field: "city" | "zip", value: string) =>
@@ -567,17 +568,18 @@ export const es: Strings = {
     orangeAria: "Sitios del Plan de Salud Conductual del condado de Orange",
     orangeCount: (count: number, city: string | null) =>
       `${count} ${count === 1 ? "centro proveedor listado" : "centros proveedores listados"} · ${city ? `${city} · ` : ""}Condado de Orange`,
-    orangeFilter: "Filtrar los sitios del condado de Orange por ciudad",
+    orangeBrowse: "Buscar una clínica",
+    orangeFilter: "Ciudad",
     orangeChooseCity: "Elige una ciudad para ver los sitios",
-    orangeAll: "Mostrar todos los sitios (primeros 20)",
+    orangeAll: "Cualquier ciudad",
     sitesInCity: (count: number, city: string) => `${count} sitios listados en ${city}.`,
     clinicsInCity: (count: number, city: string) => `${count} clínicas listadas en ${city}.`,
-    orangeFirst20: "Se muestran los primeros 20 sitios. Elige una ciudad o usa el directorio oficial completo para el resto.",
+    orangePreview: "3 centros mostrados · sin clasificación",
     orangeSourceNow: (date: string) =>
       `Subconjunto de centros proveedores del BHP de Medi-Cal del condado de Orange · recuperado el ${date}. No es un directorio completo.`,
     callBefore:
       "Llama antes de ir para confirmar los servicios, la elegibilidad, el costo, el horario y las citas. Los listados no garantizan atención gratuita ni disponibilidad.",
-    orangeDirectory: "Directorio de proveedores del Plan de Salud Conductual del condado de Orange",
+    orangeDirectory: "Directorio completo de proveedores de OC",
     sdAria: "Clínicas de salud conductual para adultos del condado de San Diego",
     sdCountyHeading: (count: number) => `${count} ubicaciones de clínicas para adultos en el condado de San Diego`,
     sdAreaHeading: (count: number, field: "city" | "zip", value: string) =>
