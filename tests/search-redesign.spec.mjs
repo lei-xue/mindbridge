@@ -12,7 +12,7 @@ for (const mode of ['County', 'City', 'ZIP code']) {
     await expect(page.getByRole('button', { name: 'County', exact: true })).toHaveAttribute('aria-pressed', 'true')
     await expect(page.getByLabel('California county')).toHaveValue('Orange')
     await expect(page.locator('section[aria-label="County mental health plan"]')).toContainText('Orange County')
-    await expect(page.locator('section[aria-label="Orange County Behavioral Health Plan sites"] article')).toHaveCount(3)
+    await expect(page.locator('section[aria-label="Orange County Behavioral Health Plan sites"]')).toHaveCount(0)
     expect(requests).toEqual([])
   })
 }

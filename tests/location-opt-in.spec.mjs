@@ -15,12 +15,12 @@ test('location is opt-in, locally suggests county and never starts live search o
   const before = calls.length
   await page.getByRole('button', {name:'Use current location'}).click()
   await expect(page.getByLabel('California county')).toHaveValue('Butte')
-  await expect(page.getByRole('status')).toContainText('Showing Butte County options')
+  await expect(page.getByRole('status')).toContainText('Location identifies your county, not nearby clinics.')
   expect(await page.evaluate(() => window.locationCalls)).toBe(1)
   expect(calls.slice(before).every(r => !r.body && !/39\.7285|121\.8375|api\/la-county/.test(r.url))).toBe(true)
   expect(await page.evaluate(() => JSON.stringify({local:{...localStorage},session:{...sessionStorage}}))).not.toMatch(/39\.7285|121\.8375/)
   await expect(page).not.toHaveURL(/39\.7285|121\.8375|Butte/)
-  await expect(page.locator('section[aria-label="Butte adult outpatient centers"] article')).toHaveCount(4)
+  await expect(page.locator('section[aria-label="Butte adult outpatient centers"] article')).toHaveCount(0)
 })
 
 for (const scenario of ['denied', 'timeout', 'unsupported', 'outside', 'poor-accuracy', 'stale']) {
@@ -56,7 +56,7 @@ test('default directory avoids repeated crisis cards but filters retain them; Ab
   await expect(page.locator('#directory a[href="tel:988"]')).toHaveCount(0)
   await expect(page.getByRole('region',{name:'Crisis support'}).getByRole('link',{name:'Call 988',exact:true})).toBeVisible()
   await page.getByRole('searchbox',{name:'Search'}).fill('988')
-  await expect(page.locator('#directory').getByRole('link',{name:'988 Suicide & Crisis Lifeline',exact:true})).toBeVisible()
+  await expect(page.locator('#directory').getByRole('link',{name:'Details: 988 Suicide & Crisis Lifeline',exact:true})).toBeVisible()
   await page.getByRole('link',{name:'About',exact:true}).click()
   await expect(page.locator('main')).toContainText('Butte County adult outpatient-center subset')
   await expect(page.locator('main')).toContainText('Coordinates are matched')

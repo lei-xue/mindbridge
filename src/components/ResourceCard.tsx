@@ -11,7 +11,7 @@ export function ResourceCard({ resource, omitSharedContacts = false }: { resourc
   const sms = resource.text ? textToSms(resource.text) : null
   return <article className="flex flex-col gap-3 border-b border-sage-200 bg-white pb-6">
     <div className="flex items-start justify-between gap-2">
-      <h3 className="text-lg font-bold text-stone-900"><Link to={to(`/resource/${resource.id}`)} className={`rounded hover:text-teal-800 hover:underline ${focusRing}`}>{resource.name}</Link></h3>
+      <h3 className="text-lg font-bold text-stone-900">{resource.name}</h3>
       {resource.free && <span className={badgeFree}>{s.common.free}</span>}
     </div>
 
@@ -20,7 +20,7 @@ export function ResourceCard({ resource, omitSharedContacts = false }: { resourc
     <div className="mt-auto flex flex-wrap gap-2 pt-1">
       {resource.phone && !(omitSharedContacts && ['tel:988', 'tel:211'].includes(phoneToTel(resource.phone))) && <a className={btnCall} href={phoneToTel(resource.phone)}>{callLabel(locale, resource)}</a>}
       {sms && !(omitSharedContacts && smsHref(sms) === 'sms:988') && <a className={btnText} href={smsHref(sms)}>{smsLabel(locale, resource.text!)}</a>}
-      {!omitSharedContacts && <Link className={`inline-flex min-h-11 items-center rounded px-2 text-sm text-teal-800 underline ${focusRing}`} to={to(`/resource/${resource.id}`)}>{s.card.details}</Link>}
+      <Link aria-label={`${s.card.details}: ${resource.name}`} className={`inline-flex min-h-11 items-center rounded px-2 text-sm font-semibold text-teal-800 underline ${focusRing}`} to={to(`/resource/${resource.id}`)}>{s.card.details}</Link>
     </div>
 
   </article>

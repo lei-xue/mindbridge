@@ -189,7 +189,7 @@ export const en = {
     locationUnavailable: "Location is unavailable. Choose your county manually.",
     boundaryLoadFailed: "County boundary data could not load. Try again, or choose your county manually.",
     noCountySuggested: "We could not safely suggest a California county. Choose it manually.",
-    showingCounty: (county: string) => `Showing ${county} County options. You can choose a different county above.`,
+    showingCounty: () => "Location identifies your county, not nearby clinics.",
     locationDenied: "Location permission was not granted. You can choose your county manually.",
     locationTimeout: "Location timed out. Try precise location, or choose your county manually.",
     locationFailed:
@@ -516,7 +516,7 @@ export const es: Strings = {
     locationUnavailable: "La ubicación no está disponible. Elige tu condado manualmente.",
     boundaryLoadFailed: "No se pudieron cargar los límites de los condados. Inténtalo de nuevo o elige tu condado manualmente.",
     noCountySuggested: "No pudimos sugerir un condado de California de forma segura. Elígelo manualmente.",
-    showingCounty: (county: string) => `Mostrando opciones del condado de ${county}. Puedes elegir otro condado arriba.`,
+    showingCounty: () => "La ubicación identifica tu condado, no clínicas cercanas.",
     locationDenied: "No se concedió permiso de ubicación. Puedes elegir tu condado manualmente.",
     locationTimeout: "La ubicación tardó demasiado. Prueba con la ubicación precisa o elige tu condado manualmente.",
     locationFailed:

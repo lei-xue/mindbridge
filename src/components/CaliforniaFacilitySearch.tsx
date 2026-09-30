@@ -106,7 +106,8 @@ export function CaliforniaFacilitySearch() {
   const { s } = useLocale()
   const [field, setField] = useState<SearchField>("county")
   const [value, setValue] = useState("")
-  const [searched, setSearched] = useState<{ field: SearchField; value: string } | null>(null)
+  const [searched, setSearched] = useState<{ field: SearchField; value: string; source?: "location" } | null>(null)
+  const locationOnly = searched?.source === "location"
   const [error, setError] = useState("")
   const [manualCounty, setManualCounty] = useState("")
   const [browseCity, setBrowseCity] = useState("")
@@ -153,13 +154,14 @@ export function CaliforniaFacilitySearch() {
       laAbort.current?.abort()
       setLaSearch(null)
       setManualCounty("")
-      setBrowseCity("*")
-      setSearched({ field: "county", value: county })
+      setBrowseCity("")
+      setSearched({ field: "county", value: county, source: "location" })
       setError("")
       setValue(county)
       setField("county")
-      // Show local county records immediately, without calling an external API.
-      setLocationMessage(s.ca.showingCounty(county))
+      // Boundaries identify a county, not a city, ZIP, or nearby provider.
+      // Complete this action with the county contact; do not start a second search.
+      setLocationMessage(s.ca.showingCounty())
     }, (failure) => {
       if (request !== locationRequest.current) return
       setLocating(false)
@@ -204,7 +206,7 @@ export function CaliforniaFacilitySearch() {
     if (isLaZip) runLaSearch("zip", term)
   }
 
-  const rawMatches = searched ? facilitiesJson.filter((facility) => {
+  const rawMatches = searched && !locationOnly ? facilitiesJson.filter((facility) => {
     const selected = searched.field === "zip" ? facility.zip : facility[searched.field]
     const query = searched.field === "county" ? searched.value.replace(/\s+county$/i, "") : searched.value
     return selected.toLocaleLowerCase("en-US") === query.toLocaleLowerCase("en-US")
@@ -222,7 +224,7 @@ export function CaliforniaFacilitySearch() {
   const matches = rawMatches.filter((facility) => !manualCounty || facility.county === manualCounty)
   const matchedCounty = searched?.field === "zip" ? selectedCounty : undefined
 
-  const orangeMatches = searched && (
+  const orangeMatches = searched && !locationOnly && (
     (searched.field === "zip" && matchedCounty === "Orange") ||
     (searched.field === "city" && selectedCounty === "Orange") ||
     (searched.field === "county" && /^orange(?: county)?$/i.test(searched.value))
@@ -233,7 +235,7 @@ export function CaliforniaFacilitySearch() {
   }) : []
   const orangeCities = new Set(orangeMatches.map((site) => site.city))
   const orangeCity = searched?.field === "zip" && orangeCities.size === 1 ? orangeMatches[0].city : null
-  const sanDiegoMatches = searched && (
+  const sanDiegoMatches = searched && !locationOnly && (
     (searched.field === "zip" && selectedCounty === "San Diego") ||
     (searched.field === "city" && (!manualCounty || manualCounty === "San Diego")) ||
     (searched.field === "county" && /^san diego(?: county)?$/i.test(searched.value))
@@ -241,7 +243,7 @@ export function CaliforniaFacilitySearch() {
     if (searched.field === "county") return true
     return clinic[searched.field].toLocaleLowerCase("en-US") === searched.value.toLocaleLowerCase("en-US")
   }) : []
-  const hasButteClinics = searched?.field === "county" && selectedCounty === "Butte"
+  const hasButteClinics = !locationOnly && searched?.field === "county" && selectedCounty === "Butte"
   const hasExactResults = matches.length > 0 || orangeMatches.length > 0 || sanDiegoMatches.length > 0 || hasButteClinics || Boolean(laSearch?.results.length)
   const noExactResults = !hasExactResults && !laSearch?.isLoading && !laSearch?.error
 

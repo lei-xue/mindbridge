@@ -184,7 +184,7 @@ test("mobile directory has no horizontal overflow and crisis actions remain visi
 test("keyboard activation opens resource details", async ({ page }) => {
   await page.goto("/")
 
-  const resourceLink = page.getByRole("link", { name: "988 Suicide & Crisis Lifeline", exact: true })
+  const resourceLink = page.getByRole("link", { name: "Details: 988 Suicide & Crisis Lifeline", exact: true })
   await resourceLink.focus()
   await page.keyboard.press("Enter")
 
