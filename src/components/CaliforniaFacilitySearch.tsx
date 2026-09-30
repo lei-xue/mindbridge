@@ -368,7 +368,10 @@ export function CaliforniaFacilitySearch() {
           <div className="mt-3 grid gap-3 lg:grid-cols-2">{matches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div>
         </section>)}
         {selectedCounty && hasExactResults && searched.field !== "county" && <CountyPlanCard county={selectedCounty} compact />}
-        {noExactResults && searched.field !== "county" && countyCandidates.length <= 1 && <p role="status" className="mt-4 text-sm text-stone-700">{s.ca.noResultsAreaLead(searched.field)}{!selectedCounty ? s.ca.noResultsAreaTail : ""}</p>}
+        {noExactResults && searched.field !== "county" && countyCandidates.length <= 1 && <div className="mt-4">
+          <p role="status" className="text-sm text-stone-700">{s.ca.noResultsAreaLead(searched.field)}</p>
+          {!selectedCounty && <a href="tel:211" className={`inline-flex min-h-11 items-center rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>{s.home.call211}</a>}
+        </div>}
       </div>}
     </div>
   )

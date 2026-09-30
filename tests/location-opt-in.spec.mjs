@@ -52,9 +52,9 @@ for (const scenario of ['denied', 'timeout', 'unsupported', 'outside', 'poor-acc
 
 test('default directory avoids repeated crisis cards but filters retain them; About includes all new sources',async({page})=>{
   await page.goto('/')
-  await expect(page.getByText('Showing 20 of 23 resources')).toBeVisible()
-  await expect(page.locator('#directory').getByRole('link',{name:'988 Suicide & Crisis Lifeline',exact:true})).toHaveCount(0)
-  await expect(page.getByRole('link',{name:'Call 988 now'})).toBeVisible()
+  await expect(page.getByText('Showing 23 of 23 resources')).toBeVisible()
+  await expect(page.locator('#directory a[href="tel:988"]')).toHaveCount(0)
+  await expect(page.getByRole('region',{name:'Crisis support'}).getByRole('link',{name:'Call 988',exact:true})).toBeVisible()
   await page.getByRole('searchbox',{name:'Search'}).fill('988')
   await expect(page.locator('#directory').getByRole('link',{name:'988 Suicide & Crisis Lifeline',exact:true})).toBeVisible()
   await page.getByRole('link',{name:'About',exact:true}).click()

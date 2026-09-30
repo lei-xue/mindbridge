@@ -15,7 +15,9 @@ for (const width of [320, 390, 1440]) {
       expect(box.y + box.height).toBeLessThan(740)
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false)
-    await expect(page.getByRole('link', { name: 'Ayuda en español · 988' })).toHaveAttribute('lang', 'es')
+    await expect(page.getByRole('link', { name: 'Ayuda en español · 988' })).toHaveCount(0)
+    await expect(page.locator('a[href="tel:988"]')).toHaveCount(1)
+    await expect(page.locator('a[href="sms:988"]')).toHaveCount(1)
   })
 }
 
@@ -32,7 +34,7 @@ for (const scenario of ['no-js', 'script-failed', 'script-and-css-failed']) {
       expect(box.height).toBeGreaterThanOrEqual(44)
     }
     await expect(page.getByRole('heading', { name: 'Browse resources' })).toBeVisible()
-    await expect(page.locator('#directory article')).toHaveCount(20)
+    await expect(page.locator('#directory article')).toHaveCount(23)
     await expect(page.getByRole('button', { name: 'Use current location' })).toBeHidden()
     await expect(page.getByRole('searchbox', { name: 'Search' })).toBeHidden()
     await page.getByRole('link', { name: 'About', exact: true }).click()

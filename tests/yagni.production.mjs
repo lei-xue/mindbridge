@@ -2,6 +2,30 @@ import { test, expect } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
 
 for (const locale of ['en', 'es']) {
+  test(`${locale} homepage shared actions are not repeated, including filtered and empty states`, async ({ page }) => {
+    await page.goto(locale === 'es' ? '/es' : '/')
+    const assertSingleCrisis = async () => {
+      await expect(page.locator('a[href="tel:988"]')).toHaveCount(1)
+      await expect(page.locator('a[href="sms:988"]')).toHaveCount(1)
+    }
+    await assertSingleCrisis()
+    await expect(page.locator('a[href="tel:211"]')).toHaveCount(0)
+    await expect(page.locator('a[href="https://988lifeline.org/es/"]')).toHaveCount(0)
+    await expect(page.locator('a[href="#directory"], a[href="#local-support-heading"]')).toHaveCount(0)
+    await expect(page.locator('section[aria-labelledby="crisis-heading"]')).toHaveCount(0)
+    await page.getByRole('searchbox').fill('988')
+    await assertSingleCrisis()
+    await page.getByRole('searchbox').fill('')
+    await page.getByRole('button', { name: locale === 'es' ? 'Código postal' : 'ZIP code', exact: true }).click()
+    await page.locator('#california-search-value').fill('99999')
+    await page.locator('form').getByRole('button', { name: /Find support options|Buscar opciones/ }).click()
+    await expect(page.locator('a[href="tel:211"]')).toHaveCount(1)
+    await assertSingleCrisis()
+    await page.screenshot({ path: `test-results/deduplicated-home-${locale}.png`, fullPage: true })
+  })
+}
+
+for (const locale of ['en', 'es']) {
   for (const width of [320, 390, 1440]) {
     test(`${locale} OC has a three-row preview and quiet directory link at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 844 })

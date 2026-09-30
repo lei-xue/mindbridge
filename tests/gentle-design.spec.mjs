@@ -29,13 +29,13 @@ for (const width of [320, 390, 1440]) {
     await expect(sprout).toHaveAttribute('focusable', 'false')
     expect(await sprout.evaluate(el => getComputedStyle(el).animationName)).toBe('none')
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false)
-    const crisis = page.getByRole('link', { name: 'Call 988 now' })
+    const crisis = page.getByRole('region', { name: 'Crisis support' }).getByRole('link', { name: 'Call 988', exact: true })
     await expect(crisis).toHaveAttribute('href', 'tel:988')
     expect(await crisis.evaluate(el => el.getBoundingClientRect().bottom < innerHeight)).toBe(true)
     await page.getByRole('searchbox', { name: 'Search' }).fill('no matching resource')
     await expect(page.getByText('No matches this time. Try fewer filters, or browse all resources.')).toBeVisible()
     await page.getByRole('button', { name: 'Clear filters' }).last().click()
-    await expect(page.getByText('Showing 20 of 23 resources')).toBeVisible()
+    await expect(page.getByText('Showing 23 of 23 resources')).toBeVisible()
   })
 }
 
@@ -46,5 +46,5 @@ test('sparse county offers a gentle but accurate next step', async ({ page }) =>
   await expect(page.locator('section[aria-labelledby="local-support-heading"] [role="status"]')).toHaveCount(0)
   await expect(page.getByText('Medi-Cal referrals · Confirm eligibility and cost.')).toBeVisible()
   await expect(page.getByRole('link', { name: 'Call county plan' })).toBeVisible()
-  await expect(page.locator('section[aria-labelledby="local-support-heading"]').getByRole('link', { name: 'Call 211', exact: true })).toBeVisible()
+  await expect(page.locator('section[aria-labelledby="local-support-heading"]').getByRole('link', { name: 'Call 211', exact: true })).toHaveCount(0)
 })
