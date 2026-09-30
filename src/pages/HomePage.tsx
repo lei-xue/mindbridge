@@ -81,7 +81,7 @@ export function HomePage() {
 
 
       <section aria-labelledby="local-support-heading" className="border-b border-sage-200 bg-white">
-        <div className="mx-auto max-w-5xl px-4 py-8 sm:py-10">
+        <div className="mx-auto max-w-6xl px-4 py-8 sm:py-10">
           <SproutSpeech pose="hug" small>
           <h2 id="local-support-heading" tabIndex={-1} className={`scroll-mt-16 rounded text-xl font-bold text-stone-900 ${focusRing} sm:text-2xl`}>
             {s.home.localHeading}

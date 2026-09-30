@@ -297,6 +297,10 @@ export const en = {
     noResultsCounty:
       "No listings in our connected snapshots yet. That does not mean no care is available. Your county plan or local 211 can help you ask about current options.",
     noResultsAreaLead: (field: "city" | "zip") => `No listings in our directory for this ${field === "zip" ? "ZIP" : "city"}.`,
+    noResultsAreaHint: "That does not mean there is no support nearby. A County search covers a broader area, including your county's official contact.",
+    searchByCountyCta: "Search by County",
+    locationCancel: "Cancel and choose your county manually",
+    locationPendingHint: "You can choose a county manually without waiting.",
     noResultsLaPending: " (LA live directory not yet searched)",
     noResultsAreaTail:
       " Call 211 for local options.",
@@ -641,6 +645,10 @@ export const es: Strings = {
       "Todavía no hay listados en las instantáneas conectadas. Eso no significa que no haya atención disponible. El plan de tu condado o el 211 local pueden ayudarte a preguntar por las opciones actuales.",
     noResultsAreaLead: (field: "city" | "zip") =>
       `No hay listados en nuestro directorio para ${field === "zip" ? "este código postal" : "esta ciudad"}.`,
+    noResultsAreaHint: "Eso no significa que no haya apoyo cerca. Una búsqueda por condado cubre un área más amplia, incluido el contacto oficial de tu condado.",
+    searchByCountyCta: "Buscar por condado",
+    locationCancel: "Cancelar y elegir tu condado manualmente",
+    locationPendingHint: "Puedes elegir tu condado manualmente sin esperar.",
     noResultsLaPending: " (el directorio en vivo de Los Ángeles aún no se ha consultado)",
     noResultsAreaTail:
       " Llama al 211 para conocer opciones locales.",

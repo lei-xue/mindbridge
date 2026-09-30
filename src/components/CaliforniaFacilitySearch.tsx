@@ -11,6 +11,7 @@ import butte from "../data/butte-adult-clinics.json"
 import { btnCall, btnSecondary, focusRing } from "../lib/ui"
 import { AddressLink } from "./AddressLink"
 import { DirectoryTable, type TableRow } from "./DirectoryTable"
+import { GentleSprout } from "./GentleSprout"
 import { useLocale } from "../i18n/LocaleProvider"
 
 type SearchField = "county" | "city" | "zip"
@@ -39,6 +40,14 @@ export function CaliforniaFacilitySearch() {
   const [locating, setLocating] = useState(false)
   const [locationMessage, setLocationMessage] = useState("")
   const [preciseRetry, setPreciseRetry] = useState(false)
+  const countySelect = useRef<HTMLSelectElement>(null)
+  const focusCountyAfterSwitch = useRef(false)
+  useEffect(() => {
+    if (field === "county" && focusCountyAfterSwitch.current) {
+      countySelect.current?.focus()
+      focusCountyAfterSwitch.current = false
+    }
+  }, [field])
   const locationRequest = useRef(0)
   const locationTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const [laSearch, setLaSearch] = useState<LaSearchState | null>(null)
@@ -144,16 +153,31 @@ export function CaliforniaFacilitySearch() {
   }
   const noMatches = listings.length === 0 && !laSearch?.isLoading && !laSearch?.error
   const setMode = (mode: SearchField) => { cancelLocation(); laAbort.current?.abort(); setLaSearch(null); setManualCounty(""); setBrowseCity("*"); setField(mode); setValue(""); setSearched(null); setError("") }
+  const enterCounty = () => {
+    if (field === "county") {
+      cancelLocation()
+      countySelect.current?.focus()
+    } else {
+      focusCountyAfterSwitch.current = true
+      setMode("county")
+    }
+  }
   const changeCounty = (county: string) => { cancelLocation(); laAbort.current?.abort(); setLaSearch(null); setManualCounty(county); setBrowseCity("*") }
   const translatedError = laSearch ? t(laSearch.error) : ""
   return <div data-js-only className="mt-5 space-y-3">
     <div role="group" aria-label={s.ca.modesAria} className="grid grid-cols-3 gap-1 rounded-xl bg-sage-100 p-1">{(["county", "city", "zip"] as const).map(mode => <button key={mode} type="button" aria-pressed={field === mode} onClick={() => setMode(mode)} className={`min-h-11 rounded-lg px-3 text-sm font-semibold ${focusRing} ${field === mode ? "bg-white text-teal-800 shadow-sm" : "text-stone-700 hover:bg-sage-50"}`}>{mode === "zip" ? s.ca.modeZip : mode === "county" ? s.ca.modeCounty : s.ca.modeCity}</button>)}</div>
     <form onSubmit={onSubmit} className="grid gap-3">
       <div><label htmlFor="california-search-value" className="mb-1 block text-sm font-semibold text-stone-700">{field === "county" ? s.ca.countyLabel : field === "zip" ? s.ca.zipLabel : s.ca.cityLabel}</label>
-        {field === "county" ? <select id="california-search-value" value={value} onChange={event => { cancelLocation(); setValue(event.target.value) }} className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}><option value="">{s.ca.chooseCountyOption}</option>{countyAccess.countyPlans.map(p => <option key={p.name} value={p.name}>{s.ca.countyOption(p.name)}</option>)}</select> : <input id="california-search-value" type="text" inputMode={field === "zip" ? "numeric" : "text"} autoComplete="off" maxLength={field === "zip" ? 5 : 60} placeholder={field === "zip" ? s.ca.zipPlaceholder : s.ca.cityPlaceholder} value={value} onChange={event => { cancelLocation(); setValue(event.target.value) }} className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} />}
+        {field === "county" ? <select ref={countySelect} id="california-search-value" value={value} onChange={event => { cancelLocation(); setValue(event.target.value) }} className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}><option value="">{s.ca.chooseCountyOption}</option>{countyAccess.countyPlans.map(p => <option key={p.name} value={p.name}>{s.ca.countyOption(p.name)}</option>)}</select> : <input id="california-search-value" type="text" inputMode={field === "zip" ? "numeric" : "text"} autoComplete="off" maxLength={field === "zip" ? 5 : 60} placeholder={field === "zip" ? s.ca.zipPlaceholder : s.ca.cityPlaceholder} value={value} onChange={event => { cancelLocation(); setValue(event.target.value) }} className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} />}
       </div>
       <div className="grid gap-2 sm:flex sm:flex-wrap"><button type="submit" className={btnCall}>{s.ca.submit}</button><button type="button" disabled={locating} className={`min-h-11 rounded px-3 text-sm text-teal-800 underline ${focusRing}`} onClick={useCurrentLocation}>{locating ? s.ca.locating : preciseRetry ? s.ca.precise : s.ca.useLocation}</button></div>
     </form>
+    {locating && (
+      <div role="status" className="flex flex-wrap items-center gap-2">
+        <span className="text-sm text-stone-700">{s.ca.locationPendingHint}</span>
+        <button type="button" onClick={enterCounty} className={`min-h-11 rounded px-3 text-sm font-semibold text-teal-800 underline ${focusRing}`}>{s.ca.locationCancel}</button>
+      </div>
+    )}
     {locationMessage && <p role="status" className="text-sm text-stone-700">{locationMessage}</p>}
     <Link to={to("/about")} className={`inline-flex min-h-11 items-center rounded text-xs text-stone-600 underline ${focusRing}`}>{s.ca.coverage}</Link>
     {field === "zip" && countyAccess.zipCounties[value.trim() as keyof typeof countyAccess.zipCounties]?.length === 1 && countyAccess.zipCounties[value.trim() as keyof typeof countyAccess.zipCounties][0] === "Los Angeles" && <p className="text-xs text-stone-700">{s.ca.laZipNotice}</p>}
@@ -172,7 +196,16 @@ export function CaliforniaFacilitySearch() {
       {laSearch && !laSearch.isLoading && !laSearch.error && <h4 className="mt-2 text-sm font-semibold">{s.la.resultsHeading(laSearch.results.length, laSearch.searchType, laSearch.query)}</h4>}
       {rows.length > 0 && <DirectoryTable label={s.table.local} kind="provider" columns={[{ key: "name", label: s.table.name }, { key: "type", label: s.table.type }, { key: "location", label: s.table.location }, { key: "phone", label: s.table.contact }, { key: "source", label: s.table.source }]} rows={rows} />}
       {laSearch?.hasMore && <p className="mt-2 text-xs text-stone-600">{s.la.hasMore}</p>}
-      {noMatches && searched.field !== "county" && countyCandidates.length <= 1 && <div className="mt-3"><p role="status" className="text-sm">{s.ca.noResultsAreaLead(searched.field)}</p>{!selectedCounty && <a href="tel:211" className={linkClass}>{s.home.call211}</a>}</div>}
+      {noMatches && searched.field !== "county" && countyCandidates.length <= 1 && <div className="mt-3 flex items-start gap-3">
+        <GentleSprout small pose="hug" />
+        <div className="min-w-0 flex-1">
+          <p role="status" className="max-w-xl text-sm leading-relaxed text-stone-700">{s.ca.noResultsAreaLead(searched.field)} {s.ca.noResultsAreaHint}</p>
+          <div className="mt-2 flex flex-wrap items-center gap-3">
+            {field !== "county" && <button type="button" onClick={enterCounty} className={btnSecondary}>{s.ca.searchByCountyCta}</button>}
+            {!selectedCounty && <a href="tel:211" className={linkClass}>{s.home.call211}</a>}
+          </div>
+        </div>
+      </div>}
     </div>}
   </div>
 }

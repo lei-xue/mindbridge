@@ -78,4 +78,45 @@ untouched. No data, copy, dependency or config changes.
 
 ## Unresolved
 
-None known. Full regression suite and publication are left to the coordinator.
+The original card change was independently verified and published as 93e1e6c2.
+
+## Local-search alignment and gentle empty-state follow-up
+
+Production measurements at 1440px located the support-heading sprout at x224
+and the browse-heading sprout at x160. The mismatch came from max-w-5xl versus
+max-w-6xl section containers, not from the SVG pose or vertical centering.
+Both sections now use max-w-6xl; resource card widths are retained.
+
+A real-time production test with no geolocation callbacks ended loading after
+the existing 12-second deadline. The user's exact persistent-loading scenario
+has not yet been reproduced; do not claim its unknown root cause is fixed.
+The pending state now provides an immediate cancel/manual-County action.
+Cancelling preserves an already selected county, switches City/ZIP to County
+when explicitly requested, focuses the dropdown after React commits the mode
+change, clears the timer, and invalidates late location callbacks.
+
+K3 authored the first alignment, empty-state and cancel-action changes, then
+its tool-enabled task timed out before finishing tests. Session usage verified
+kimi-k3/custom; session-specific logs recorded a stale 90-second API call with
+approximately 29,639 context tokens. This was not proof the route was unavailable.
+The coordinator independently found and corrected pre-commit input focus,
+missing County-mode switching on cancellation, and duplicate loading text.
+
+Empty exact City/ZIP results now show one decorative hugging sprout and a
+single accessible message: absence in this directory does not mean absence of
+support; voluntary County search covers a broader area and official contacts.
+The County action only switches/focuses the form; it does not infer a county,
+auto-submit, send a live LA request, or append unrelated county facilities.
+Known-county referral rows and the existing unknown-county 211 action remain.
+The hint is excluded during live-search loading/error and ambiguous-county
+selection. English and Spanish copies are present.
+
+New shared development/production tests cover aligned heading/sprout anchors
+and vertical centers at 320/390/768/1024/1440 in both locales, unknown and mapped
+ZIPs with no exact facility records, optional County navigation/focus, and
+immediate cancellation from County/City/ZIP with ignored late callbacks.
+The initial 18-test run exposed eight failures in the unverified first draft;
+the targeted regression and existing watchdog tests passed after corrections.
+Independent full validation: lint and production build pass; 27 unit tests,
+95 development-browser tests and 86 built-artifact tests pass. Screenshots and
+live-artifact checks remain a separate publication verification step.
