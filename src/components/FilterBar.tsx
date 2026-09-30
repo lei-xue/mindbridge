@@ -6,6 +6,7 @@ import {
   type Filters,
 } from "../lib/directory"
 import { btnSecondary, focusRing } from "../lib/ui"
+import { useLocale } from "../i18n/LocaleProvider"
 
 const controlClass = `min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 py-2.5 text-base text-stone-800 ${focusRing}`
 
@@ -16,6 +17,7 @@ type Props = {
 }
 
 export function FilterBar({ filters, onChange, onClear }: Props) {
+  const { s, t } = useLocale()
   const hasFilters =
     filters.q.trim() !== "" ||
     filters.audience !== "" ||
@@ -28,12 +30,12 @@ export function FilterBar({ filters, onChange, onClear }: Props) {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <div className="sm:col-span-2 lg:col-span-1">
           <label htmlFor="filter-q" className="mb-1 block text-sm font-semibold text-stone-700">
-            Search
+            {s.filters.search}
           </label>
           <input
             id="filter-q"
             type="search"
-            placeholder="Name or description…"
+            placeholder={s.filters.searchPlaceholder}
             className={controlClass}
             value={filters.q}
             onChange={(e) => onChange({ q: e.target.value })}
@@ -41,7 +43,7 @@ export function FilterBar({ filters, onChange, onClear }: Props) {
         </div>
         <div>
           <label htmlFor="filter-audience" className="mb-1 block text-sm font-semibold text-stone-700">
-            Audience
+            {s.filters.audience}
           </label>
           <select
             id="filter-audience"
@@ -49,17 +51,17 @@ export function FilterBar({ filters, onChange, onClear }: Props) {
             value={filters.audience}
             onChange={(e) => onChange({ audience: e.target.value })}
           >
-            <option value="">All audiences</option>
+            <option value="">{s.filters.allAudiences}</option>
             {AUDIENCE_OPTIONS.map((a) => (
               <option key={a} value={a}>
-                {a}
+                {t(a)}
               </option>
             ))}
           </select>
         </div>
         <div>
           <label htmlFor="filter-issue" className="mb-1 block text-sm font-semibold text-stone-700">
-            Issue
+            {s.filters.issue}
           </label>
           <select
             id="filter-issue"
@@ -67,17 +69,17 @@ export function FilterBar({ filters, onChange, onClear }: Props) {
             value={filters.issue}
             onChange={(e) => onChange({ issue: e.target.value })}
           >
-            <option value="">All issues</option>
+            <option value="">{s.filters.allIssues}</option>
             {ISSUE_OPTIONS.map((issue) => (
               <option key={issue} value={issue}>
-                {issue}
+                {t(issue)}
               </option>
             ))}
           </select>
         </div>
         <div>
           <label htmlFor="filter-category" className="mb-1 block text-sm font-semibold text-stone-700">
-            Category
+            {s.filters.category}
           </label>
           <select
             id="filter-category"
@@ -85,17 +87,17 @@ export function FilterBar({ filters, onChange, onClear }: Props) {
             value={filters.category}
             onChange={(e) => onChange({ category: e.target.value })}
           >
-            <option value="">All categories</option>
+            <option value="">{s.filters.allCategories}</option>
             {CATEGORY_OPTIONS.map((c) => (
               <option key={c} value={c}>
-                {c}
+                {t(c)}
               </option>
             ))}
           </select>
         </div>
         <div>
           <label htmlFor="filter-region" className="mb-1 block text-sm font-semibold text-stone-700">
-            Region
+            {s.filters.region}
           </label>
           <select
             id="filter-region"
@@ -103,10 +105,10 @@ export function FilterBar({ filters, onChange, onClear }: Props) {
             value={filters.region}
             onChange={(e) => onChange({ region: e.target.value })}
           >
-            <option value="">All regions</option>
+            <option value="">{s.filters.allRegions}</option>
             {REGION_OPTIONS.map((r) => (
               <option key={r} value={r}>
-                {r}
+                {t(r)}
               </option>
             ))}
           </select>
@@ -115,7 +117,7 @@ export function FilterBar({ filters, onChange, onClear }: Props) {
       {hasFilters && (
         <div className="mt-4">
           <button type="button" onClick={onClear} className={btnSecondary}>
-            Clear filters
+            {s.filters.clear}
           </button>
         </div>
       )}

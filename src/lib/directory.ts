@@ -1,5 +1,7 @@
 import resourcesJson from "../data/resources.json"
 import type { Resource } from "../types"
+import type { Locale } from "./localePath"
+import { resourceSearchText } from "../i18n/translate"
 
 export const RESOURCES: Resource[] = resourcesJson
 
@@ -32,7 +34,7 @@ export function getResourcesByIds(ids: string[]): Resource[] {
     .filter((r): r is Resource => r !== undefined)
 }
 
-export function filterResources(filters: Filters): Resource[] {
+export function filterResources(filters: Filters, locale: Locale = "en"): Resource[] {
   const q = filters.q.trim().toLowerCase()
   return RESOURCES.filter((r) => {
     if (filters.audience && !r.audience.includes(filters.audience)) return false
@@ -41,7 +43,7 @@ export function filterResources(filters: Filters): Resource[] {
     }
     if (filters.category && r.category !== filters.category) return false
     if (filters.region && r.region !== filters.region) return false
-    if (q && !`${r.name} ${r.description}`.toLowerCase().includes(q)) return false
+    if (q && !resourceSearchText(locale, r).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(q.normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) return false
     return true
   })
 }

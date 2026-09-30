@@ -1,0 +1,95 @@
+{
+  "988-lifeline": {
+    "description": "Apoyo gratuito y confidencial para personas en crisis, además de recursos de prevención y de crisis. Llama o envía un mensaje al 988, o chatea en línea.",
+    "hours": "24/7"
+  },
+  "crisis-text-line": {
+    "description": "Apoyo gratuito, 24/7, por mensaje de texto con un consejero en crisis capacitado y en tiempo real.",
+    "hours": "24/7"
+  },
+  "samhsa-helpline": {
+    "description": "Servicio confidencial y gratuito de información y derivación a tratamiento para trastornos de salud mental y de consumo de sustancias. Inglés y español.",
+    "hours": "24/7"
+  },
+  "veterans-crisis-line": {
+    "description": "Apoyo confidencial para veteranos, miembros del servicio y sus familias; no se necesita estar inscrito en el VA.",
+    "hours": "24/7",
+    "phoneLabel": "Llamar al 988 y pulsar 1"
+  },
+  "trevor-project": {
+    "description": "Apoyo en crisis para personas jóvenes LGBTQ menores de 25 años, por teléfono, mensaje de texto o chat.",
+    "hours": "24/7"
+  },
+  "nami-helpline": {
+    "description": "Información, derivaciones a recursos y apoyo para personas que viven con condiciones de salud mental y para sus familias.",
+    "hours": "Lun–Vie 10:00–22:00 ET"
+  },
+  "disaster-distress": {
+    "description": "Orientación en crisis para personas que sienten malestar emocional relacionado con desastres naturales o causados por el ser humano.",
+    "hours": "24/7"
+  },
+  "dv-hotline": {
+    "description": "Apoyo confidencial para cualquier persona afectada por violencia doméstica, incluida la planificación de seguridad.",
+    "hours": "24/7"
+  },
+  "rainn": {
+    "description": "Apoyo para personas sobrevivientes de agresión sexual, con chat en línea y derivaciones a servicios locales.",
+    "hours": "24/7"
+  },
+  "childhelp": {
+    "description": "Apoyo en crisis y recursos sobre abuso infantil, para niños y niñas, madres y padres, y adultos preocupados.",
+    "hours": "24/7"
+  },
+  "trans-lifeline": {
+    "description": "Línea de apoyo entre pares dirigida por y para personas trans.",
+    "hours": "Consulta el sitio web para ver el horario actual"
+  },
+  "lgbt-national-hotline": {
+    "description": "Apoyo confidencial entre pares y recursos locales para personas LGBTQ de todas las edades que llaman.",
+    "hours": "Lun–Vie 16:00–24:00 ET, Sáb 12:00–17:00 ET"
+  },
+  "maternal-mh-hotline": {
+    "description": "Apoyo gratuito y confidencial para personas embarazadas y en posparto y sus familias. Inglés y español, con intérpretes disponibles.",
+    "hours": "24/7"
+  },
+  "psi-helpline": {
+    "description": "Información, apoyo y derivaciones a proveedores locales de salud mental perinatal.",
+    "hours": "Deja un mensaje; te devolvemos la llamada o el mensaje en unas horas"
+  },
+  "stronghearts": {
+    "description": "Apoyo culturalmente adecuado para personas sobrevivientes de violencia doméstica y de pareja de comunidades nativas americanas y nativas de Alaska.",
+    "hours": "24/7"
+  },
+  "211": {
+    "description": "Conecta a quien llama con servicios comunitarios locales: vivienda, alimentos, atención de salud mental y más.",
+    "hours": "24/7 en la mayoría de las zonas"
+  },
+  "findahelpline": {
+    "description": "Directorio de líneas de ayuda verificadas en más de 130 países, con filtros por tema y ubicación.",
+    "hours": "Directorio en línea"
+  },
+  "calhope": {
+    "description": "Línea de apoyo emocional de California: consejeros entre pares que escuchan sin juzgar, antes de que la situación llegue a una crisis.",
+    "hours": "Lun–Vie 7:00–23:00 PT, Sáb–Dom 11:00–19:00 PT"
+  },
+  "ca-peer-warm-line": {
+    "description": "Apoyo emocional no urgente, atendido por personas con experiencia vivida en salud mental, para cualquier persona en California.",
+    "hours": "24/7"
+  },
+  "teen-line": {
+    "description": "Línea de crisis de adolescentes para adolescentes con base en Los Ángeles: jóvenes capacitados que escuchan, supervisados por profesionales de salud mental.",
+    "hours": "Todos los días 18:00–22:00 PT"
+  },
+  "friendship-line": {
+    "description": "Línea de crisis acreditada y línea de apoyo emocional, 24/7, para adultos de 60 años o más y adultos con discapacidades; apoyo emocional y llamadas de seguimiento del bienestar.",
+    "hours": "24/7"
+  },
+  "la-county-access": {
+    "description": "Línea de acceso 24/7 del Departamento de Salud Mental del condado de Los Ángeles: servicios de crisis, derivaciones y programas de salud mental del condado.",
+    "hours": "24/7"
+  },
+  "ca-youth-crisis-line": {
+    "description": "Línea de crisis 24/7 para personas jóvenes de California de 12 a 24 años y sus familias: orientación, recursos y derivaciones.",
+    "hours": "24/7"
+  }
+}

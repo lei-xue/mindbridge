@@ -9,6 +9,7 @@ import sanDiegoSnapshot from "../data/san-diego-adult-clinics.json"
 import butteSnapshot from "../data/butte-adult-clinics.json"
 import { btnCall, btnSecondary, focusRing } from "../lib/ui"
 import { AddressLink } from "./AddressLink"
+import { useLocale } from "../i18n/LocaleProvider"
 
 const sanDiegoDirectoryUrl = "https://www.optumsandiego.com/content/SanDiego/sandiego/en/community-resources/providerdirectory1.html"
 
@@ -35,6 +36,7 @@ const sources: Record<Facility["source"], { name: string; url: string; date: str
 }
 
 function FacilityCard({ facility }: { facility: Facility }) {
+  const { s } = useLocale()
   const source = sources[facility.source]
   return (
     <article className="rounded-xl border border-sage-200 bg-white p-5 shadow-sm">
@@ -45,15 +47,16 @@ function FacilityCard({ facility }: { facility: Facility }) {
       </p>
       {facility.phone && <p className="mt-2 text-sm text-stone-700"><ListedPhone phone={facility.phone} /></p>}
       <details className="mt-2 text-xs text-stone-600">
-        <summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>Source &amp; details</summary>
-        <p className="mt-1 text-sm text-stone-700">{facility.category}</p>
-        <p className="mt-2">Source: <a href={source.url} target="_blank" rel="noopener noreferrer" className={`rounded underline ${focusRing}`}>{source.name}</a> (snapshot {source.date}).</p>
+        <summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>{s.ca.sourceDetails}</summary>
+        <p lang="en" className="mt-1 text-sm text-stone-700">{facility.category}</p>
+        <p className="mt-2">{s.ca.sourcePrefix}<a lang="en" href={source.url} target="_blank" rel="noopener noreferrer" className={`rounded underline ${focusRing}`}>{source.name}</a> {s.ca.snapshot(source.date)}.</p>
       </details>
     </article>
   )
 }
 
 function OrangeSiteCard({ site }: { site: (typeof orangeSnapshot.sites)[number] }) {
+  const { s } = useLocale()
   return (
     <article className="rounded-xl border border-sage-200 bg-white p-5 shadow-sm">
       <h5 className="font-bold text-stone-900">{site.name}</h5>
@@ -61,8 +64,8 @@ function OrangeSiteCard({ site }: { site: (typeof orangeSnapshot.sites)[number] 
       <p className="mt-2 text-sm text-stone-700"><AddressLink address={`${site.address} · ${site.city}, CA ${site.zip}`} /></p>
       {site.phone && <p className="mt-2 text-sm text-stone-700"><ListedPhone phone={site.phone} /></p>}
       <details className="mt-2 text-xs text-stone-600">
-        <summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>Provider details</summary>
-        <p className="mt-1 text-sm text-stone-700">{site.category}</p>
+        <summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>{s.ca.providerDetails}</summary>
+        <p lang="en" className="mt-1 text-sm text-stone-700">{site.category}</p>
       </details>
     </article>
   )
@@ -77,25 +80,27 @@ function SanDiegoClinicCard({ clinic }: { clinic: (typeof sanDiegoSnapshot.clini
 }
 
 function CountyPlanCard({ county, compact = false }: { county: string; compact?: boolean }) {
+  const { s } = useLocale()
   const plan = countyAccess.countyPlans.find((entry) => entry.name === county)
   if (!plan) return null
   const website = countySites.websites.find((entry) => entry.name === county)?.url
   const dial = plan.phone.match(/\(?\d{3}\)?[ .-]*\d{3}[ .-]*\d{4}/)?.[0].replace(/\D/g, "")
-  const content = <section aria-label="County mental health plan" className={`mt-4 rounded-lg border border-teal-300 bg-white ${compact ? "p-3" : "p-4"}`}>
-    <h5 className="font-semibold text-stone-900">{compact ? `${county} County access line` : `${county} County Mental Health Plan`}</h5>
-    {!compact && <p className="mt-1 text-sm text-stone-700">Official Medi-Cal specialty mental-health contact. Ask about current providers and eligibility; this is not a clinic or a promise of free care.</p>}
-    <p className="mt-2 text-sm text-stone-700">{compact ? "Medi-Cal specialty mental-health plan (not another local clinic): " : "Listed access phone: "}{dial ? <a href={`tel:${dial}`} aria-label="Call county plan" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>{plan.phone}</a> : plan.phone}</p>
-    {website && <p className="mt-2 text-sm text-stone-700"><a href={website} target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>Visit {county} County plan website</a> <span className="text-xs">(linked by DHCS; not necessarily a provider directory)</span></p>}
-    {county === "Los Angeles" && <p className="mt-2 text-sm text-stone-700">Browse the <a href="https://dmh.lacounty.gov/pd/" target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>official LA County provider directory</a> without entering a ZIP here.</p>}
-    <a href={countyAccess.source} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>DHCS county mental health plans</a>
+  const content = <section aria-label={s.ca.planAria} className={`mt-4 rounded-lg border border-teal-300 bg-white ${compact ? "p-3" : "p-4"}`}>
+    <h5 className="font-semibold text-stone-900">{compact ? s.ca.planAccessLine(county) : s.ca.planName(county)}</h5>
+    {!compact && <p className="mt-1 text-sm text-stone-700">{s.ca.planBody}</p>}
+    <p className="mt-2 text-sm text-stone-700">{compact ? s.ca.planCompactLead : s.ca.planPhoneLead}{dial ? <a href={`tel:${dial}`} aria-label={s.ca.planCallAria} className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>{plan.phone}</a> : plan.phone}</p>
+    {website && <p className="mt-2 text-sm text-stone-700"><a href={website} target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>{s.ca.planVisit(county)}</a> <span className="text-xs">{s.ca.planVisitNote}</span></p>}
+    {county === "Los Angeles" && <p className="mt-2 text-sm text-stone-700">{s.ca.planLaLead}<a href="https://dmh.lacounty.gov/pd/" target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>{s.ca.planLaLink}</a>{s.ca.planLaTail}</p>}
+    <a href={countyAccess.source} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>{s.ca.planSource}</a>
   </section>
   return compact ? <details key={county} className="mt-3 text-sm text-stone-700">
-    <summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>County referral · {county}</summary>
+    <summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>{s.ca.referral(county)}</summary>
     {content}
   </details> : content
 }
 
 export function CaliforniaFacilitySearch() {
+  const { s } = useLocale()
   const [field, setField] = useState<SearchField>("county")
   const [value, setValue] = useState("")
   const [searched, setSearched] = useState<{ field: SearchField; value: string } | null>(null)
@@ -117,7 +122,7 @@ export function CaliforniaFacilitySearch() {
   }
   const useCurrentLocation = () => {
     if (!navigator.geolocation) {
-      setLocationMessage("Location is unavailable. Choose your county manually.")
+      setLocationMessage(s.ca.locationUnavailable)
       return
     }
     const request = ++locationRequest.current
@@ -133,13 +138,13 @@ export function CaliforniaFacilitySearch() {
       } catch {
         if (request !== locationRequest.current) return
         setLocating(false)
-        setLocationMessage("County boundary data could not load. Try again, or choose your county manually.")
+        setLocationMessage(s.ca.boundaryLoadFailed)
         return
       }
       setLocating(false)
       setPreciseRetry(false)
       if (!county) {
-        setLocationMessage("We could not safely suggest a California county. Choose it manually.")
+        setLocationMessage(s.ca.noCountySuggested)
         return
       }
       laAbort.current?.abort()
@@ -151,16 +156,16 @@ export function CaliforniaFacilitySearch() {
       setValue(county)
       setField("county")
       // Show local county records immediately, without calling an external API.
-      setLocationMessage(`Showing ${county} County options. You can choose a different county above.`)
+      setLocationMessage(s.ca.showingCounty(county))
     }, (failure) => {
       if (request !== locationRequest.current) return
       setLocating(false)
       setPreciseRetry(failure.code === 2 || failure.code === 3)
       setLocationMessage(failure.code === 1
-        ? "Location permission was not granted. You can choose your county manually."
+        ? s.ca.locationDenied
         : failure.code === 3
-          ? "Location timed out. Try precise location, or choose your county manually."
-          : "Your device could not determine a location. Check device Location Services, try precise location, or choose your county manually.")
+          ? s.ca.locationTimeout
+          : s.ca.locationFailed)
     }, { enableHighAccuracy: preciseRetry, timeout: 20000, maximumAge: 60000 })
   }
   const runLaSearch = (searchType: SearchType, term: string) => {
@@ -184,7 +189,7 @@ export function CaliforniaFacilitySearch() {
     setBrowseCity("")
     const term = value.trim().replace(/\s+/g, " ")
     if (field === "county" ? !countyAccess.countyPlans.some((plan) => plan.name === term) : field === "zip" ? !/^\d{5}$/.test(term) : !/^[\p{L}\p{M}][\p{L}\p{M} .'-]{1,59}$/u.test(term)) {
-      setError(field === "county" ? "Choose a California county." : field === "zip" ? "Enter a 5-digit California ZIP code." : "Enter a California city name.")
+      setError(field === "county" ? s.ca.errorCounty : field === "zip" ? s.ca.errorZip : s.ca.errorCity)
       setSearched(null)
       return
     }
@@ -254,150 +259,150 @@ export function CaliforniaFacilitySearch() {
 
   return (
     <div data-js-only className="mt-5 rounded-xl border border-sage-200 bg-sage-50 p-4 sm:p-5">
-      <div role="group" aria-label="Search by" className="grid grid-cols-3 gap-1 rounded-xl bg-sage-100 p-1">
-        {(["county", "city", "zip"] as const).map((mode) => <button key={mode} type="button" aria-pressed={field === mode} onClick={() => { cancelLocation(); laAbort.current?.abort(); setLaSearch(null); setManualCounty(""); setBrowseCity(""); setField(mode); setValue(""); setSearched(null); setError("") }} className={`min-h-11 rounded-lg px-3 text-sm font-semibold ${focusRing} ${field === mode ? "bg-white text-teal-800 shadow-sm" : "text-stone-700 hover:bg-sage-50"}`}>{mode === "zip" ? "ZIP code" : mode === "county" ? "County" : "City"}</button>)}
+      <div role="group" aria-label={s.ca.modesAria} className="grid grid-cols-3 gap-1 rounded-xl bg-sage-100 p-1">
+        {(["county", "city", "zip"] as const).map((mode) => <button key={mode} type="button" aria-pressed={field === mode} onClick={() => { cancelLocation(); laAbort.current?.abort(); setLaSearch(null); setManualCounty(""); setBrowseCity(""); setField(mode); setValue(""); setSearched(null); setError("") }} className={`min-h-11 rounded-lg px-3 text-sm font-semibold ${focusRing} ${field === mode ? "bg-white text-teal-800 shadow-sm" : "text-stone-700 hover:bg-sage-50"}`}>{mode === "zip" ? s.ca.modeZip : mode === "county" ? s.ca.modeCounty : s.ca.modeCity}</button>)}
       </div>
       <form onSubmit={onSubmit} className="mt-4 grid gap-3">
         <div>
           {field === "county" ? <>
-            <label htmlFor="california-search-value" className="mb-1 block text-sm font-semibold text-stone-700">California county</label>
+            <label htmlFor="california-search-value" className="mb-1 block text-sm font-semibold text-stone-700">{s.ca.countyLabel}</label>
             <select id="california-search-value" className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} value={value} onChange={(event) => { cancelLocation(); setValue(event.target.value) }}>
-              <option value="">Choose a county</option>
-              {countyAccess.countyPlans.map((plan) => <option key={plan.name} value={plan.name}>{plan.name} County</option>)}
+              <option value="">{s.ca.chooseCountyOption}</option>
+              {countyAccess.countyPlans.map((plan) => <option key={plan.name} value={plan.name}>{s.ca.countyOption(plan.name)}</option>)}
             </select>
           </> : <>
-            <label htmlFor="california-search-value" className="mb-1 block text-sm font-semibold text-stone-700">{field === "zip" ? "California ZIP code" : "California city"}</label>
-            <input id="california-search-value" type="text" inputMode={field === "zip" ? "numeric" : "text"} autoComplete="off" maxLength={field === "zip" ? 5 : 60} placeholder={field === "zip" ? "e.g. 92868" : "e.g. Santa Ana"} className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} value={value} onChange={(event) => { cancelLocation(); setValue(event.target.value) }} />
+            <label htmlFor="california-search-value" className="mb-1 block text-sm font-semibold text-stone-700">{field === "zip" ? s.ca.zipLabel : s.ca.cityLabel}</label>
+            <input id="california-search-value" type="text" inputMode={field === "zip" ? "numeric" : "text"} autoComplete="off" maxLength={field === "zip" ? 5 : 60} placeholder={field === "zip" ? s.ca.zipPlaceholder : s.ca.cityPlaceholder} className={`min-h-11 w-full rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`} value={value} onChange={(event) => { cancelLocation(); setValue(event.target.value) }} />
           </>}
         </div>
         <div className="grid gap-2 sm:flex sm:flex-wrap">
-          <button type="submit" className={btnCall}>Find support options</button>
-          <button type="button" disabled={locating} className={btnSecondary} onClick={useCurrentLocation}>{locating ? "Finding your county…" : preciseRetry ? "Try precise location" : "Use current location"}</button>
+          <button type="submit" className={btnCall}>{s.ca.submit}</button>
+          <button type="button" disabled={locating} className={btnSecondary} onClick={useCurrentLocation}>{locating ? s.ca.locating : preciseRetry ? s.ca.precise : s.ca.useLocation}</button>
         </div>
       </form>
       {locationMessage && <p role="status" className="mt-2 text-sm text-stone-700">{locationMessage}</p>}
 
-      <details className="mt-3 text-xs text-stone-600"><summary className="cursor-pointer font-semibold">Search coverage and privacy</summary><p className="mt-2">Local snapshots are incomplete; ZIP-to-county matches are approximate. Device coordinates stay in your browser and are not saved; its location provider has its own policies. Submitting a ZIP mapped only to LA sends the ZIP through Cloudflare to LA County DMH. Other live LA searches require a separate click. LA County may log IP/browser details. Map links open Google Maps with the public address only. Search terms are not added to the page URL. More details are in About.</p></details>
-      {field === "zip" && countyAccess.zipCounties[value.trim() as keyof typeof countyAccess.zipCounties]?.length === 1 && countyAccess.zipCounties[value.trim() as keyof typeof countyAccess.zipCounties][0] === "Los Angeles" && <p className="mt-2 text-xs text-stone-700">Search sends this ZIP via Cloudflare to LA County DMH, which may log IP/browser details.</p>}
+      <details className="mt-3 text-xs text-stone-600"><summary className="cursor-pointer font-semibold">{s.ca.coverage}</summary><p className="mt-2">{s.ca.coverageBody}</p></details>
+      {field === "zip" && countyAccess.zipCounties[value.trim() as keyof typeof countyAccess.zipCounties]?.length === 1 && countyAccess.zipCounties[value.trim() as keyof typeof countyAccess.zipCounties][0] === "Los Angeles" && <p className="mt-2 text-xs text-stone-700">{s.ca.laZipNotice}</p>}
       {error && <p role="alert" className="mt-3 text-sm font-semibold text-red-800">{error}</p>}
       {searched && <div className="mt-5" aria-live="polite">
-        <h4 className="font-semibold text-stone-900">{searched.field === "zip" ? "ZIP " : ""}{searched.value}{searched.field === "county" ? " County" : ""}</h4>
-        <p className="mt-2 text-xs text-stone-600">Call to confirm cost, eligibility, and availability.</p>
-        {searched.field === "zip" && countyCandidates.length === 1 && <p className="mt-2 text-sm text-stone-700">{orangeCity ? <>Listed sites: <strong>{orangeCity} · Orange County</strong>.</> : <>Suggested county: <strong>{countyCandidates[0]}</strong>.</>} The ZIP-to-county match is approximate; confirm your location.</p>}
-        {searched.field === "zip" && countyCandidates.length > 1 && <p className="mt-2 text-sm text-stone-700">This ZIP may cross county boundaries. Choose your county below; the ZIP alone cannot identify your side of the boundary.</p>}
-        {searched.field === "zip" && countyCandidates.length === 0 && <p className="mt-2 text-sm text-stone-700">We cannot confirm this ZIP belongs to California from the available ZIP-to-county crosswalk (newer and PO Box ZIPs may be missing). If you know your California county, choose it below for its official contact; otherwise verify the ZIP and county first.</p>}
-        {countyCandidates.length === 1 && searched.field !== "county" && <details className="mt-2 text-sm text-stone-700"><summary className="cursor-pointer font-semibold text-teal-800">Change county</summary><p className="mt-1">The suggestion may not match your address. Choosing another county changes the county contact and hides location listings from the suggested county; it does not search a new provider directory.</p>
-          <div className="mt-2"><label htmlFor="choose-county" className="mb-1 block font-semibold">Choose your county</label>
+        <h4 className="font-semibold text-stone-900">{s.ca.resultHeading(searched.field, searched.value)}</h4>
+        <p className="mt-2 text-xs text-stone-600">{s.ca.confirmCall}</p>
+        {searched.field === "zip" && countyCandidates.length === 1 && <p className="mt-2 text-sm text-stone-700">{orangeCity ? <>{s.ca.listedSites}<strong>{orangeCity} · {s.ca.countyName("Orange")}</strong>.</> : <>{s.ca.suggestedCounty}<strong>{countyCandidates[0]}</strong>.</>} {s.ca.zipApprox}</p>}
+        {searched.field === "zip" && countyCandidates.length > 1 && <p className="mt-2 text-sm text-stone-700">{s.ca.zipCrosses}</p>}
+        {searched.field === "zip" && countyCandidates.length === 0 && <p className="mt-2 text-sm text-stone-700">{s.ca.zipUnknown}</p>}
+        {countyCandidates.length === 1 && searched.field !== "county" && <details className="mt-2 text-sm text-stone-700"><summary className="cursor-pointer font-semibold text-teal-800">{s.ca.changeCounty}</summary><p className="mt-1">{s.ca.changeCountyBody}</p>
+          <div className="mt-2"><label htmlFor="choose-county" className="mb-1 block font-semibold">{s.ca.chooseYourCounty}</label>
           <select id="choose-county" value={selectedCounty} onChange={(event) => onCountyChange(event.target.value)} className={`min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
-            {countyAccess.countyPlans.map((plan) => <option key={plan.name} value={plan.name}>{plan.name} County</option>)}
+            {countyAccess.countyPlans.map((plan) => <option key={plan.name} value={plan.name}>{s.ca.countyOption(plan.name)}</option>)}
           </select></div></details>}
         {countyCandidates.length !== 1 && <div className="mt-3">
-          <label htmlFor="choose-county" className="mb-1 block text-sm font-semibold text-stone-700">Choose your county</label>
+          <label htmlFor="choose-county" className="mb-1 block text-sm font-semibold text-stone-700">{s.ca.chooseYourCounty}</label>
           <select id="choose-county" value={manualCounty} onChange={(event) => onCountyChange(event.target.value)} className={`min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
-            <option value="">Select a county</option>
-            {countyAccess.countyPlans.map((plan) => plan.name).map((county) => <option key={county} value={county}>{county} County</option>)}
+            <option value="">{s.ca.selectCountyOption}</option>
+            {countyAccess.countyPlans.map((plan) => plan.name).map((county) => <option key={county} value={county}>{s.ca.countyOption(county)}</option>)}
           </select>
         </div>}
 
         {selectedCounty && (searched.field === "county" || !hasExactResults) && <CountyPlanCard county={selectedCounty} />}
-        {selectedCounty === "Los Angeles" && searched.field !== "county" && !laSearch && <div className="mt-4 rounded-lg border border-teal-300 bg-white p-4"><p className="text-sm text-stone-700">Want to search LA County's live provider directory for this {searched.field}? Clicking below sends the entered location through Cloudflare to LA County; they may log your IP/browser details.</p><button type="button" className={`${btnSecondary} mt-2`} onClick={() => runLaSearch(searched.field as SearchType, searched.value)}>Search live LA County directory</button></div>}
+        {selectedCounty === "Los Angeles" && searched.field !== "county" && !laSearch && <div className="mt-4 rounded-lg border border-teal-300 bg-white p-4"><p className="text-sm text-stone-700">{s.ca.livePrompt(searched.field)}</p><button type="button" className={`${btnSecondary} mt-2`} onClick={() => runLaSearch(searched.field as SearchType, searched.value)}>{s.ca.liveSearch}</button></div>}
         {laSearch && <LaCountyDirectoryResults state={laSearch} />}
         {orangeMatches.length > 0 && (
-          <section aria-label="Orange County Behavioral Health Plan sites" className="mt-4 rounded-lg border border-teal-300 bg-white p-4">
-            <h5 className="font-semibold text-stone-900">{orangeMatches.length} listed provider {orangeMatches.length === 1 ? "site" : "sites"} · {orangeCity ? `${orangeCity} · ` : ""}Orange County</h5>
-            {searched.field === "county" && <><label htmlFor="orange-county-city" className="mt-3 block text-sm font-semibold text-stone-700">Filter Orange County sites by city</label>
+          <section aria-label={s.ca.orangeAria} className="mt-4 rounded-lg border border-teal-300 bg-white p-4">
+            <h5 className="font-semibold text-stone-900">{s.ca.orangeCount(orangeMatches.length, orangeCity)}</h5>
+            {searched.field === "county" && <><label htmlFor="orange-county-city" className="mt-3 block text-sm font-semibold text-stone-700">{s.ca.orangeFilter}</label>
               <select id="orange-county-city" value={browseCity} onChange={(event) => setBrowseCity(event.target.value)} className={`mt-1 min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
-                <option value="">Choose a city to see sites</option>
-                <option value="*">Show all sites (first 20)</option>
+                <option value="">{s.ca.orangeChooseCity}</option>
+                <option value="*">{s.ca.orangeAll}</option>
                 {[...new Set(orangeMatches.map((site) => site.city))].sort().map((city) => <option key={city} value={city}>{city}</option>)}
-              </select>{browseCity && browseCity !== "*" && <p className="mt-2 text-sm text-stone-700">{orangeMatches.filter((site) => site.city === browseCity).length} sites listed in {browseCity}.</p>}</>}
+              </select>{browseCity && browseCity !== "*" && <p className="mt-2 text-sm text-stone-700">{s.ca.sitesInCity(orangeMatches.filter((site) => site.city === browseCity).length, browseCity)}</p>}</>}
             <div className="mt-3 grid gap-3 lg:grid-cols-2">{orangeMatches.filter((site) => searched.field !== "county" || (browseCity !== "" && (browseCity === "*" || site.city === browseCity))).slice(0, 20).map((site) => <OrangeSiteCard key={site.id} site={site} />)}</div>
-            {orangeMatches.filter((site) => searched.field !== "county" || (browseCity !== "" && (browseCity === "*" || site.city === browseCity))).length > 20 && <p className="mt-2 text-sm text-stone-700">Showing the first 20 sites. Choose a city or use the full official directory for the rest.</p>}
+            {orangeMatches.filter((site) => searched.field !== "county" || (browseCity !== "" && (browseCity === "*" || site.city === browseCity))).length > 20 && <p className="mt-2 text-sm text-stone-700">{s.ca.orangeFirst20}</p>}
             <details className="mt-2 text-xs text-stone-600">
-              <summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>Source &amp; details</summary>
-              <p className="mt-2">Orange County Medi-Cal BHP provider-site subset · Retrieved {orangeSnapshot.retrievedAt}. Not a complete directory.</p>
-              <p className="mt-2">Call before visiting to confirm services, eligibility, cost, hours, and appointments. Listings do not guarantee free care or openings.</p>
-              <a href="https://bhpproviderdirectory.ochca.com/" target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded font-semibold underline ${focusRing}`}>Orange County Behavioral Health Plan provider directory</a>
+              <summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>{s.ca.sourceDetails}</summary>
+              <p className="mt-2">{s.ca.orangeSourceNow(orangeSnapshot.retrievedAt)}</p>
+              <p className="mt-2">{s.ca.callBefore}</p>
+              <a href="https://bhpproviderdirectory.ochca.com/" target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded font-semibold underline ${focusRing}`}>{s.ca.orangeDirectory}</a>
             </details>
           </section>
         )}
-        {sanDiegoMatches.length > 0 && <section aria-label="San Diego adult behavioral health clinics" className="mt-4 rounded-lg border border-teal-300 bg-white p-4">
-          <h5 className="font-semibold text-stone-900">{searched.field === "county" ? `${sanDiegoMatches.length} adult clinic locations in San Diego County` : `${sanDiegoMatches.length} adult clinic listings for ${searched.field === "zip" ? "ZIP" : searched.field} ${searched.value} · San Diego County`}</h5>
-          <p className="mt-1 text-xs text-stone-600">Adults 18+</p>
-          {searched.field === "county" && <><label htmlFor="san-diego-county-city" className="mt-3 block text-sm font-semibold text-stone-700">Filter San Diego adult clinics by city</label>
+        {sanDiegoMatches.length > 0 && <section aria-label={s.ca.sdAria} className="mt-4 rounded-lg border border-teal-300 bg-white p-4">
+          <h5 className="font-semibold text-stone-900">{searched.field === "county" ? s.ca.sdCountyHeading(sanDiegoMatches.length) : s.ca.sdAreaHeading(sanDiegoMatches.length, searched.field, searched.value)}</h5>
+          <p className="mt-1 text-xs text-stone-600">{s.ca.adultsOnly}</p>
+          {searched.field === "county" && <><label htmlFor="san-diego-county-city" className="mt-3 block text-sm font-semibold text-stone-700">{s.ca.sdFilter}</label>
             <select id="san-diego-county-city" value={browseCity} onChange={(event) => setBrowseCity(event.target.value)} className={`mt-1 min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
-              <option value="">Choose a city to see clinics</option>
-              <option value="*">Show all 20 clinics</option>
+              <option value="">{s.ca.sdChooseCity}</option>
+              <option value="*">{s.ca.sdAll}</option>
               {[...new Set(sanDiegoMatches.map((clinic) => clinic.city))].sort().map((city) => <option key={city} value={city}>{city}</option>)}
-            </select>{browseCity && browseCity !== "*" && <p className="mt-2 text-sm text-stone-700">{sanDiegoMatches.filter((clinic) => clinic.city === browseCity).length} clinics listed in {browseCity}.</p>}</>}
+            </select>{browseCity && browseCity !== "*" && <p className="mt-2 text-sm text-stone-700">{s.ca.clinicsInCity(sanDiegoMatches.filter((clinic) => clinic.city === browseCity).length, browseCity)}</p>}</>}
           <div className="mt-3 grid gap-3 lg:grid-cols-2">{sanDiegoMatches.filter((clinic) => searched.field !== "county" || (browseCity !== "" && (browseCity === "*" || clinic.city === browseCity))).map((clinic) => <SanDiegoClinicCard key={clinic.id} clinic={clinic} />)}</div>
-          <details className="mt-2 text-xs text-stone-600"><summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>Source &amp; details</summary>
-            <p className="mt-2">Adults 18+ · County outpatient-clinic subset · Snapshot {sanDiegoSnapshot.retrievedAt}, not a complete directory.</p>
-            <a href={sanDiegoDirectoryUrl} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded font-semibold underline ${focusRing}`}>Full San Diego County behavioral health provider directory</a>
+          <details className="mt-2 text-xs text-stone-600"><summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>{s.ca.sourceDetails}</summary>
+            <p className="mt-2">{s.ca.sdSource(sanDiegoSnapshot.retrievedAt)}</p>
+            <a href={sanDiegoDirectoryUrl} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded font-semibold underline ${focusRing}`}>{s.ca.sdDirectory}</a>
           </details>
         </section>}
-        {hasButteClinics && <section aria-label="Butte adult outpatient centers" className="mt-4 rounded-lg border border-teal-300 bg-white p-4">
-          <h5 className="font-semibold text-stone-900">{butteSnapshot.clinics.length} adult outpatient centers in Butte County</h5>
-          <p className="mt-1 text-xs text-stone-600">Adults 18+</p>
-          <label htmlFor="butte-clinic-city" className="mt-3 block text-sm font-semibold text-stone-700">Filter Butte adult centers by city</label>
+        {hasButteClinics && <section aria-label={s.ca.butteAria} className="mt-4 rounded-lg border border-teal-300 bg-white p-4">
+          <h5 className="font-semibold text-stone-900">{s.ca.butteHeading(butteSnapshot.clinics.length)}</h5>
+          <p className="mt-1 text-xs text-stone-600">{s.ca.adultsOnly}</p>
+          <label htmlFor="butte-clinic-city" className="mt-3 block text-sm font-semibold text-stone-700">{s.ca.butteFilter}</label>
           <select id="butte-clinic-city" value={browseCity} onChange={(event) => setBrowseCity(event.target.value)} className={`mt-1 min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
-            <option value="">All cities</option><option value="*">Show all centers</option>
+            <option value="">{s.ca.butteAllCities}</option><option value="*">{s.ca.butteAll}</option>
             {[...new Set(butteSnapshot.clinics.map((clinic) => clinic.city))].sort().map((city) => <option key={city} value={city}>{city}</option>)}
           </select>
           <div className="mt-3 grid gap-3 lg:grid-cols-2">{butteSnapshot.clinics.filter((clinic) => !browseCity || browseCity === "*" || clinic.city === browseCity).map((clinic) => <article key={clinic.id} className="rounded-xl border border-sage-200 bg-white p-5 shadow-sm">
             <h5 className="font-bold text-stone-900">{clinic.name}</h5>
             <p className="mt-2 text-sm text-stone-700"><AddressLink address={`${clinic.address} · ${clinic.city}, CA ${clinic.zip}`} /></p>
             <p className="mt-2 text-sm text-stone-700"><ListedPhone phone={clinic.phone} /></p>
-            <a href={clinic.source} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded text-sm text-teal-800 underline ${focusRing}`}>Official center information</a>
+            <a href={clinic.source} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded text-sm text-teal-800 underline ${focusRing}`}>{s.ca.butteOfficial}</a>
           </article>)}</div>
-          <details className="mt-2 text-xs text-stone-600"><summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>Source &amp; details</summary>
-            <p className="mt-2">Adults 18+ · County outpatient-center subset · Snapshot {butteSnapshot.retrievedAt}, not the full directory.</p>
-            <a href={butteSnapshot.directoryUrl} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded font-semibold underline ${focusRing}`}>Full Butte County provider directory</a>
+          <details className="mt-2 text-xs text-stone-600"><summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>{s.ca.sourceDetails}</summary>
+            <p className="mt-2">{s.ca.butteSource(butteSnapshot.retrievedAt)}</p>
+            <a href={butteSnapshot.directoryUrl} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded font-semibold underline ${focusRing}`}>{s.ca.butteDirectory}</a>
           </details>
         </section>}
-        {matches.length > 0 && (searched.field === "county" ? <details aria-label="Statewide licensed-facility snapshot" className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
-          <summary className="cursor-pointer font-semibold text-stone-900">{matches.length} statewide licensed-facility {matches.length === 1 ? "listing" : "listings"} for county {searched.value} (not an outpatient directory)</summary>
-          <p className="mt-2 text-xs text-stone-600">Dated licensing snapshot, including hospitals and rehabilitation centers. A license does not establish current availability, walk-in access, or free care.</p>
+        {matches.length > 0 && (searched.field === "county" ? <details aria-label={s.ca.licensedAria} className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
+          <summary className="cursor-pointer font-semibold text-stone-900">{s.ca.licensedFoldHeading(matches.length, searched.value)}</summary>
+          <p className="mt-2 text-xs text-stone-600">{s.ca.licensedFoldBody}</p>
           <div className="mt-3 grid gap-3 lg:grid-cols-2">{matches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div>
-        </details> : <section aria-label="Statewide licensed-facility snapshot" className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
-          <h5 className="font-semibold text-stone-900">{matches.length} statewide licensed-facility listings for {searched.field} {searched.value}</h5>
-          <p className="mt-1 text-xs text-stone-600">Licensed facilities · Not an outpatient directory</p>
-          <details className="mt-2 text-xs text-stone-600"><summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>About these listings</summary><p className="mt-2">Licensed-facility matches · Limited, dated licensing snapshot (including hospitals and rehabilitation centers), not a general outpatient directory. A license does not establish availability or walk-in access.</p></details>
+        </details> : <section aria-label={s.ca.licensedAria} className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
+          <h5 className="font-semibold text-stone-900">{s.ca.licensedHeading(matches.length, searched.field, searched.value)}</h5>
+          <p className="mt-1 text-xs text-stone-600">{s.ca.licensedSubheading}</p>
+          <details className="mt-2 text-xs text-stone-600"><summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>{s.ca.licensedAbout}</summary><p className="mt-2">{s.ca.licensedAboutBody}</p></details>
           <div className="mt-3 grid gap-3 lg:grid-cols-2">{matches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div>
         </section>)}
         {selectedCounty && hasExactResults && searched.field !== "county" && <CountyPlanCard county={selectedCounty} compact />}
-        {noExactResults && <p role="status" className="mt-4 text-sm text-stone-700">{searched.field === "county" ? "No listings in our connected snapshots yet. That does not mean no care is available. Your county plan or local 211 can help you ask about current options." : <>No exact {searched.field === "zip" ? "ZIP" : "city"} listings were found in the connected sources{selectedCounty === "Los Angeles" && !laSearch ? " (LA live directory not yet searched)" : ""}. This does not mean there is no care nearby; ask your county plan for current providers or use local 211.</>}</p>}
-        {orangeElsewhere.length > 0 && <details aria-label="Other Orange County provider sites" className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
-          <summary className="cursor-pointer font-semibold text-stone-900">{orangeElsewhere.length} provider sites elsewhere in Orange County (not exact-ZIP matches)</summary>
-          <p className="mt-2 text-sm text-stone-700">These official Orange County BHP snapshot sites are not necessarily near this ZIP, available, or appropriate for your needs. Choose a city you recognize to browse its sites; this is not a distance search. Ask the county plan or use its full directory for current options.</p>
-          <label htmlFor="orange-elsewhere-city" className="mt-3 block text-sm font-semibold text-stone-700">Show Orange County sites in city</label>
+        {noExactResults && <p role="status" className="mt-4 text-sm text-stone-700">{searched.field === "county" ? s.ca.noResultsCounty : <>{s.ca.noResultsAreaLead(searched.field)}{selectedCounty === "Los Angeles" && !laSearch ? s.ca.noResultsLaPending : ""}{s.ca.noResultsAreaTail}</>}</p>}
+        {orangeElsewhere.length > 0 && <details aria-label={s.ca.elsewhereOrangeAria} className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
+          <summary className="cursor-pointer font-semibold text-stone-900">{s.ca.elsewhereOrangeHeading(orangeElsewhere.length)}</summary>
+          <p className="mt-2 text-sm text-stone-700">{s.ca.elsewhereOrangeBody}</p>
+          <label htmlFor="orange-elsewhere-city" className="mt-3 block text-sm font-semibold text-stone-700">{s.ca.elsewhereOrangeFilter}</label>
           <select id="orange-elsewhere-city" value={browseCity} onChange={(event) => setBrowseCity(event.target.value)} className={`mt-1 min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
-            <option value="">All cities (first 10 by city, not distance)</option>
+            <option value="">{s.ca.elsewhereAllCities}</option>
             {[...new Set(orangeElsewhere.map((site) => site.city))].sort().map((city) => <option key={city} value={city}>{city}</option>)}
           </select>
           <div className="mt-3 grid gap-3 lg:grid-cols-2">{orangeElsewhere.filter((site) => !browseCity || site.city === browseCity).slice(0, 10).map((site) => <OrangeSiteCard key={site.id} site={site} />)}</div>
-          {orangeElsewhere.filter((site) => !browseCity || site.city === browseCity).length > 10 && <p className="mt-2 text-sm text-stone-700">Showing the first 10 alphabetically by city and name. Use the full official directory for the rest.</p>}
+          {orangeElsewhere.filter((site) => !browseCity || site.city === browseCity).length > 10 && <p className="mt-2 text-sm text-stone-700">{s.ca.elsewhereFirst10}</p>}
         </details>}
-        {sanDiegoElsewhere.length > 0 && <details aria-label="Other San Diego County adult clinics" className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
-          <summary className="cursor-pointer font-semibold text-stone-900">{sanDiegoElsewhere.length} adult clinics elsewhere in San Diego County (not exact-ZIP matches)</summary>
-          <p className="mt-2 text-sm text-stone-700">These county-published outpatient clinics serve adults 18 and older. They are not necessarily near this ZIP or currently available. Choose a city you recognize; this is not a distance search. Confirm eligibility, cost, and appointments before visiting.</p>
-          <label htmlFor="san-diego-elsewhere-city" className="mt-3 block text-sm font-semibold text-stone-700">Show San Diego adult clinics in city</label>
+        {sanDiegoElsewhere.length > 0 && <details aria-label={s.ca.elsewhereSdAria} className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
+          <summary className="cursor-pointer font-semibold text-stone-900">{s.ca.elsewhereSdHeading(sanDiegoElsewhere.length)}</summary>
+          <p className="mt-2 text-sm text-stone-700">{s.ca.elsewhereSdBody}</p>
+          <label htmlFor="san-diego-elsewhere-city" className="mt-3 block text-sm font-semibold text-stone-700">{s.ca.elsewhereSdFilter}</label>
           <select id="san-diego-elsewhere-city" value={browseCity} onChange={(event) => setBrowseCity(event.target.value)} className={`mt-1 min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
-            <option value="">All cities (first 10 by city, not distance)</option>
+            <option value="">{s.ca.elsewhereAllCities}</option>
             {[...new Set(sanDiegoElsewhere.map((clinic) => clinic.city))].sort().map((city) => <option key={city} value={city}>{city}</option>)}
           </select>
           <div className="mt-3 grid gap-3 lg:grid-cols-2">{sanDiegoElsewhere.filter((clinic) => !browseCity || clinic.city === browseCity).slice(0, 10).map((clinic) => <SanDiegoClinicCard key={clinic.id} clinic={clinic} />)}</div>
-          {sanDiegoElsewhere.filter((clinic) => !browseCity || clinic.city === browseCity).length > 10 && <p className="mt-2 text-sm text-stone-700">Showing the first 10 alphabetically by city and name. Use the full official directory for the rest.</p>}
+          {sanDiegoElsewhere.filter((clinic) => !browseCity || clinic.city === browseCity).length > 10 && <p className="mt-2 text-sm text-stone-700">{s.ca.elsewhereFirst10}</p>}
         </details>}
         {matchedCounty && countyMatches.length > 0 && !hasExactResults && !laSearch?.isLoading && (
           <details className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
-            <summary className="cursor-pointer font-semibold text-stone-900">Other licensed facilities elsewhere in {matchedCounty} County ({countyMatches.length}; not local matches)</summary>
-            <p className="mt-2 text-sm text-stone-700">This ZIP has a suggested {matchedCounty} County match from an approximate ZIP-to-county crosswalk. These facilities may be far from your ZIP and may not offer the service you need, have openings, or accept walk-ins.</p>
+            <summary className="cursor-pointer font-semibold text-stone-900">{s.ca.countyElsewhereHeading(countyMatches.length, matchedCounty)}</summary>
+            <p className="mt-2 text-sm text-stone-700">{s.ca.countyElsewhereBody(matchedCounty)}</p>
             {countyMatches.length > 0 && <div className="mt-3 grid gap-3 lg:grid-cols-2">{countyMatches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div>}
           </details>
         )}
-        {matchedCounty === "Orange" && orangeMatches.length === 0 && <a href="https://bhpproviderdirectory.ochca.com/" target="_blank" rel="noopener noreferrer" className={`mt-4 inline-block rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>Orange County Behavioral Health Plan provider directory</a>}
-        {selectedCounty === "San Diego" && sanDiegoMatches.length === 0 && <a href={sanDiegoDirectoryUrl} target="_blank" rel="noopener noreferrer" className={`mt-4 inline-block rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>Full San Diego County behavioral health provider directory</a>}
+        {matchedCounty === "Orange" && orangeMatches.length === 0 && <a href="https://bhpproviderdirectory.ochca.com/" target="_blank" rel="noopener noreferrer" className={`mt-4 inline-block rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>{s.ca.orangeDirectory}</a>}
+        {selectedCounty === "San Diego" && sanDiegoMatches.length === 0 && <a href={sanDiegoDirectoryUrl} target="_blank" rel="noopener noreferrer" className={`mt-4 inline-block rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>{s.ca.sdDirectory}</a>}
       </div>}
     </div>
   )

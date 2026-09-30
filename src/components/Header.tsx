@@ -1,17 +1,21 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, Link, useLocation } from "react-router-dom"
 import { focusRing } from "../lib/ui"
+import { useLocale } from "../i18n/LocaleProvider"
+import { safeSearch, switchLocalePath } from "../lib/localePath"
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-  `rounded-md px-2 py-2.5 font-semibold sm:px-3 ${focusRing} ${
+  `inline-flex min-h-11 items-center rounded-md px-1 font-semibold sm:px-3 ${focusRing} ${
     isActive ? "bg-sage-100 text-sage-900" : "text-sage-700 hover:bg-sage-50"
   }`
 
 export function Header() {
+  const { locale, s, to } = useLocale()
+  const { pathname, search, hash } = useLocation()
   return (
     <header className="border-b border-sage-200 bg-white">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-2 px-4 py-3 sm:gap-4">
         <NavLink
-          to="/"
+          to={to("/")}
           className={`flex items-center gap-2 rounded text-lg font-extrabold text-sage-800 ${focusRing}`}
         >
           <svg
@@ -27,13 +31,16 @@ export function Header() {
           </svg>
           MindBridge
         </NavLink>
-        <nav aria-label="Main" className="flex items-center gap-0 sm:gap-1">
-          <NavLink to="/" end className={navLinkClass}>
-            Home
+        <nav aria-label={s.nav.aria} className="flex items-center gap-0 text-xs sm:gap-1 sm:text-base">
+          <NavLink to={to("/")} end className={navLinkClass}>
+            {s.nav.home}
           </NavLink>
-          <NavLink to="/about" className={navLinkClass}>
-            About
+          <NavLink to={to("/about")} className={navLinkClass}>
+            {s.nav.about}
           </NavLink>
+          <Link to={switchLocalePath(locale, pathname) + safeSearch(search) + hash} aria-label={s.nav.switchAria} lang={locale === "en" ? "es" : "en"} className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-md px-1 font-semibold text-teal-800 underline sm:px-3 ${focusRing}`}>
+            <span className="sm:hidden">{s.nav.switchShort}</span><span className="hidden sm:inline">{s.nav.switchLabel}</span>
+          </Link>
         </nav>
       </div>
     </header>

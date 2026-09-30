@@ -6,6 +6,7 @@ import { FilterBar } from "../components/FilterBar"
 import { ResourceCard } from "../components/ResourceCard"
 import { GentleSprout } from "../components/GentleSprout"
 import { SproutSpeech } from "../components/SproutSpeech"
+import { useLocale } from "../i18n/LocaleProvider"
 import {
   CRISIS_ENTRY_IDS,
   filterResources,
@@ -19,6 +20,7 @@ export function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [query, setQuery] = useState("")
   const [includeCrisis, setIncludeCrisis] = useState(false)
+  const { locale, s, to } = useLocale()
 
   useEffect(() => {
     if (searchParams.has("q")) {
@@ -60,7 +62,7 @@ export function HomePage() {
   }
 
   const hasFilters = Object.values(filters).some(Boolean)
-  const results = filterResources(filters).filter((resource) => hasFilters || includeCrisis || !CRISIS_ENTRY_IDS.includes(resource.id))
+  const results = filterResources(filters, locale).filter((resource) => hasFilters || includeCrisis || !CRISIS_ENTRY_IDS.includes(resource.id))
   const crisisEntries = getResourcesByIds(CRISIS_ENTRY_IDS)
 
   return (
@@ -69,19 +71,19 @@ export function HomePage() {
         <div className="mx-auto max-w-5xl px-4 py-12 text-center sm:py-16">
           <SproutSpeech pose="wave" hero>
           <h1 className="text-3xl font-extrabold tracking-tight text-stone-900 sm:text-4xl">
-            You are not alone.
+            {s.home.heading}
           </h1>
           <p className="mt-3 text-lg text-stone-700 sm:text-xl">
-            Find free crisis and support resources, or explore in-person options whose cost and eligibility you must confirm.
+            {s.home.lead}
           </p>
           </SproutSpeech>
-          <p className="mt-2 text-sm text-sage-700">Take your time. One small step is enough to begin.</p>
-          <a lang="es" href="https://988lifeline.org/es/" target="_blank" rel="noopener noreferrer" className={`inline-flex min-h-11 items-center rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>Ayuda en español · 988</a>
+          <p className="mt-2 text-sm text-sage-700">{s.home.calm}</p>
+          <a lang="es" href="https://988lifeline.org/es/" target="_blank" rel="noopener noreferrer" className={`inline-flex min-h-11 items-center rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>{s.home.spanishLink}</a>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <a href="tel:988" className={btnCall}>
-              Call 988 now
+              {s.home.callNow}
             </a>
-            <a href="sms:988" className={btnText}>Text 988 now</a>
+            <a href="sms:988" className={btnText}>{s.home.textNow}</a>
             <a
               href="#directory"
               className={btnSecondary}
@@ -96,11 +98,11 @@ export function HomePage() {
                 })
               }}
             >
-              Browse all resources
+              {s.home.browseAll}
             </a>
           </div>
           <p className="mt-4 text-sm text-stone-700">
-            Not in immediate crisis?{" "}
+            {s.home.notInCrisis}{" "}
             <a
               href="#local-support-heading"
               className={`rounded font-semibold text-teal-800 underline ${focusRing}`}
@@ -113,7 +115,7 @@ export function HomePage() {
                   block: "start",
                 })
               }}
-            >Find in-person support by county</a>.
+            >{s.home.findInPerson}</a>.
           </p>
         </div>
       </section>
@@ -121,10 +123,10 @@ export function HomePage() {
       <section aria-labelledby="crisis-heading" className="border-b border-sage-200 bg-amber-50">
         <div className="mx-auto max-w-5xl px-4 py-10">
           <h2 id="crisis-heading" className="text-xl font-bold text-stone-900 sm:text-2xl">
-            In crisis right now?
+            {s.home.crisisHeading}
           </h2>
           <p className="mt-1 text-stone-700">
-            These services are free, confidential, and available right away.
+            {s.home.crisisLead}
           </p>
           <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {crisisEntries.map((resource) => (
@@ -138,14 +140,14 @@ export function HomePage() {
         <div className="mx-auto max-w-5xl px-4 py-8 sm:py-10">
           <SproutSpeech pose="hug" small>
           <h2 id="local-support-heading" tabIndex={-1} className={`scroll-mt-16 rounded text-xl font-bold text-stone-900 ${focusRing} sm:text-2xl`}>
-            Looking for in-person support?
+            {s.home.localHeading}
           </h2>
           </SproutSpeech>
 
           <CaliforniaFacilitySearch />
           <div className="mt-4 flex flex-wrap gap-3">
             <a href="tel:211" className={btnCall}>
-              Call 211
+              {s.home.call211}
             </a>
             <a
               href="https://www.211.org/about-us/your-local-211"
@@ -153,7 +155,7 @@ export function HomePage() {
               rel="noopener noreferrer"
               className={btnSecondary}
             >
-              Find your local 211 directory
+              {s.home.find211}
             </a>
 
           </div>
@@ -169,7 +171,7 @@ export function HomePage() {
             tabIndex={-1}
             className={`rounded text-xl font-bold text-stone-900 ${focusRing} sm:text-2xl`}
           >
-            Browse resources
+            {s.home.directoryHeading}
           </h2>
           </SproutSpeech>
 
@@ -177,9 +179,9 @@ export function HomePage() {
             <FilterBar filters={filters} onChange={onChange} onClear={onClear} />
           </div>
           <p className="mt-4 text-sm font-semibold text-stone-700" aria-live="polite">
-            Showing {results.length} of {RESOURCES.length} resources
+            {s.home.showing(results.length, RESOURCES.length)}
           </p>
-          {!hasFilters && !includeCrisis && <p data-js-only className="mt-1 text-sm text-stone-600">Crisis lines are above. <button type="button" onClick={() => setIncludeCrisis(true)} className={`rounded text-teal-800 underline ${focusRing}`}>Include crisis lines here</button></p>}
+          {!hasFilters && !includeCrisis && <p data-js-only className="mt-1 text-sm text-stone-600">{s.home.crisisAbove}{" "}<button type="button" onClick={() => setIncludeCrisis(true)} className={`rounded text-teal-800 underline ${focusRing}`}>{s.home.includeCrisis}</button></p>}
           {results.length > 0 ? (
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {results.map((resource) => (
@@ -190,17 +192,17 @@ export function HomePage() {
             <div className="mt-4 rounded-xl border border-dashed border-sage-300 bg-white p-8 text-center">
               <div className="mb-2 flex justify-center"><GentleSprout small pose="hug" /></div>
               <p className="text-stone-700">
-                No matches this time. Try fewer filters, or browse all resources.
+                {s.home.noMatches}
               </p>
               <button type="button" onClick={onClear} className={`${btnSecondary} mt-4`}>
-                Clear filters
+                {s.home.clearFilters}
               </button>
             </div>
           )}
           <p className="mt-8 text-sm text-stone-600">
-            Looking for something else?{" "}
-            <Link to="/about" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>
-              Learn how MindBridge works
+            {s.home.somethingElse}{" "}
+            <Link to={to("/about")} className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>
+              {s.home.howItWorks}
             </Link>
             .
           </p>

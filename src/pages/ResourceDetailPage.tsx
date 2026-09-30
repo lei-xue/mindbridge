@@ -1,37 +1,42 @@
 import { ResourceReview } from "../components/ResourceReview"
 import { Link, useParams } from "react-router-dom"
-import { DATA_LAST_REVIEWED } from "../data/meta"
+import { useLocale } from "../i18n/LocaleProvider"
+import { callLabel, resourceView, smsLabel } from "../i18n/translate"
 import { getResourceById, phoneToTel, smsHref, textToSms } from "../lib/directory"
 import { badgeFree, btnCall, btnSecondary, btnText, chip, focusRing } from "../lib/ui"
 
 export function ResourceDetailPage() {
   const { id } = useParams()
+  const { locale, s, to, t } = useLocale()
   const resource = id ? getResourceById(id) : undefined
 
   if (!resource) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-16 text-center">
-        <h1 className="text-2xl font-extrabold text-stone-900">Resource not found</h1>
+        <h1 className="text-2xl font-extrabold text-stone-900">{s.detail.notFoundHeading}</h1>
         <p className="mt-3 text-stone-700">
-          The resource you're looking for doesn't exist.{" "}
-          <Link to="/" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>
-            Back to all resources
+          {s.detail.notFoundBody}{" "}
+          <Link to={to("/")} className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>
+            {s.detail.backToAll}
           </Link>
         </p>
       </div>
     )
   }
 
-  const sms = resource.text ? textToSms(resource.text) : null
+  // Original phone/text feed the href parsers; only the visible labels are localized.
+  const view = resourceView(locale, resource)
+  const smsText = resource.text
+  const sms = smsText ? textToSms(smsText) : null
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       <p>
         <Link
-          to="/"
+          to={to("/")}
           className={`rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}
         >
-          ← All resources
+          {s.detail.allResources}
         </Link>
       </p>
 
@@ -40,35 +45,35 @@ export function ResourceDetailPage() {
           <div>
             <h1 className="text-2xl font-extrabold text-stone-900 sm:text-3xl">{resource.name}</h1>
             <p className="mt-2">
-              <span className={chip}>{resource.category}</span>{" "}
-              <span className={chip}>{resource.region}</span>{" "}
-              {resource.free && <span className={badgeFree}>FREE</span>}
+              <span className={chip}>{t(resource.category)}</span>{" "}
+              <span className={chip}>{t(resource.region)}</span>{" "}
+              {resource.free && <span className={badgeFree}>{s.common.free}</span>}
             </p>
           </div>
         </div>
 
-        <p className="mt-4 leading-relaxed text-stone-700">{resource.description}</p>
+        <p className="mt-4 leading-relaxed text-stone-700">{view.description}</p>
 
         <dl className="mt-5 space-y-2 rounded-lg bg-sage-50 p-4 text-sm text-stone-700">
           <div className="flex gap-2">
-            <dt className="font-semibold text-stone-800">Hours:</dt>
-            <dd>{resource.hours}</dd>
+            <dt className="font-semibold text-stone-800">{s.detail.hours}</dt>
+            <dd>{view.hours}</dd>
           </div>
           <div className="flex gap-2">
-            <dt className="font-semibold text-stone-800">Region:</dt>
-            <dd>{resource.region}</dd>
+            <dt className="font-semibold text-stone-800">{s.detail.region}</dt>
+            <dd>{t(resource.region)}</dd>
           </div>
         </dl>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           {resource.phone && (
             <a className={btnCall} href={phoneToTel(resource.phone)}>
-              Call {resource.phone}
+              {callLabel(locale, resource)}
             </a>
           )}
-          {sms && (
+          {sms && smsText && (
             <a className={btnText} href={smsHref(sms)}>
-              {resource.text}
+              {smsLabel(locale, smsText)}
             </a>
           )}
           <a
@@ -77,18 +82,18 @@ export function ResourceDetailPage() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Visit official website
+            {s.detail.visitSite}
           </a>
         </div>
 
         <section aria-labelledby="detail-audience" className="mt-8">
           <h2 id="detail-audience" className="text-sm font-bold uppercase tracking-wide text-stone-500">
-            Who it's for
+            {s.detail.whoFor}
           </h2>
           <ul className="mt-2 flex flex-wrap gap-1.5">
             {resource.audience.map((a) => (
               <li key={a} className={chip}>
-                {a}
+                {t(a)}
               </li>
             ))}
           </ul>
@@ -96,20 +101,19 @@ export function ResourceDetailPage() {
 
         <section aria-labelledby="detail-issues" className="mt-5">
           <h2 id="detail-issues" className="text-sm font-bold uppercase tracking-wide text-stone-500">
-            Issues covered
+            {s.detail.issues}
           </h2>
           <ul className="mt-2 flex flex-wrap gap-1.5">
             {resource.issues.map((issue) => (
               <li key={issue} className={chip}>
-                {issue}
+                {t(issue)}
               </li>
             ))}
           </ul>
         </section>
 
         <p className="mt-8 border-t border-sage-200 pt-4 text-sm text-stone-600">
-          Information last reviewed {DATA_LAST_REVIEWED}. Information may change — always confirm on
-          the provider's official site. If you or someone else is in immediate danger, call 911.
+          {s.detail.reviewNote}
         </p>
         <ResourceReview id={resource.id} name={resource.name} />
       </article>

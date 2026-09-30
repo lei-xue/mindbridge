@@ -10,7 +10,7 @@ const commit = (process.env.CF_PAGES_COMMIT_SHA || process.env.GITHUB_SHA || exe
 const buildTime = new Date().toISOString().slice(0, 16) + 'Z'
 
 export default defineConfig({
-  base: './',
+  base: '/',
   define: { __APP_BUILD_VERSION__: JSON.stringify(`${buildTime} · ${commit}`) },
   plugins: [react(), tailwindcss(), {
     name: 'preview-static-routes',
@@ -18,7 +18,7 @@ export default defineConfig({
       // Mirror generated Cloudflare rewrites instead of previewing the SPA fallback.
       server.middlewares.use((request, _response, next) => {
         const path = (request.url || '').split('?')[0].replace(/\/$/, '')
-        if (/^\/(about|resource\/[a-z0-9-]+)$/.test(path) && existsSync(resolve('dist', `.${path}/index.html`))) {
+        if (/^\/(es(?:\/about|\/resource\/[a-z0-9-]+)?|about|resource\/[a-z0-9-]+)$/.test(path) && existsSync(resolve('dist', `.${path}/index.html`))) {
           request.url = `${path}/index.html`
         }
         next()
