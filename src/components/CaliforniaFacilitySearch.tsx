@@ -85,13 +85,17 @@ function CountyPlanCard({ county, compact = false }: { county: string; compact?:
   if (!plan) return null
   const website = countySites.websites.find((entry) => entry.name === county)?.url
   const dial = plan.phone.match(/\(?\d{3}\)?[ .-]*\d{3}[ .-]*\d{4}/)?.[0].replace(/\D/g, "")
-  const content = <section aria-label={s.ca.planAria} className={`mt-4 rounded-lg border border-teal-300 bg-white ${compact ? "p-3" : "p-4"}`}>
-    <h5 className="font-semibold text-stone-900">{compact ? s.ca.planAccessLine(county) : s.ca.planName(county)}</h5>
-    {!compact && <p className="mt-1 text-sm text-stone-700">{s.ca.planBody}</p>}
-    <p className="mt-2 text-sm text-stone-700">{compact ? s.ca.planCompactLead : s.ca.planPhoneLead}{dial ? <a href={`tel:${dial}`} aria-label={s.ca.planCallAria} className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>{plan.phone}</a> : plan.phone}</p>
+  const info = <>
+    <p className="mt-2 text-sm text-stone-700">{s.ca.planBody}</p>
     {website && <p className="mt-2 text-sm text-stone-700"><a href={website} target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>{s.ca.planVisit(county)}</a> <span className="text-xs">{s.ca.planVisitNote}</span></p>}
     {county === "Los Angeles" && <p className="mt-2 text-sm text-stone-700">{s.ca.planLaLead}<a href="https://dmh.lacounty.gov/pd/" target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>{s.ca.planLaLink}</a>{s.ca.planLaTail}</p>}
-    <a href={countyAccess.source} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>{s.ca.planSource}</a>
+    <a href={countyAccess.source} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-block rounded text-sm font-semibold underline ${focusRing}`}>{s.ca.planSource}</a>
+  </>
+  const content = <section aria-label={s.ca.planAria} className="mt-4 space-y-2 bg-white py-4">
+    <h5 className="font-semibold text-stone-900">{compact ? s.ca.planAccessLine(county) : s.ca.planName(county)}</h5>
+    <p className="text-xs text-stone-600">{s.ca.planBrief}</p>
+    <p>{dial ? <a href={`tel:${dial}`} aria-label={s.ca.planCallAria} className={btnCall}>{plan.phone}</a> : plan.phone}</p>
+    {compact ? info : <details className="text-sm text-stone-600"><summary className={`min-h-11 cursor-pointer content-center rounded ${focusRing}`}>{s.ca.sourceDetails}</summary>{info}</details>}
   </section>
   return compact ? <details key={county} className="mt-3 text-sm text-stone-700">
     <summary className={`min-h-11 cursor-pointer content-center rounded font-semibold ${focusRing}`}>{s.ca.referral(county)}</summary>
@@ -218,9 +222,7 @@ export function CaliforniaFacilitySearch() {
   const selectedCounty = manualCounty || (countyCandidates.length === 1 ? countyCandidates[0] : "")
   const matches = rawMatches.filter((facility) => !manualCounty || facility.county === manualCounty)
   const matchedCounty = searched?.field === "zip" ? selectedCounty : undefined
-  const countyMatches = matchedCounty && matches.length === 0
-    ? facilitiesJson.filter((facility) => facility.county === matchedCounty)
-    : []
+
   const orangeMatches = searched && (
     (searched.field === "zip" && matchedCounty === "Orange") ||
     (searched.field === "city" && selectedCounty === "Orange") ||
@@ -243,11 +245,7 @@ export function CaliforniaFacilitySearch() {
   const hasButteClinics = searched?.field === "county" && selectedCounty === "Butte"
   const hasExactResults = matches.length > 0 || orangeMatches.length > 0 || sanDiegoMatches.length > 0 || hasButteClinics || Boolean(laSearch?.results.length)
   const noExactResults = !hasExactResults && !laSearch?.isLoading && !laSearch?.error
-  // These are county-wide browsing aids, never exact-ZIP or proximity matches.
-  const orangeElsewhere = searched?.field === "zip" && selectedCounty === "Orange" && orangeMatches.length === 0
-    ? orangeSnapshot.sites.filter((site) => countyAccess.zipCounties[site.zip as keyof typeof countyAccess.zipCounties]?.includes("Orange")).sort((a, b) => a.city.localeCompare(b.city) || a.name.localeCompare(b.name)) : []
-  const sanDiegoElsewhere = searched?.field === "zip" && selectedCounty === "San Diego" && sanDiegoMatches.length === 0
-    ? [...sanDiegoSnapshot.clinics].sort((a, b) => a.city.localeCompare(b.city) || a.name.localeCompare(b.name)) : []
+
 
   const onCountyChange = (county: string) => {
     cancelLocation()
@@ -258,7 +256,7 @@ export function CaliforniaFacilitySearch() {
   }
 
   return (
-    <div data-js-only className="mt-5 rounded-xl border border-sage-200 bg-sage-50 p-4 sm:p-5">
+    <div data-js-only className="mt-5 space-y-3">
       <div role="group" aria-label={s.ca.modesAria} className="grid grid-cols-3 gap-1 rounded-xl bg-sage-100 p-1">
         {(["county", "city", "zip"] as const).map((mode) => <button key={mode} type="button" aria-pressed={field === mode} onClick={() => { cancelLocation(); laAbort.current?.abort(); setLaSearch(null); setManualCounty(""); setBrowseCity(""); setField(mode); setValue(""); setSearched(null); setError("") }} className={`min-h-11 rounded-lg px-3 text-sm font-semibold ${focusRing} ${field === mode ? "bg-white text-teal-800 shadow-sm" : "text-stone-700 hover:bg-sage-50"}`}>{mode === "zip" ? s.ca.modeZip : mode === "county" ? s.ca.modeCounty : s.ca.modeCity}</button>)}
       </div>
@@ -277,7 +275,7 @@ export function CaliforniaFacilitySearch() {
         </div>
         <div className="grid gap-2 sm:flex sm:flex-wrap">
           <button type="submit" className={btnCall}>{s.ca.submit}</button>
-          <button type="button" disabled={locating} className={btnSecondary} onClick={useCurrentLocation}>{locating ? s.ca.locating : preciseRetry ? s.ca.precise : s.ca.useLocation}</button>
+          <button type="button" disabled={locating} className={`min-h-11 rounded px-3 text-sm text-teal-800 underline ${focusRing}`} onClick={useCurrentLocation}>{locating ? s.ca.locating : preciseRetry ? s.ca.precise : s.ca.useLocation}</button>
         </div>
       </form>
       {locationMessage && <p role="status" className="mt-2 text-sm text-stone-700">{locationMessage}</p>}
@@ -286,21 +284,20 @@ export function CaliforniaFacilitySearch() {
       {field === "zip" && countyAccess.zipCounties[value.trim() as keyof typeof countyAccess.zipCounties]?.length === 1 && countyAccess.zipCounties[value.trim() as keyof typeof countyAccess.zipCounties][0] === "Los Angeles" && <p className="mt-2 text-xs text-stone-700">{s.ca.laZipNotice}</p>}
       {error && <p role="alert" className="mt-3 text-sm font-semibold text-red-800">{error}</p>}
       {searched && <div className="mt-5" aria-live="polite">
-        <h4 className="font-semibold text-stone-900">{s.ca.resultHeading(searched.field, searched.value)}</h4>
-        <p className="mt-2 text-xs text-stone-600">{s.ca.confirmCall}</p>
-        {searched.field === "zip" && countyCandidates.length === 1 && <p className="mt-2 text-sm text-stone-700">{orangeCity ? <>{s.ca.listedSites}<strong>{orangeCity} · {s.ca.countyName("Orange")}</strong>.</> : <>{s.ca.suggestedCounty}<strong>{countyCandidates[0]}</strong>.</>} {s.ca.zipApprox}</p>}
+        {searched.field !== "county" && <h4 className="font-semibold text-stone-900">{s.ca.resultHeading(searched.field, searched.value)}</h4>}
+        {hasExactResults && <p className="mt-2 text-xs text-stone-600">{s.ca.confirmCall}</p>}
         {searched.field === "zip" && countyCandidates.length > 1 && <p className="mt-2 text-sm text-stone-700">{s.ca.zipCrosses}</p>}
-        {searched.field === "zip" && countyCandidates.length === 0 && <p className="mt-2 text-sm text-stone-700">{s.ca.zipUnknown}</p>}
+
         {countyCandidates.length === 1 && searched.field !== "county" && <details className="mt-2 text-sm text-stone-700"><summary className="cursor-pointer font-semibold text-teal-800">{s.ca.changeCounty}</summary><p className="mt-1">{s.ca.changeCountyBody}</p>
           <div className="mt-2"><label htmlFor="choose-county" className="mb-1 block font-semibold">{s.ca.chooseYourCounty}</label>
           <select id="choose-county" value={selectedCounty} onChange={(event) => onCountyChange(event.target.value)} className={`min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
             {countyAccess.countyPlans.map((plan) => <option key={plan.name} value={plan.name}>{s.ca.countyOption(plan.name)}</option>)}
           </select></div></details>}
-        {countyCandidates.length !== 1 && <div className="mt-3">
+        {countyCandidates.length > 1 && <div className="mt-3">
           <label htmlFor="choose-county" className="mb-1 block text-sm font-semibold text-stone-700">{s.ca.chooseYourCounty}</label>
           <select id="choose-county" value={manualCounty} onChange={(event) => onCountyChange(event.target.value)} className={`min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
             <option value="">{s.ca.selectCountyOption}</option>
-            {countyAccess.countyPlans.map((plan) => plan.name).map((county) => <option key={county} value={county}>{s.ca.countyOption(county)}</option>)}
+            {countyCandidates.map((county) => <option key={county} value={county}>{s.ca.countyOption(county)}</option>)}
           </select>
         </div>}
 
@@ -371,38 +368,7 @@ export function CaliforniaFacilitySearch() {
           <div className="mt-3 grid gap-3 lg:grid-cols-2">{matches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div>
         </section>)}
         {selectedCounty && hasExactResults && searched.field !== "county" && <CountyPlanCard county={selectedCounty} compact />}
-        {noExactResults && <p role="status" className="mt-4 text-sm text-stone-700">{searched.field === "county" ? s.ca.noResultsCounty : <>{s.ca.noResultsAreaLead(searched.field)}{selectedCounty === "Los Angeles" && !laSearch ? s.ca.noResultsLaPending : ""}{s.ca.noResultsAreaTail}</>}</p>}
-        {orangeElsewhere.length > 0 && <details aria-label={s.ca.elsewhereOrangeAria} className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
-          <summary className="cursor-pointer font-semibold text-stone-900">{s.ca.elsewhereOrangeHeading(orangeElsewhere.length)}</summary>
-          <p className="mt-2 text-sm text-stone-700">{s.ca.elsewhereOrangeBody}</p>
-          <label htmlFor="orange-elsewhere-city" className="mt-3 block text-sm font-semibold text-stone-700">{s.ca.elsewhereOrangeFilter}</label>
-          <select id="orange-elsewhere-city" value={browseCity} onChange={(event) => setBrowseCity(event.target.value)} className={`mt-1 min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
-            <option value="">{s.ca.elsewhereAllCities}</option>
-            {[...new Set(orangeElsewhere.map((site) => site.city))].sort().map((city) => <option key={city} value={city}>{city}</option>)}
-          </select>
-          <div className="mt-3 grid gap-3 lg:grid-cols-2">{orangeElsewhere.filter((site) => !browseCity || site.city === browseCity).slice(0, 10).map((site) => <OrangeSiteCard key={site.id} site={site} />)}</div>
-          {orangeElsewhere.filter((site) => !browseCity || site.city === browseCity).length > 10 && <p className="mt-2 text-sm text-stone-700">{s.ca.elsewhereFirst10}</p>}
-        </details>}
-        {sanDiegoElsewhere.length > 0 && <details aria-label={s.ca.elsewhereSdAria} className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
-          <summary className="cursor-pointer font-semibold text-stone-900">{s.ca.elsewhereSdHeading(sanDiegoElsewhere.length)}</summary>
-          <p className="mt-2 text-sm text-stone-700">{s.ca.elsewhereSdBody}</p>
-          <label htmlFor="san-diego-elsewhere-city" className="mt-3 block text-sm font-semibold text-stone-700">{s.ca.elsewhereSdFilter}</label>
-          <select id="san-diego-elsewhere-city" value={browseCity} onChange={(event) => setBrowseCity(event.target.value)} className={`mt-1 min-h-11 w-full max-w-sm rounded-lg border border-sage-300 bg-white px-3 text-base ${focusRing}`}>
-            <option value="">{s.ca.elsewhereAllCities}</option>
-            {[...new Set(sanDiegoElsewhere.map((clinic) => clinic.city))].sort().map((city) => <option key={city} value={city}>{city}</option>)}
-          </select>
-          <div className="mt-3 grid gap-3 lg:grid-cols-2">{sanDiegoElsewhere.filter((clinic) => !browseCity || clinic.city === browseCity).slice(0, 10).map((clinic) => <SanDiegoClinicCard key={clinic.id} clinic={clinic} />)}</div>
-          {sanDiegoElsewhere.filter((clinic) => !browseCity || clinic.city === browseCity).length > 10 && <p className="mt-2 text-sm text-stone-700">{s.ca.elsewhereFirst10}</p>}
-        </details>}
-        {matchedCounty && countyMatches.length > 0 && !hasExactResults && !laSearch?.isLoading && (
-          <details className="mt-4 rounded-lg border border-sage-300 bg-white p-4">
-            <summary className="cursor-pointer font-semibold text-stone-900">{s.ca.countyElsewhereHeading(countyMatches.length, matchedCounty)}</summary>
-            <p className="mt-2 text-sm text-stone-700">{s.ca.countyElsewhereBody(matchedCounty)}</p>
-            {countyMatches.length > 0 && <div className="mt-3 grid gap-3 lg:grid-cols-2">{countyMatches.map((facility) => <FacilityCard key={facility.id} facility={facility} />)}</div>}
-          </details>
-        )}
-        {matchedCounty === "Orange" && orangeMatches.length === 0 && <a href="https://bhpproviderdirectory.ochca.com/" target="_blank" rel="noopener noreferrer" className={`mt-4 inline-block rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>{s.ca.orangeDirectory}</a>}
-        {selectedCounty === "San Diego" && sanDiegoMatches.length === 0 && <a href={sanDiegoDirectoryUrl} target="_blank" rel="noopener noreferrer" className={`mt-4 inline-block rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>{s.ca.sdDirectory}</a>}
+        {noExactResults && searched.field !== "county" && countyCandidates.length <= 1 && <p role="status" className="mt-4 text-sm text-stone-700">{s.ca.noResultsAreaLead(searched.field)}{!selectedCounty ? s.ca.noResultsAreaTail : ""}</p>}
       </div>}
     </div>
   )

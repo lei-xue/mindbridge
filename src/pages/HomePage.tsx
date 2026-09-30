@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Link, useSearchParams } from "react-router-dom"
+import { useSearchParams } from "react-router-dom"
 import { CaliforniaFacilitySearch } from "../components/CaliforniaFacilitySearch"
 import { CrisisResourceCard } from "../components/CrisisResourceCard"
 import { FilterBar } from "../components/FilterBar"
@@ -20,7 +20,7 @@ export function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [query, setQuery] = useState("")
   const [includeCrisis, setIncludeCrisis] = useState(false)
-  const { locale, s, to } = useLocale()
+  const { locale, s } = useLocale()
 
   useEffect(() => {
     if (searchParams.has("q")) {
@@ -77,7 +77,7 @@ export function HomePage() {
             {s.home.lead}
           </p>
           </SproutSpeech>
-          <p className="mt-2 text-sm text-sage-700">{s.home.calm}</p>
+
           <a lang="es" href="https://988lifeline.org/es/" target="_blank" rel="noopener noreferrer" className={`inline-flex min-h-11 items-center rounded text-sm font-semibold text-teal-800 underline ${focusRing}`}>{s.home.spanishLink}</a>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <a href="tel:988" className={btnCall}>
@@ -86,7 +86,7 @@ export function HomePage() {
             <a href="sms:988" className={btnText}>{s.home.textNow}</a>
             <a
               href="#directory"
-              className={btnSecondary}
+              className={`inline-flex min-h-11 items-center rounded px-2 text-sm text-teal-800 underline ${focusRing}`}
               onClick={(event) => {
                 event.preventDefault()
                 setIncludeCrisis(true)
@@ -102,7 +102,7 @@ export function HomePage() {
             </a>
           </div>
           <p className="mt-4 text-sm text-stone-700">
-            {s.home.notInCrisis}{" "}
+
             <a
               href="#local-support-heading"
               className={`rounded font-semibold text-teal-800 underline ${focusRing}`}
@@ -125,9 +125,7 @@ export function HomePage() {
           <h2 id="crisis-heading" className="text-xl font-bold text-stone-900 sm:text-2xl">
             {s.home.crisisHeading}
           </h2>
-          <p className="mt-1 text-stone-700">
-            {s.home.crisisLead}
-          </p>
+
           <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {crisisEntries.map((resource) => (
               <CrisisResourceCard key={resource.id} resource={resource} />
@@ -146,14 +144,14 @@ export function HomePage() {
 
           <CaliforniaFacilitySearch />
           <div className="mt-4 flex flex-wrap gap-3">
-            <a href="tel:211" className={btnCall}>
+            <a href="tel:211" className={`inline-flex min-h-11 items-center rounded px-2 font-semibold text-teal-800 underline ${focusRing}`}>
               {s.home.call211}
             </a>
             <a
               href="https://www.211.org/about-us/your-local-211"
               target="_blank"
               rel="noopener noreferrer"
-              className={btnSecondary}
+              className={`inline-flex min-h-11 items-center rounded px-2 text-sm text-teal-800 underline ${focusRing}`}
             >
               {s.home.find211}
             </a>
@@ -183,7 +181,7 @@ export function HomePage() {
           </p>
           {!hasFilters && !includeCrisis && <p data-js-only className="mt-1 text-sm text-stone-600">{s.home.crisisAbove}{" "}<button type="button" onClick={() => setIncludeCrisis(true)} className={`rounded text-teal-800 underline ${focusRing}`}>{s.home.includeCrisis}</button></p>}
           {results.length > 0 ? (
-            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-6 space-y-6">
               {results.map((resource) => (
                 <ResourceCard key={resource.id} resource={resource} />
               ))}
@@ -199,13 +197,7 @@ export function HomePage() {
               </button>
             </div>
           )}
-          <p className="mt-8 text-sm text-stone-600">
-            {s.home.somethingElse}{" "}
-            <Link to={to("/about")} className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>
-              {s.home.howItWorks}
-            </Link>
-            .
-          </p>
+
         </div>
       </section>
     </>

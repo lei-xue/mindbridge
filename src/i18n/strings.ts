@@ -207,7 +207,7 @@ export const en = {
     listedSites: "Listed sites: ",
     suggestedCounty: "Suggested county: ",
     zipApprox: "The ZIP-to-county match is approximate; confirm your location.",
-    zipCrosses: "This ZIP may cross county boundaries. Choose your county below; the ZIP alone cannot identify your side of the boundary.",
+    zipCrosses: "This ZIP may cross county boundaries. Which county are you in?",
     zipUnknown:
       "We cannot confirm this ZIP belongs to California from the available ZIP-to-county crosswalk (newer and PO Box ZIPs may be missing). If you know your California county, choose it below for its official contact; otherwise verify the ZIP and county first.",
     changeCounty: "Change county",
@@ -219,6 +219,7 @@ export const en = {
       `Want to search LA County's live provider directory for this ${field}? Clicking below sends the entered location through Cloudflare to LA County; they may log your IP/browser details.`,
     liveSearch: "Search live LA County directory",
     planAria: "County mental health plan",
+    planBrief: "Medi-Cal referrals · Confirm eligibility and cost.",
     planAccessLine: (county: string) => `${county} County access line`,
     planName: (county: string) => `${county} County Mental Health Plan`,
     planBody:
@@ -281,10 +282,10 @@ export const en = {
       "Licensed-facility matches · Limited, dated licensing snapshot (including hospitals and rehabilitation centers), not a general outpatient directory. A license does not establish availability or walk-in access.",
     noResultsCounty:
       "No listings in our connected snapshots yet. That does not mean no care is available. Your county plan or local 211 can help you ask about current options.",
-    noResultsAreaLead: (field: "city" | "zip") => `No exact ${field === "zip" ? "ZIP" : "city"} listings were found in the connected sources`,
+    noResultsAreaLead: (field: "city" | "zip") => `No listings in our directory for this ${field === "zip" ? "ZIP" : "city"}.`,
     noResultsLaPending: " (LA live directory not yet searched)",
     noResultsAreaTail:
-      ". This does not mean there is no care nearby; ask your county plan for current providers or use local 211.",
+      " Call 211 for local options.",
     elsewhereOrangeAria: "Other Orange County provider sites",
     elsewhereOrangeHeading: (count: number) => `${count} provider sites elsewhere in Orange County (not exact-ZIP matches)`,
     elsewhereOrangeBody:
@@ -532,7 +533,7 @@ export const es: Strings = {
     listedSites: "Sitios listados: ",
     suggestedCounty: "Condado sugerido: ",
     zipApprox: "La coincidencia entre código postal y condado es aproximada; confirma tu ubicación.",
-    zipCrosses: "Este código postal puede cruzar límites de condados. Elige tu condado abajo; el código postal por sí solo no identifica de qué lado del límite estás.",
+    zipCrosses: "Este código postal puede cruzar límites de condados. ¿En qué condado estás?",
     zipUnknown:
       "No podemos confirmar que este código postal pertenezca a California según la tabla disponible de código postal a condado (pueden faltar códigos nuevos y de apartados postales). Si conoces tu condado de California, elígelo abajo para ver su contacto oficial; si no, verifica primero el código postal y el condado.",
     changeCounty: "Cambiar de condado",
@@ -544,6 +545,7 @@ export const es: Strings = {
       `¿Quieres buscar en el directorio de proveedores en vivo del condado de Los Ángeles para esta ${field === "zip" ? "código postal" : "ciudad"}? Si haces clic abajo, la ubicación escrita viaja a través de Cloudflare al condado de Los Ángeles; pueden registrar tu IP y datos del navegador.`,
     liveSearch: "Buscar en el directorio en vivo del condado de Los Ángeles",
     planAria: "Plan de salud mental del condado",
+    planBrief: "Derivaciones de Medi-Cal · Confirma elegibilidad y costo.",
     planAccessLine: (county: string) => `Línea de acceso del condado de ${county}`,
     planName: (county: string) => `Plan de salud mental del condado de ${county}`,
     planBody:
@@ -610,10 +612,10 @@ export const es: Strings = {
     noResultsCounty:
       "Todavía no hay listados en las instantáneas conectadas. Eso no significa que no haya atención disponible. El plan de tu condado o el 211 local pueden ayudarte a preguntar por las opciones actuales.",
     noResultsAreaLead: (field: "city" | "zip") =>
-      `No se encontraron listados exactos para ${field === "zip" ? "el código postal" : "la ciudad"}`,
+      `No hay listados en nuestro directorio para ${field === "zip" ? "este código postal" : "esta ciudad"}.`,
     noResultsLaPending: " (el directorio en vivo de Los Ángeles aún no se ha consultado)",
     noResultsAreaTail:
-      ". Esto no significa que no haya atención cerca; pregunta al plan de tu condado por los proveedores actuales o usa el 211 local.",
+      " Llama al 211 para conocer opciones locales.",
     elsewhereOrangeAria: "Otros sitios de proveedores del condado de Orange",
     elsewhereOrangeHeading: (count: number) =>
       `${count} sitios de proveedores en otras zonas del condado de Orange (no coinciden con el código postal)`,

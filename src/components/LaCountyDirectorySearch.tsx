@@ -61,8 +61,8 @@ export function LaCountyDirectoryResults({ state }: { state: LaSearchState }) {
     {!state.isLoading && !state.error && <>
       <h5 className="mt-2 font-semibold text-stone-900">{s.la.resultsHeading(state.results.length, state.searchType, state.query)}</h5>
       {state.results.length > 0 ? <div className="mt-3 grid gap-3 lg:grid-cols-2">{state.results.map((result, index) => <ResultCard key={result.id || `${result.name}-${index}`} result={result} />)}</div> : <p className="mt-2 text-sm text-stone-700">{s.la.empty}</p>}
-      {state.hasMore && <p className="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-stone-700">{s.la.hasMore}</p>}
+      {state.hasMore && <p className="mt-3 text-xs text-stone-600">{s.la.hasMore}</p>}
     </>}
-    <p className="mt-4 text-xs leading-relaxed text-stone-600">{s.la.disclaimerLead}<a href={countyDirectoryUrl} target="_blank" rel="noopener noreferrer" className={`rounded font-semibold text-teal-800 underline ${focusRing}`}>{s.la.disclaimerLink}</a>{s.la.disclaimerTail}</p>
+    <details className="mt-3 text-xs text-stone-600"><summary className={`min-h-11 cursor-pointer content-center rounded ${focusRing}`}>{s.ca.sourceDetails}</summary><p>{s.la.disclaimerLead}<a href={countyDirectoryUrl} target="_blank" rel="noopener noreferrer" className={`rounded underline ${focusRing}`}>{s.la.disclaimerLink}</a>{s.la.disclaimerTail}</p></details>
   </section>
 }
