@@ -20,6 +20,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--site-header-height, 160px);
 }
 
 body {

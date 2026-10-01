@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { Route, Routes, Link } from "react-router-dom"
 import { CrisisBanner } from "./components/CrisisBanner"
 import { Footer } from "./components/Footer"
@@ -25,7 +25,20 @@ function NotFoundPage() {
 
 function AppContent() {
   const { s } = useLocale()
+  const siteHeader = useRef<HTMLDivElement>(null)
   useEffect(() => { document.documentElement.setAttribute("data-enhanced", "true") }, [])
+  useEffect(() => {
+    const header = siteHeader.current
+    if (!header) return
+    const update = () => document.documentElement.style.setProperty("--site-header-height", `${header.getBoundingClientRect().height}px`)
+    update()
+    const observer = new ResizeObserver(update)
+    observer.observe(header)
+    return () => {
+      observer.disconnect()
+      document.documentElement.style.removeProperty("--site-header-height")
+    }
+  }, [])
   return (
     <div className="flex min-h-svh flex-col">
       <DocumentMeta />
@@ -44,8 +57,10 @@ function AppContent() {
       >
         {s.common.skipToMain}
       </a>
-      <CrisisBanner />
-      <Header />
+      <div ref={siteHeader} data-site-header className="sticky top-0 z-50 shrink-0 bg-white">
+        <CrisisBanner />
+        <Header />
+      </div>
       <main id="main-content" tabIndex={-1} className="flex-1">
         <Routes>
           <Route path="/" element={<HomePage />} />

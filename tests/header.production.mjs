@@ -1,0 +1,53 @@
+import { test, expect } from '@playwright/test'
+
+for (const locale of ['en', 'es']) for (const width of [320, 390, 1440]) {
+  test(`${locale} whole header remains pinned without hiding skip-link destination at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 })
+    await page.goto(locale === 'es' ? '/es' : '/')
+    await page.evaluate(() => window.scrollTo(0, 1000))
+    await expect.poll(async () => (await page.locator('header').boundingBox()).y).toBeGreaterThanOrEqual(0)
+    const crisis = await page.locator('[data-crisis-banner]').boundingBox()
+    const header = await page.locator('header').boundingBox()
+    expect(crisis.y).toBeCloseTo(0, 0)
+    expect(header.y).toBeCloseTo(crisis.height, 0)
+    expect(header.x + header.width).toBeLessThanOrEqual(width)
+    await expect(page.locator('header nav')).toBeVisible()
+    await expect(page.locator('a[href="tel:988"]')).toHaveCount(1)
+    await expect(page.locator('a[href="sms:988"]')).toHaveCount(1)
+    const skip = page.locator('a[href="#main-content"]')
+    await skip.focus()
+    await skip.press('Enter')
+    await expect(page.locator('main')).toBeFocused()
+    await expect.poll(async () => (await page.locator('main').boundingBox()).y).toBeGreaterThanOrEqual(header.y + header.height - 1)
+    await page.evaluate(() => window.scrollTo(0, 1000))
+    await page.locator('header nav a').nth(1).click()
+    await expect(page).toHaveURL(/\/about$/)
+    await expect(page.locator('header')).toBeVisible()
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+    await page.screenshot({ path: `test-results/header-${locale}-${width}.png` })
+  })
+}
+
+test('static whole header stays pinned without JavaScript', async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 320, height: 844 } })
+  const page = await context.newPage()
+  await page.goto(baseURL)
+  await page.mouse.wheel(0, 1000)
+  await expect.poll(async () => (await page.locator('header').boundingBox()).y).toBeGreaterThanOrEqual(0)
+  await page.locator('header nav a').nth(1).click()
+  await expect(page).toHaveURL(/\/about$/)
+  await context.close()
+})
+
+test('changing language while scrolled keeps the whole header pinned and updates its content offset', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 844 })
+  await page.goto('/')
+  await page.evaluate(() => window.scrollTo(0, 1000))
+  await page.locator('header nav a').nth(2).click()
+  await expect(page).toHaveURL(/\/es$/)
+  await expect.poll(async () => (await page.locator('[data-site-header]').boundingBox()).y).toBeCloseTo(0, 0)
+  await expect.poll(() => page.evaluate(() => Math.abs(parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) - document.querySelector('[data-site-header]').getBoundingClientRect().height))).toBeLessThan(1)
+  await page.locator('a[href="#main-content"]').focus()
+  await page.locator('a[href="#main-content"]').press('Enter')
+  await expect.poll(() => page.evaluate(() => document.querySelector('main').getBoundingClientRect().top - document.querySelector('[data-site-header]').getBoundingClientRect().bottom)).toBeGreaterThanOrEqual(-1)
+})
