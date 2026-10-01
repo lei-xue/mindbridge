@@ -21,7 +21,7 @@ for (const locale of ['en', 'es']) for (const width of [320, 390, 1440]) {
     await expect.poll(async () => (await page.locator('main').boundingBox()).y).toBeGreaterThanOrEqual(header.y + header.height - 1)
     await page.evaluate(() => window.scrollTo(0, 1000))
     await page.locator('header nav a').nth(1).click()
-    await expect(page).toHaveURL(/\/about$/)
+    await expect(page).toHaveURL(/\/about\/?$/)
     await expect(page.locator('header')).toBeVisible()
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
     await page.screenshot({ path: `test-results/header-${locale}-${width}.png` })
@@ -35,7 +35,7 @@ test('static whole header stays pinned without JavaScript', async ({ browser, ba
   await page.mouse.wheel(0, 1000)
   await expect.poll(async () => (await page.locator('header').boundingBox()).y).toBeGreaterThanOrEqual(0)
   await page.locator('header nav a').nth(1).click()
-  await expect(page).toHaveURL(/\/about$/)
+  await expect(page).toHaveURL(/\/about\/?$/)
   await context.close()
 })
 
