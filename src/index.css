@@ -23,6 +23,12 @@ html {
   scroll-padding-top: var(--site-header-height, 160px);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   background-color: var(--color-cream-50);
   color: var(--color-stone-800);

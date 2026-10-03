@@ -38,7 +38,7 @@ The [Orange County Behavioral Health Plan provider directory](https://bhpprovide
 
 [San Diego County BHS's adult outpatient clinic page](https://www.sandiegocounty.gov/content/sdc/bhs/Outpatient_behavioral_health_centers.html) publishes clinic names, street addresses, and phones by region. MindBridge includes a minimized snapshot of **20 physical clinic locations serving adults 18 and older**, retrieved September 29, 2026. The source also lists a contact-only program with no public street address, which was excluded rather than treated as a nearby clinic. San Diego ZIPs without an exact clinic match show no county-wide clinic fallback; city filtering remains available in an explicit County-mode search. This is not the full county Behavioral Health Plan provider directory, youth service list, or confirmation of current walk-in hours, price, eligibility or availability. The County links to a separate [full behavioral health provider directory](https://www.optumsandiego.com/content/SanDiego/sandiego/en/community-resources/providerdirectory1.html) for broader/current searches. Do not combine the San Diego adult clinics, Orange County sites, statewide licensing snapshot, and curated support directory counts.
 
-The footer's version is generated at frontend build time from the UTC build minute and the source commit's short SHA. It identifies the frontend artifact, not the separately deployed LA County Worker.
+The footer's version is generated at frontend build time from the `package.json` version, the UTC build minute, and the source commit's short SHA (e.g. `v0.0.1 · <UTC time> · <SHA>`). It identifies the frontend artifact, not the separately deployed LA County Worker.
 
 ## Butte County adult outpatient subset
 

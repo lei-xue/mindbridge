@@ -7,7 +7,7 @@ export function CrisisBanner() {
       <span>{s.crisisBanner.label}</span>
       <a href="tel:988" className={`inline-flex min-h-11 items-center rounded px-2 font-extrabold underline underline-offset-2 ${focusRing}`}>{s.crisisBanner.call}</a>
       <a href="sms:988" className={`inline-flex min-h-11 items-center rounded px-2 font-extrabold underline underline-offset-2 ${focusRing}`}>{s.crisisBanner.text}</a>
-      <span className="text-xs">{s.crisisBanner.hours}</span>
+      <span className="whitespace-nowrap text-xs">{s.crisisBanner.hours}</span>
     </div>
   </div>
 }

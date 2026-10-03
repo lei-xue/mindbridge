@@ -13,15 +13,15 @@ export function Header() {
   const { pathname, search, hash } = useLocation()
   return (
     <header className="border-b border-sage-200 bg-white">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-2 px-4 py-3 sm:gap-4">
+      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-4 py-3 sm:gap-4">
         <NavLink
           to={to("/")}
-          className={`flex items-center gap-2 rounded text-lg font-extrabold text-sage-800 ${focusRing}`}
+          className={`flex min-h-11 min-w-0 max-w-full items-center gap-2 rounded text-lg font-extrabold text-sage-800 ${focusRing}`}
         >
           <svg
             aria-hidden="true"
             viewBox="0 0 32 32"
-            className="h-7 w-7 rounded-lg bg-sage-700 p-1"
+            className="h-[28px] w-[28px] shrink-0 rounded-lg bg-sage-700 p-1"
             fill="none"
           >
             <path
@@ -29,9 +29,9 @@ export function Header() {
               fill="#faf9f6"
             />
           </svg>
-          MindBridge
+          <span className="min-w-0">Mind<wbr />Bridge</span>
         </NavLink>
-        <nav aria-label={s.nav.aria} className="flex items-center gap-0 text-xs sm:gap-1 sm:text-base">
+        <nav aria-label={s.nav.aria} className="flex flex-wrap items-center gap-0 text-sm sm:gap-1 sm:text-base">
           <NavLink to={to("/")} end className={navLinkClass}>
             {s.nav.home}
           </NavLink>

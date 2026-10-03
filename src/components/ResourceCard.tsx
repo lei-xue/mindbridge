@@ -9,9 +9,9 @@ export function ResourceCard({ resource, omitSharedContacts = false }: { resourc
   const { locale, s, to } = useLocale()
   const copy = resourceView(locale, resource)
   const sms = resource.text ? textToSms(resource.text) : null
-  return <article className="flex h-full flex-col gap-3 rounded-xl border border-sage-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
-    <div className="flex items-start justify-between gap-2">
-      <h3 className="text-lg font-bold leading-snug text-stone-900">{resource.name}</h3>
+  return <article className="flex h-full min-w-0 [overflow-wrap:anywhere] flex-col gap-3 rounded-xl border border-sage-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
+    <div className="flex flex-wrap items-start justify-between gap-2">
+      <h3 className="min-w-0 break-words text-lg font-bold leading-snug text-stone-900">{resource.name}</h3>
       {resource.free && <span className={`${badgeFree} mt-0.5 shrink-0`}>{s.common.free}</span>}
     </div>
 
