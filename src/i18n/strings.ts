@@ -217,7 +217,7 @@ export const en = {
     coverage: "Search coverage and privacy",
     coverageBody:
       "Local snapshots are incomplete; ZIP-to-county matches are approximate. Device coordinates stay in your browser and are not saved; its location provider has its own policies. Submitting a ZIP mapped only to LA sends the ZIP through Cloudflare to LA County DMH. Other live LA searches require a separate click. LA County may log IP/browser details. Map links open Google Maps with the public address only. Search terms are not added to the page URL. More details are in About.",
-    laZipNotice: "Search sends this ZIP via Cloudflare to LA County DMH, which may log IP/browser details.",
+    laZipNotice: "New requests send this ZIP via Cloudflare to LA County DMH, which may log IP/browser details. Repeat searches within 5 minutes can reuse a copy kept only in this tab.",
     errorCounty: "Choose a California county.",
     errorZip: "Enter a 5-digit California ZIP code.",
     errorCity: "Enter a California city name.",
@@ -337,6 +337,11 @@ export const en = {
     empty: "No active listings were returned for that area. This does not mean there is no care nearby; try the full county directory or local 211.",
     hasMore:
       "The County API indicates there are additional matches beyond this result page. For the complete list and County filters, use the official interactive provider directory below.",
+    refresh: "Refresh LA results",
+    retry: "Retry LA search",
+    fetchedAt: "Directory fetched",
+    memoryCache: "Cached in this tab (up to 5 min).",
+    staleResults: "Showing previous results; refresh failed.",
     phones: "Phones as listed:",
     websitesAria: (name: string) => `Websites for ${name}`,
     fold: "Listed hours, languages & accessibility (verify with provider)",
@@ -568,7 +573,7 @@ export const es: Strings = {
     coverage: "Cobertura de la búsqueda y privacidad",
     coverageBody:
       "Las instantáneas locales están incompletas; las coincidencias entre código postal y condado son aproximadas. Las coordenadas del dispositivo permanecen en tu navegador y no se guardan; el proveedor de ubicación del dispositivo tiene sus propias políticas. Si envías un código postal asignado solo a Los Ángeles, el código viaja a través de Cloudflare al DMH del condado de Los Ángeles. Otras búsquedas en vivo de Los Ángeles requieren un clic aparte. El condado de Los Ángeles puede registrar la IP y datos del navegador. Los enlaces a mapas abren Google Maps solo con la dirección pública. Los términos de búsqueda no se añaden a la URL. Hay más detalles en “Acerca de”.",
-    laZipNotice: "La búsqueda envía este código postal a través de Cloudflare al DMH del condado de Los Ángeles, que puede registrar la IP y datos del navegador.",
+    laZipNotice: "Las búsquedas nuevas envían este código postal a través de Cloudflare al DMH del condado de Los Ángeles, que puede registrar la IP y datos del navegador. Las búsquedas repetidas dentro de 5 minutos pueden reutilizar una copia guardada solo en esta pestaña.",
     errorCounty: "Elige un condado de California.",
     errorZip: "Escribe un código postal de California de 5 dígitos.",
     errorCity: "Escribe el nombre de una ciudad de California.",
@@ -694,6 +699,11 @@ export const es: Strings = {
     empty: "No se devolvieron listados activos para esa zona. Esto no significa que no haya atención cerca; prueba el directorio completo del condado o el 211 local.",
     hasMore:
       "La API del condado indica que hay más coincidencias además de esta página de resultados. Para ver la lista completa y los filtros del condado, usa el directorio oficial interactivo de proveedores que aparece abajo.",
+    refresh: "Actualizar resultados de LA",
+    retry: "Reintentar búsqueda de LA",
+    fetchedAt: "Datos del directorio obtenidos",
+    memoryCache: "En caché en esta pestaña (hasta 5 min).",
+    staleResults: "Se muestran resultados anteriores; no se pudo actualizar.",
     phones: "Teléfonos según el listado:",
     websitesAria: (name: string) => `Sitios web de ${name}`,
     fold: "Horario, idiomas y accesibilidad indicados (verifícalo con el proveedor)",

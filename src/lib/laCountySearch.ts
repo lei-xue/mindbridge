@@ -1,9 +1,10 @@
 import type { DirectoryResult, SearchType } from "../components/LaCountyDirectorySearch"
+import { createLaCountyCache, type LaCachedResponse } from "./laCountyCache"
 
 type SearchResponse = { results: DirectoryResult[]; hasMore?: boolean; error?: string }
 const API_URL = import.meta.env.VITE_LA_COUNTY_API_URL?.trim() || "/api/la-county/locations"
 
-export async function searchLaCounty(searchType: SearchType, value: string, signal: AbortSignal): Promise<SearchResponse> {
+async function loadLaCounty(searchType: SearchType, value: string, signal: AbortSignal): Promise<SearchResponse> {
   const response = await fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -15,3 +16,11 @@ export async function searchLaCounty(searchType: SearchType, value: string, sign
   if (!payload || !Array.isArray(payload.results)) throw new Error("The directory returned an unexpected response.")
   return payload
 }
+
+const cache = createLaCountyCache({ endpoint: API_URL, load: loadLaCounty })
+
+export function searchLaCounty(searchType: SearchType, value: string, signal: AbortSignal, force = false): Promise<LaCachedResponse> {
+  return cache.search(searchType, value, signal, force)
+}
+
+export type { LaCachedResponse }

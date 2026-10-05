@@ -16,6 +16,11 @@ import { GentleSprout } from "./GentleSprout"
 import { useLocale } from "../i18n/LocaleProvider"
 
 type SearchField = "county" | "zip"
+const formatLaFetchedAt = (fetchedAt: number, locale: string) => {
+  const date = new Date(fetchedAt)
+  if (Number.isNaN(date.getTime())) return ""
+  return new Intl.DateTimeFormat(locale === "es" ? "es-US" : "en-US", { dateStyle: "medium", timeStyle: "short" }).format(date)
+}
 type Listing = { id: string; name: string; city: string; address: string; zip: string; phone: string; category: string; source: string; sourceLabel: string; date: string; extra?: ReactNode }
 const licenseSources = {
   CDPH: "https://data.chhs.ca.gov/dataset/licensed-healthcare-facility-listing",
@@ -96,25 +101,35 @@ export function CaliforniaFacilitySearch() {
     }, failure => fail(failure.code), { enableHighAccuracy: false, timeout: 6000, maximumAge: 60000 }) }
     catch { fail(2) }
   }
-  const runLaSearch = (searchType: SearchType, term: string) => {
+  const runLaSearch = (searchType: SearchType, term: string, force = false) => {
     laAbort.current?.abort()
     const controller = new AbortController(); laAbort.current = controller
-    setLaSearch({ query: term, searchType, results: [], hasMore: false, isLoading: true, error: "" })
-    void searchLaCounty(searchType, term, controller.signal).then(payload => {
-      if (!controller.signal.aborted) setLaSearch({ query: term, searchType, results: payload.results, hasMore: Boolean(payload.hasMore), isLoading: false, error: "" })
+    setLaSearch(previous => {
+      const match = previous && previous.query === term && previous.searchType === searchType ? previous : null
+      return { query: term, searchType, results: match?.results ?? [], hasMore: match?.hasMore ?? false, isLoading: true, error: "", fetchedAt: match?.fetchedAt ?? null, cacheHit: match?.cacheHit ?? false, stale: match?.stale ?? false }
+    })
+    void searchLaCounty(searchType, term, controller.signal, force).then(payload => {
+      if (controller.signal.aborted || laAbort.current !== controller) return
+      setLaSearch({ query: term, searchType, results: payload.results, hasMore: Boolean(payload.hasMore), isLoading: false, error: "", fetchedAt: payload.fetchedAt, cacheHit: Boolean(payload.cacheHit), stale: false })
     }).catch((caught: unknown) => {
-      if (!controller.signal.aborted) setLaSearch({ query: term, searchType, results: [], hasMore: false, isLoading: false, error: caught instanceof Error ? caught.message : "The directory search is temporarily unavailable." })
+      if (controller.signal.aborted || laAbort.current !== controller) return
+      setLaSearch(previous => {
+        const match = previous && previous.query === term && previous.searchType === searchType ? previous : null
+        return { query: term, searchType, results: match?.results ?? [], hasMore: match?.hasMore ?? false, isLoading: false, error: caught instanceof Error ? caught.message : "The directory search is temporarily unavailable.", fetchedAt: match?.fetchedAt ?? null, cacheHit: match?.cacheHit ?? false, stale: match?.fetchedAt != null }
+      })
     })
   }
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); cancelLocation(); laAbort.current?.abort(); setLaSearch(null); setManualCounty(""); setBrowseCity("*")
+    event.preventDefault(); cancelLocation(); laAbort.current?.abort(); setManualCounty(""); setBrowseCity("*")
     const term = value.trim().replace(/\s+/g, " ")
+    const laLive = field === "zip" && (countyAccess.zipCounties[term as keyof typeof countyAccess.zipCounties]?.length === 1 && countyAccess.zipCounties[term as keyof typeof countyAccess.zipCounties][0] === "Los Angeles")
+    const match = laLive && laSearch && laSearch.query === term && laSearch.searchType === "zip" ? laSearch : null
+    setLaSearch(match)
     if (field === "county" ? !countyAccess.countyPlans.some(plan => plan.name === term) : !/^\d{5}$/.test(term)) {
       setError(field === "county" ? s.ca.errorCounty : s.ca.errorZip); setSearched(null); return
     }
     setError(""); setSearched({ field, value: term })
-    const counties = countyAccess.zipCounties[term as keyof typeof countyAccess.zipCounties]
-    if (field === "zip" && counties?.length === 1 && counties[0] === "Los Angeles") runLaSearch("zip", term)
+    if (laLive) runLaSearch("zip", term, Boolean(match?.error))
   }
   const same = (a: string, b: string) => a.toLocaleLowerCase("en-US") === b.toLocaleLowerCase("en-US")
   const zipCandidates = searched?.field === "zip" ? [...new Set([
@@ -194,7 +209,13 @@ export function CaliforniaFacilitySearch() {
       {selectedCounty === "Los Angeles" && searched.field !== "county" && !laSearch && <div className="mt-3"><p className="text-sm">{s.ca.livePrompt(searched.field)}</p><button type="button" className={`${btnSecondary} mt-2`} onClick={() => runLaSearch(searched.field as SearchType, searched.value)}>{s.ca.liveSearch}</button></div>}
       {laSearch?.isLoading && <p role="status" className="mt-2 text-sm">{s.la.searching}</p>}
       {laSearch?.error && <p role="alert" className="mt-2 text-sm font-semibold text-red-800">{locale === "es" && translatedError === laSearch.error ? s.la.errorUnavailable : translatedError}</p>}
-      {laSearch && !laSearch.isLoading && !laSearch.error && <h4 className="mt-2 text-sm font-semibold">{s.la.resultsHeading(laSearch.results.length, laSearch.searchType, laSearch.query)}</h4>}
+      {laSearch?.stale && <p role="status" className="mt-2 text-xs font-semibold text-amber-800">{s.la.staleResults}</p>}
+      {laSearch && laSearch.fetchedAt !== null && <div className="mt-2 text-xs text-stone-600">
+        <p>{s.la.fetchedAt} <time data-la-fetched-at={laSearch.fetchedAt} dateTime={new Date(laSearch.fetchedAt).toISOString()}>{formatLaFetchedAt(laSearch.fetchedAt, locale)}</time></p>
+        {laSearch.cacheHit && !laSearch.isLoading && !laSearch.stale && <p>{s.la.memoryCache}</p>}
+      </div>}
+      {laSearch && <button type="button" aria-disabled={laSearch.isLoading} aria-busy={laSearch.isLoading} className={`${btnSecondary} mt-2${laSearch.isLoading ? ' opacity-60 cursor-wait' : ''}`} onClick={() => { if (laSearch.isLoading) return; runLaSearch(laSearch.searchType, laSearch.query, true); }}>{laSearch.error ? s.la.retry : s.la.refresh}</button>}
+      {laSearch && !laSearch.isLoading && !laSearch.error && laSearch.fetchedAt !== null && <h4 className="mt-2 text-sm font-semibold">{s.la.resultsHeading(laSearch.results.length, laSearch.searchType, laSearch.query)}</h4>}
       {rows.length > 0 && <DirectoryTable resetKey={searched} label={s.table.local} kind="provider" columns={[{ key: "name", label: s.table.name }, { key: "type", label: s.table.type }, { key: "location", label: s.table.location }, { key: "phone", label: s.table.contact }, { key: "source", label: s.table.source }]} rows={rows} />}
       {laSearch?.hasMore && <p className="mt-2 text-xs text-stone-600">{s.la.hasMore}</p>}
       {noMatches && searched.field !== "county" && countyCandidates.length <= 1 && <div className="mt-3 flex items-start gap-3">

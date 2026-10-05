@@ -16,7 +16,12 @@ export type DirectoryResult = {
   accessibility: string[]
   lastUpdated: string | null
 }
-export type LaSearchState = { query: string; searchType: SearchType; results: DirectoryResult[]; hasMore: boolean; isLoading: boolean; error: string }
+export type LaSearchState = { query: string; searchType: SearchType; results: DirectoryResult[]; hasMore: boolean; isLoading: boolean; error: string; fetchedAt: number | null; cacheHit: boolean; stale: boolean }
+const formatLaFetchedAt = (fetchedAt: number, locale: Locale) => {
+  const date = new Date(fetchedAt)
+  if (Number.isNaN(date.getTime())) return ""
+  return new Intl.DateTimeFormat(locale === "es" ? "es-US" : "en-US", { dateStyle: "medium", timeStyle: "short" }).format(date)
+}
 const countyDirectoryUrl = "https://dmh.lacounty.gov/pd/"
 const spanishDays: Record<string, string> = { monday: "lun", tuesday: "mar", wednesday: "mié", thursday: "jue", friday: "vie", saturday: "sáb", sunday: "dom" }
 function formatHours(hours: DirectoryResult["hours"], locale: Locale, unspecified: string) {
@@ -58,7 +63,12 @@ export function LaCountyDirectoryResults({ state }: { state: LaSearchState }) {
     <h4 className="font-semibold text-stone-900">{s.la.heading}</h4>
     {state.isLoading && <p role="status" className="mt-2 text-sm text-stone-700">{s.la.searching}</p>}
     {state.error && <p role="alert" className="mt-2 text-sm font-semibold text-red-800">{errorMessage}</p>}
-    {!state.isLoading && !state.error && <>
+    {state.stale && <p role="status" className="mt-2 text-xs font-semibold text-amber-800">{s.la.staleResults}</p>}
+    {state.fetchedAt !== null && <div className="mt-2 text-xs text-stone-600">
+      <p>{s.la.fetchedAt} <time data-la-fetched-at={state.fetchedAt} dateTime={new Date(state.fetchedAt).toISOString()}>{formatLaFetchedAt(state.fetchedAt, locale)}</time></p>
+      {state.cacheHit && !state.isLoading && !state.stale && <p>{s.la.memoryCache}</p>}
+    </div>}
+    {!state.isLoading && !state.error && state.fetchedAt !== null && <>
       <h5 className="mt-2 font-semibold text-stone-900">{s.la.resultsHeading(state.results.length, state.searchType, state.query)}</h5>
       {state.results.length > 0 ? <div className="mt-3 grid gap-3 lg:grid-cols-2">{state.results.map((result, index) => <ResultCard key={result.id || `${result.name}-${index}`} result={result} />)}</div> : <p className="mt-2 text-sm text-stone-700">{s.la.empty}</p>}
       {state.hasMore && <p className="mt-3 text-xs text-stone-600">{s.la.hasMore}</p>}
