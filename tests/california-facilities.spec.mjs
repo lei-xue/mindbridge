@@ -163,5 +163,5 @@ test('changing search mode removes stale city results', async ({ page }) => {
 })
 test('footer identifies the actual frontend build', async ({ page }) => {
   await page.goto('/')
-  await expect(page.locator('footer')).toContainText(/Version: v\d+\.\d+\.\d+ · \d{4}-\d{2}-\d{2}T\d{2}:\d{2}Z · [0-9a-f]{8}/)
+  await expect(page.locator('footer')).toContainText(/© 2026(–\d{4})? MindBridge · Version: v\d+\.\d+\.\d+ · [0-9a-f]{8}/)
 })
