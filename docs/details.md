@@ -10,7 +10,8 @@
 ## Deploy
 
 - **Site:** Cloudflare Pages project `mindbridge`, built from GitHub → https://mindbridge.leixue.dev/
-- **LA County Worker:** `npm run worker:deploy` (route `mindbridge.leixue.dev/api/la-county/locations`). Deploy it separately from the site.
+- **LA County Worker:** `npm run worker:deploy` (route `mindbridge.leixue.dev/api/la-county/locations`). Deploy it separately from the site. Its `ALLOWED_ORIGINS` var is set in `workers/la-county-directory/wrangler.jsonc`.
+- **Optional:** `VITE_LA_COUNTY_API_URL` points the app at another Worker URL (default `/api/la-county/locations`; `npm run dev` proxies it to the local Worker on port 8787).
 
 ## Update the data
 
