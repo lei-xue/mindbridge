@@ -19,6 +19,7 @@ export function Footer() {
       <p>{s.footer.disclaimer}</p>
       <p className="text-xs text-sage-200">© {copyrightYears} MindBridge · {s.footer.version(__APP_BUILD_VERSION__)}</p>
       {!isHome && <p><Link to={to("/about")} className={`rounded font-semibold text-white underline underline-offset-2 hover:text-sage-200 ${focusRing}`}>{s.footer.about}</Link></p>}
+      <p>{s.footer.contact}{" "}<a href="mailto:hi@leixue.dev" className={`rounded font-semibold text-white underline underline-offset-2 hover:text-sage-200 ${focusRing}`}>hi@leixue.dev</a></p>
     </div>
   </footer>
 }

@@ -136,6 +136,7 @@ export const en = {
     disclaimer: "MindBridge is an information directory, not a substitute for professional care. In an emergency, call 911.",
     version: (version: string) => `Version: ${version}`,
     about: "About MindBridge",
+    contact: "Contact:",
   },
   about: {
     heading: "About MindBridge",
@@ -489,6 +490,7 @@ export const es: Strings = {
     disclaimer: "MindBridge es un directorio de información, no un sustituto de la atención profesional. En una emergencia, llama al 911.",
     version: (version: string) => `Versión: ${version}`,
     about: "Acerca de MindBridge",
+    contact: "Contacto:",
   },
   about: {
     heading: "Acerca de MindBridge",
