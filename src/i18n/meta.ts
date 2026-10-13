@@ -64,16 +64,39 @@ export function pageMetadata(pathname: string) {
 }
 
 /**
+ * The one author/publisher identity shared by the page JSON-LD and llms.txt.
+ * It is taken from the project's own About copy; no extra claims are added.
+ */
+export const authorPerson = {
+  "@type": "Person",
+  name: "Sherry (Lei) Xue",
+  url: "https://blog.leixue.dev",
+  sameAs: ["https://github.com/lei-xue"],
+}
+
+/**
  * One truthful site-level JSON-LD entity. It declares what MindBridge is
- * (a website/directory) and never invents ratings, medical entities or offers.
+ * (a website/directory, authored and published by one person) and never
+ * invents ratings, reviews, medical entities or offers.
  */
 export function siteSchema(meta: { locale: Locale; description: string }) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": `${siteOrigin}/#website`,
     name: siteName,
+    alternateName: "MindBridge — US mental health crisis directory",
     url: siteOrigin + (meta.locale === "es" ? "/es" : "/"),
     inLanguage: meta.locale,
     description: meta.description,
+    author: authorPerson,
+    publisher: {
+      "@type": "Organization",
+      "@id": `${siteOrigin}/#organization`,
+      name: siteName,
+      url: `${siteOrigin}/`,
+      logo: `${siteOrigin}/favicon.svg`,
+      founder: authorPerson,
+    },
   }
 }
